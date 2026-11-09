@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0369a1" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#oceanGrad)" rx="16"/>
+  <!-- Decorative Wave Lines -->
+  <path d="M0,320 C200,280 350,380 500,320 C650,260 750,340 800,300 L800,400 L0,400 Z" fill="#ffffff" fill-opacity="0.08"/>
+  <path d="M0,350 C180,310 320,390 480,350 C640,310 720,380 800,340 L800,400 L0,400 Z" fill="#ffffff" fill-opacity="0.12"/>
+  <!-- Compass / Archetype Symbol -->
+  <g transform="translate(400, 170)">
+    <circle r="70" fill="none" stroke="url(#accentGrad)" stroke-width="4" stroke-dasharray="6,4"/>
+    <circle r="54" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="2"/>
+    <!-- Compass needle / Spark -->
+    <path d="M0,-45 L14,0 L0,45 L-14,0 Z" fill="url(#accentGrad)"/>
+    <circle r="8" fill="#ffffff"/>
+  </g>
+  <text x="400" y="290" text-anchor="middle" font-family="-apple-system, Inter, sans-serif" font-size="28" font-weight="800" fill="#ffffff" letter-spacing="1">ARCHETYPE DISCOVERY</text>
+  <text x="400" y="325" text-anchor="middle" font-family="-apple-system, Inter, sans-serif" font-size="16" fill="#bae6fd">Uncover your true cognitive & behavioral strengths</text>
+</svg>

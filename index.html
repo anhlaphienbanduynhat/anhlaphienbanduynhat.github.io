@@ -3,25 +3,177 @@ layout: default
 title: "Home"
 ---
 
+<!-- Hero Section -->
 <div class="hero-section container">
-  <span class="hero-badge">🌊 Fast & Insightful Quizzes</span>
-  <h1 class="hero-title">Discover Your True Vibe & Archetype</h1>
-  <p class="hero-subtitle">Interactive, clean, and distraction-free quizzes. Get instant psychological and lifestyle insights in under 2 minutes.</p>
+  <span class="hero-badge">🌊 Quiztide</span>
+  <h1 class="hero-title" id="home-hero-title">Descubra Quem Você É de Verdade</h1>
+  <p class="hero-subtitle" id="home-hero-subtitle">Quizzes rápidos, visuais e sem travamentos. Teste sua personalidade e seus conhecimentos em 2 minutos.</p>
+
+  <!-- Live Search Box -->
+  <div class="search-box-wrapper">
+    <input type="text" id="quiz-search-input" placeholder="🔍 Buscar quizzes por título ou tag..." class="search-input">
+  </div>
+
+  <!-- Tag Filter Bar -->
+  <div class="tag-filter-bar" id="tag-filter-bar">
+    <button type="button" class="tag-filter-btn active" data-tag="all">✨ Todos</button>
+    <button type="button" class="tag-filter-btn" data-tag="personalidade">#personalidade</button>
+    <button type="button" class="tag-filter-btn" data-tag="psicologia">#psicologia</button>
+    <button type="button" class="tag-filter-btn" data-tag="autoconhecimento">#autoconhecimento</button>
+  </div>
 </div>
 
+<!-- Quizzes Grid -->
 <section class="container">
-  <h2 class="section-title">✨ Featured Quizzes</h2>
-  <div class="quiz-grid">
-    {% for quiz in site.quizzes %}
-    <a href="{{ quiz.url | relative_url }}" class="quiz-card">
-      <div class="card-category">{{ quiz.category | default: "Personality" }} · {{ quiz.lang | upcase }}</div>
-      <h3 class="card-title">{{ quiz.title }}</h3>
-      <p class="card-desc">{{ quiz.description | truncate: 120 }}</p>
-      <div class="card-footer">
-        <span>⏱️ 2 min</span>
-        <span>Start Quiz &rarr;</span>
-      </div>
-    </a>
+  <div class="quiz-grid" id="quiz-catalog-grid">
+    {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
+    {% for quiz in quiz_pages %}
+    <article class="quiz-card" 
+             data-slug="{{ quiz.slug }}" 
+             data-tags="{{ quiz.tags | join: ',' | downcase }}"
+             data-title-pt="{{ quiz.i18n.pt.title | escape }}"
+             data-desc-pt="{{ quiz.i18n.pt.subtitle | default: quiz.i18n.pt.description | escape }}"
+             data-title-en="{{ quiz.i18n.en.title | escape }}"
+             data-desc-en="{{ quiz.i18n.en.subtitle | default: quiz.i18n.en.description | escape }}"
+             data-title-es="{{ quiz.i18n.es.title | escape }}"
+             data-desc-es="{{ quiz.i18n.es.subtitle | default: quiz.i18n.es.description | escape }}">
+      
+      <a href="{{ quiz.url | relative_url }}" class="card-link-wrapper">
+        {% if quiz.cover_image %}
+        <div class="card-cover-wrapper">
+          <img src="{{ quiz.cover_image | relative_url }}" alt="{{ quiz.title }}" class="card-cover-img" loading="lazy">
+        </div>
+        {% endif %}
+
+        <div class="card-body">
+          <div class="card-tags">
+            {% for tag in quiz.tags %}
+            <span class="card-tag">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <h3 class="card-title quiz-card-title">{{ quiz.i18n.pt.title }}</h3>
+          <p class="card-desc quiz-card-desc">{{ quiz.i18n.pt.subtitle | default: quiz.i18n.pt.description | truncate: 120 }}</p>
+          <div class="card-footer">
+            <span class="card-meta-time">⏱️ 2 min</span>
+            <span class="card-cta-btn">Começar Quiz &rarr;</span>
+          </div>
+        </div>
+      </a>
+    </article>
     {% endfor %}
   </div>
+
+  <div id="no-results-msg" class="no-results-msg" style="display: none;">
+    <p>Nenhum quiz encontrado para essa busca. Tente outro termo ou limpe os filtros.</p>
+  </div>
 </section>
+
+<!-- Homepage Interactive Filtering & Localization Script -->
+<script>
+  (function() {
+    const searchInput = document.getElementById('quiz-search-input');
+    const tagButtons = document.querySelectorAll('.tag-filter-btn');
+    const cards = document.querySelectorAll('.quiz-card');
+    const noResults = document.getElementById('no-results-msg');
+
+    const heroTitle = document.getElementById('home-hero-title');
+    const heroSubtitle = document.getElementById('home-hero-subtitle');
+
+    const I18N_HOME = {
+      pt: {
+        heroTitle: "Descubra Quem Você É de Verdade",
+        heroSubtitle: "Quizzes rápidos, visuais e sem travamentos. Teste sua personalidade e seus conhecimentos em 2 minutos.",
+        placeholder: "🔍 Buscar quizzes por título ou tag...",
+        allTag: "✨ Todos",
+        cta: "Começar Quiz →",
+        noResults: "Nenhum quiz encontrado para essa busca."
+      },
+      en: {
+        heroTitle: "Discover Your True Self & Vibe",
+        heroSubtitle: "Fast, visual, distraction-free quizzes. Test your personality and mind in under 2 minutes.",
+        placeholder: "🔍 Search quizzes by title or tag...",
+        allTag: "✨ All",
+        cta: "Start Quiz →",
+        noResults: "No quizzes found for this search."
+      },
+      es: {
+        heroTitle: "Descubre Quién Eres Realmente",
+        heroSubtitle: "Quizzes rápidos, visuales y sin pausas. Pon a prueba tu personalidad en 2 minutos.",
+        placeholder: "🔍 Buscar quizzes por título o tag...",
+        allTag: "✨ Todos",
+        cta: "Comenzar Quiz →",
+        noResults: "No se encontraron quizzes para esta búsqueda."
+      }
+    };
+
+    function updateHomeLanguage(lang) {
+      const texts = I18N_HOME[lang] || I18N_HOME.pt;
+      if (heroTitle) heroTitle.textContent = texts.heroTitle;
+      if (heroSubtitle) heroSubtitle.textContent = texts.heroSubtitle;
+      if (searchInput) searchInput.placeholder = texts.placeholder;
+
+      const allTagBtn = document.querySelector('.tag-filter-btn[data-tag="all"]');
+      if (allTagBtn) allTagBtn.textContent = texts.allTag;
+
+      cards.forEach(card => {
+        const titleEl = card.querySelector('.quiz-card-title');
+        const descEl = card.querySelector('.quiz-card-desc');
+        const ctaEl = card.querySelector('.card-cta-btn');
+
+        const title = card.getAttribute(`data-title-${lang}`) || card.getAttribute('data-title-pt') || card.getAttribute('data-title-en');
+        const desc = card.getAttribute(`data-desc-${lang}`) || card.getAttribute('data-desc-pt') || card.getAttribute('data-desc-en');
+
+        if (titleEl && title) titleEl.textContent = title;
+        if (descEl && desc) descEl.textContent = desc;
+        if (ctaEl) ctaEl.textContent = texts.cta;
+      });
+    }
+
+    let activeTag = 'all';
+
+    function filterCards() {
+      const query = (searchInput.value || '').toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        const title = (card.querySelector('.quiz-card-title').textContent || '').toLowerCase();
+        const desc = (card.querySelector('.quiz-card-desc').textContent || '').toLowerCase();
+
+        const matchesTag = (activeTag === 'all') || tags.includes(activeTag);
+        const matchesQuery = !query || title.includes(query) || desc.includes(query) || tags.includes(query);
+
+        if (matchesTag && matchesQuery) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', filterCards);
+    }
+
+    tagButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tagButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTag = btn.getAttribute('data-tag');
+        filterCards();
+      });
+    });
+
+    window.addEventListener('quiztide:langchange', (e) => {
+      updateHomeLanguage(e.detail.lang || 'pt');
+    });
+
+    // Initial language setup
+    updateHomeLanguage(window.CURRENT_LANG || 'pt');
+  })();
+</script>

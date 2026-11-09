@@ -4,11 +4,9 @@ description: "Discover your true archetype, personality traits, and test your kn
 url: "https://quiztide.github.io"
 baseurl: ""
 
-# Collections
-collections:
-  quizzes:
-    output: true
-    permalink: /quizzes/:name/
+# Supported site languages
+languages: ["pt", "en", "es"]
+default_lang: "pt"
 
 # Plugins supported by GitHub Pages
 plugins:
@@ -23,8 +21,7 @@ kramdown:
 # Defaults
 defaults:
   - scope:
-      path: ""
-      type: "quizzes"
+      path: "quizzes"
     values:
       layout: "quiz"
 

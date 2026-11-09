@@ -5,13 +5,29 @@ layout: default
 <article class="quiz-article container">
   <!-- Quiz Header -->
   <header class="quiz-header">
-    <div class="quiz-meta-badge">{{ page.category | default: "Personality" }}</div>
-    <h1 class="quiz-title">{{ page.title }}</h1>
-    <p class="quiz-subtitle">{{ page.description }}</p>
+    {% if page.cover_image %}
+    <div class="quiz-cover-wrapper">
+      <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title }}" class="quiz-cover-img" id="quiz-cover-img">
+    </div>
+    {% endif %}
+
+    <!-- Tags List -->
+    {% if page.tags %}
+    <div class="quiz-tags-wrapper">
+      {% for tag in page.tags %}
+      <span class="quiz-tag-pill">#{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="quiz-meta-badge" id="quiz-category">Personality</div>
+    <h1 class="quiz-title" id="quiz-title">Loading...</h1>
+    <p class="quiz-subtitle" id="quiz-subtitle"></p>
+    
     <div class="quiz-info-bar">
-      <span>⏱️ 2 min test</span>
-      <span>📊 {{ page.questions.size }} questions</span>
-      <span>🌐 Instant result</span>
+      <span id="quiz-time-badge">⏱️ 2 min</span>
+      <span id="quiz-count-badge">📊 5 questions</span>
+      <span>🌐 Multilingual</span>
     </div>
   </header>
 
@@ -20,7 +36,7 @@ layout: default
     <!-- Progress Bar -->
     <div class="quiz-progress-wrapper">
       <div class="quiz-progress-info">
-        <span id="quiz-progress-text">Question 1 of {{ page.questions.size }}</span>
+        <span id="quiz-progress-text">Question 1</span>
         <span id="quiz-progress-percent">0%</span>
       </div>
       <div class="quiz-progress-bar">
@@ -30,30 +46,38 @@ layout: default
 
     <!-- Active Question Card -->
     <div id="quiz-question-card" class="quiz-question-card">
-      <h2 id="quiz-question-title" class="question-title">Loading question...</h2>
-      <div id="quiz-options-list" class="options-grid"></div>
+      <div id="quiz-question-img-wrapper" class="quiz-question-img-wrapper" style="display: none;">
+        <img id="quiz-question-img" src="" alt="Question visual" class="quiz-question-img">
+      </div>
+      <h2 id="quiz-question-title" class="question-title"></h2>
+      <div id="quiz-options-list" class="options-container"></div>
     </div>
 
     <!-- Quiz Result Screen (Initially Hidden) -->
     <div id="quiz-result-card" class="quiz-result-card" style="display: none;">
-      <div class="result-celebration">🎉 Result Unlocked!</div>
+      <div class="result-celebration" id="result-celebration">🎉 Resultado Revelado!</div>
+      
+      <div id="result-img-wrapper" class="result-img-wrapper" style="display: none;">
+        <img id="result-img" src="" alt="Result" class="result-img">
+      </div>
       <div id="result-badge" class="result-badge">🌊</div>
-      <h2 id="result-title" class="result-title">Calculating your vibe...</h2>
-      <p id="result-description" class="result-description">Please wait a second.</p>
+      
+      <h2 id="result-title" class="result-title"></h2>
+      <p id="result-description" class="result-description"></p>
 
       <!-- Share Actions -->
       <div class="result-share-actions">
-        <button id="btn-share-whatsapp" class="btn btn-whatsapp">
-          <span>📲 Share on WhatsApp</span>
+        <button id="btn-share-whatsapp" class="btn btn-whatsapp" type="button">
+          <span>📲 WhatsApp</span>
         </button>
-        <button id="btn-copy-link" class="btn btn-copy">
-          <span>📋 Copy Result Link</span>
+        <button id="btn-copy-link" class="btn btn-copy" type="button">
+          <span id="btn-copy-text">📋 Copiar Link</span>
         </button>
-        <button id="btn-restart-quiz" class="btn btn-outline">
-          <span>🔄 Retake Quiz</span>
+        <button id="btn-restart-quiz" class="btn btn-outline" type="button">
+          <span id="btn-restart-text">🔄 Refazer Teste</span>
         </button>
       </div>
-      <div id="copy-feedback" class="copy-feedback" style="display: none;">Link copied to clipboard!</div>
+      <div id="copy-feedback" class="copy-feedback" style="display: none;">Link copiado com sucesso!</div>
     </div>
   </div>
 
@@ -65,13 +89,14 @@ layout: default
   {% endif %}
 </article>
 
-<!-- Inject Quiz Data into Vanilla JS Engine -->
+<!-- Inject Multilingual Quiz Data into JS Engine -->
 <script>
   window.QUIZ_DATA = {
-    title: {{ page.title | jsonify }},
+    slug: {{ page.slug | jsonify }},
     url: {{ page.url | absolute_url | jsonify }},
-    questions: {{ page.questions | jsonify }},
-    results: {{ page.results | jsonify }}
+    tags: {{ page.tags | jsonify }},
+    cover_image: {{ page.cover_image | relative_url | jsonify }},
+    i18n: {{ page.i18n | jsonify }}
   };
 </script>
 <script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>

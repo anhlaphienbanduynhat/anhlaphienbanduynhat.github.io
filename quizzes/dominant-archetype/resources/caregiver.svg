@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#d1fae5" rx="16"/>
+  <!-- Guardian / Leaf / Shield Icon -->
+  <g transform="translate(100, 100)">
+    <path d="M0,-45 C25,-45 42,-35 42,0 C42,32 18,48 0,55 C-18,48 -42,32 -42,0 C-42,-35 -25,-45 0,-45 Z" fill="url(#emeraldGrad)"/>
+    <!-- Heart in center -->
+    <path d="M0,18 C-18,2 -22,-12 -12,-20 C-5,-25 0,-18 0,-14 C0,-18 5,-25 12,-20 C22,-12 18,2 0,18 Z" fill="#ffffff"/>
+  </g>
+</svg>
