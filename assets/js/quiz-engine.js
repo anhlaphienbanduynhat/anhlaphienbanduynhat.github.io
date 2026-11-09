@@ -90,7 +90,7 @@
         return data;
       })
       .catch(function() {
-        var fallbackLang = targetLang === 'pt' ? 'en' : 'pt';
+        var fallbackLang = (window.i18next && i18next.options && i18next.options.fallbackLng && i18next.options.fallbackLng[0]) || 'pt';
         var fallbackUrl = baseUrl + 'locales/' + fallbackLang + '.json';
 
         return fetch(fallbackUrl)
@@ -102,9 +102,7 @@
             currentLang = fallbackLang;
             quizData = fallbackData;
             if (quizLangNotice) {
-              quizLangNotice.textContent = targetLang === 'en' 
-                ? 'This assessment is not available in English yet. Displaying in Portuguese.'
-                : 'Esta avaliação ainda não está disponível no idioma selecionado.';
+              quizLangNotice.textContent = (window.i18next && i18next.t('lang_not_available')) || '';
               quizLangNotice.style.display = 'block';
             }
             return fallbackData;
@@ -349,9 +347,8 @@
 
       var qTitle = quizData.title || '';
       var rTitle = winner.title || '';
-      var shareText = currentLang === 'en'
-        ? 'I took the "' + qTitle + '" assessment on Quiztide and got: ' + rTitle + '! Discover yours: ' + window.location.href
-        : 'Fiz a avaliação "' + qTitle + '" no Quiztide e meu resultado foi: ' + rTitle + '! Descubra o seu: ' + window.location.href;
+      var tmpl = (window.i18next && i18next.t('share_msg')) || 'Quiztide: {title} - {result}';
+      var shareText = tmpl.replace('{title}', qTitle).replace('{result}', rTitle) + ' ' + window.location.href;
 
       var url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareText);
       window.open(url, '_blank');

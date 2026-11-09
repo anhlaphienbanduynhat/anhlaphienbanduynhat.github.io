@@ -21,30 +21,53 @@
 
   {% seo %}
 
-  <!-- i18n Global Dictionary -->
+  <!-- i18n Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/i18next@23.7.11/dist/umd/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/loc-i18next@0.1.6/dist/umd/loc-i18next.min.js"></script>
+
+  <!-- i18n Global Setup -->
   <script>
-    window.SITE_I18N = {{ site.data.i18n | jsonify }};
+    window.LANGUAGES = {{ site.data.languages | jsonify }};
     window.CURRENT_LANG = localStorage.getItem('quiztide_lang') || 'pt';
+
+    window.initI18n = function(callback) {
+      i18next.init({
+        lng: window.CURRENT_LANG,
+        fallbackLng: 'pt',
+        resources: {
+          pt: { translation: {{ site.data.i18n.pt | jsonify }} },
+          en: { translation: {{ site.data.i18n.en | jsonify }} },
+          es: { translation: {{ site.data.i18n.es | jsonify }} }
+        }
+      }, function() {
+        window.localize = locI18next.init(i18next);
+        window.localize('body');
+        window.updateLangDropdown(i18next.language);
+        if (typeof callback === 'function') callback();
+      });
+    };
 
     window.setLanguage = function(lang) {
       window.CURRENT_LANG = lang;
       localStorage.setItem('quiztide_lang', lang);
       document.documentElement.lang = lang;
 
+      i18next.changeLanguage(lang, function() {
+        window.localize('body');
+        window.updateLangDropdown(lang);
+        window.dispatchEvent(new CustomEvent('quiztide:langchange', { detail: { lang: lang } }));
+      });
+    };
+
+    window.updateLangDropdown = function(lang) {
+      var l = (window.LANGUAGES && window.LANGUAGES[lang]) || (window.LANGUAGES && window.LANGUAGES.pt);
+      if (!l) return;
       var flagImg = document.getElementById('current-flag-img');
       var langName = document.getElementById('current-lang-name');
-      var flagMap = {
-        pt: { flag: '{{ "/assets/images/flags/br.svg" | relative_url }}', name: 'Português' },
-        en: { flag: '{{ "/assets/images/flags/us.svg" | relative_url }}', name: 'English' },
-        es: { flag: '{{ "/assets/images/flags/es.svg" | relative_url }}', name: 'Español' }
-      };
-      if (flagImg && flagMap[lang]) flagImg.src = flagMap[lang].flag;
-      if (langName && flagMap[lang]) langName.textContent = flagMap[lang].name;
-
+      if (flagImg) flagImg.src = l.flag;
+      if (langName) langName.textContent = l.name;
       var dropdown = document.getElementById('lang-dropdown');
       if (dropdown) dropdown.removeAttribute('open');
-
-      window.dispatchEvent(new CustomEvent('quiztide:langchange', { detail: { lang: lang } }));
     };
   </script>
 </head>
@@ -59,9 +82,9 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      window.setLanguage(window.CURRENT_LANG);
+      window.initI18n();
 
-      // Close dropdown when clicking outside
+      // Close dropdown on click outside
       document.addEventListener('click', function(e) {
         var dropdown = document.getElementById('lang-dropdown');
         if (dropdown && dropdown.hasAttribute('open') && !dropdown.contains(e.target)) {

@@ -1,0 +1,9 @@
+pt:
+  name: Português
+  flag: /assets/images/flags/br.svg
+en:
+  name: English
+  flag: /assets/images/flags/us.svg
+es:
+  name: Español
+  flag: /assets/images/flags/es.svg
