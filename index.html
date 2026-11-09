@@ -11,15 +11,15 @@ title: "Home"
 
   <!-- Live Search Box -->
   <div class="search-box-wrapper">
-    <input type="text" id="quiz-search-input" placeholder="🔍" class="search-input">
+    <input type="text" id="quiz-search-input" placeholder="🔍" class="search-input" aria-label="Search quizzes">
   </div>
 
   <!-- Dynamic Localized Tag Filter Bar -->
-  <div class="tag-filter-bar" id="tag-filter-bar"></div>
+  <div class="tag-filter-bar" id="tag-filter-bar" role="toolbar" aria-label="Tag filters"></div>
 </div>
 
 <!-- Quizzes Grid -->
-<section class="container">
+<section class="container" aria-label="Quiz catalog">
   <div class="quiz-grid" id="quiz-catalog-grid">
     <div class="catalog-loading" id="catalog-loading">Carregando quizzes...</div>
   </div>
@@ -55,6 +55,13 @@ title: "Home"
     var activeTag = 'all';
     var loadedQuizzes = [];
 
+    function calculateEstMinutes(questionCount) {
+      if (questionCount <= 3) return 1;
+      if (questionCount <= 7) return 2;
+      if (questionCount <= 12) return 3;
+      return Math.ceil(questionCount * 0.35);
+    }
+
     function getUI() {
       var i18n = window.SITE_I18N || {};
       return i18n[currentLang] || i18n.pt || {};
@@ -86,7 +93,7 @@ title: "Home"
             if (!res.ok) return null;
             return res.json().then(function(data) {
               var qCount = (data.questions || []).length;
-              var estMinutes = Math.max(1, Math.ceil(qCount * 0.4));
+              var estMinutes = calculateEstMinutes(qCount);
               return {
                 url: url,
                 title: data.title,
@@ -186,7 +193,7 @@ title: "Home"
           }
 
           var questionsLabel = ui.questions_label || 'questões';
-          var metaStats = '📊 ' + q.questionCount + ' ' + questionsLabel + ' · ⏱️ ~' + q.estMinutes + ' min';
+          var metaStats = '📊 <span class="tabular-nums">' + q.questionCount + '</span> ' + questionsLabel + ' · ⏱️ ~<span class="tabular-nums">' + q.estMinutes + '</span> min';
 
           card.innerHTML = '<a href="' + q.url + '" class="card-link-wrapper">' +
             coverHtml +

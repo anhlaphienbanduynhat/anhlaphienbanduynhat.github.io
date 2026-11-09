@@ -8,7 +8,7 @@
   <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} - {{ site.tagline }}{% endif %}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
 
-  <!-- Main Stylesheet -->
+  <!-- Main Stylesheet (Quiet, Editorial, High-Contrast UI) -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   
   <!-- Favicon -->
@@ -26,19 +26,38 @@
       localStorage.setItem('quiztide_lang', lang);
       document.documentElement.lang = lang;
 
-      // Update button active states
+      // Update segmented pill active states
       document.querySelectorAll('.lang-btn').forEach(function(btn) {
         btn.classList.toggle('active', btn.dataset.lang === lang);
       });
 
-      // Update global nav texts
-      var t = window.SITE_I18N[lang] || window.SITE_I18N.pt;
+      // Update global navigation & footer chrome
+      var t = window.SITE_I18N[lang] || window.SITE_I18N.pt || {};
+      
       var navHome = document.getElementById('nav-link-home');
       var navAbout = document.getElementById('nav-link-about');
       if (navHome) navHome.textContent = t.nav_home;
       if (navAbout) navAbout.textContent = t.nav_about;
 
-      // Dispatch event for active page (home or quiz)
+      var footerDesc = document.getElementById('footer-desc');
+      var footerNavHeading = document.getElementById('footer-nav-heading');
+      var footerNavHome = document.getElementById('footer-nav-home');
+      var footerNavAbout = document.getElementById('footer-nav-about');
+      var footerNavContact = document.getElementById('footer-nav-contact');
+      var footerLegalHeading = document.getElementById('footer-legal-heading');
+      var footerNavPrivacy = document.getElementById('footer-nav-privacy');
+      var footerNavTerms = document.getElementById('footer-nav-terms');
+
+      if (footerDesc) footerDesc.textContent = t.site_tagline;
+      if (footerNavHeading) footerNavHeading.textContent = t.nav_heading;
+      if (footerNavHome) footerNavHome.textContent = t.nav_home;
+      if (footerNavAbout) footerNavAbout.textContent = t.nav_about;
+      if (footerNavContact) footerNavContact.textContent = t.nav_contact;
+      if (footerLegalHeading) footerLegalHeading.textContent = t.legal_heading;
+      if (footerNavPrivacy) footerNavPrivacy.textContent = t.nav_privacy;
+      if (footerNavTerms) footerNavTerms.textContent = t.nav_terms;
+
+      // Dispatch reactive event for current view
       window.dispatchEvent(new CustomEvent('quiztide:langchange', { detail: { lang: lang } }));
     };
   </script>
@@ -51,8 +70,8 @@
     <div class="ad-placeholder"><span>Advertisement</span></div>
   </div>
 
-  <!-- Main Page Content -->
-  <main class="main-content">
+  <!-- Main Content Surface -->
+  <main class="main-content" id="main-content">
     {{ content }}
   </main>
 

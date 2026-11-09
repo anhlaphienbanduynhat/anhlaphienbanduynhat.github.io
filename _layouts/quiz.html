@@ -10,7 +10,7 @@ layout: default
     </div>
 
     <!-- Tags List -->
-    <div class="quiz-tags-wrapper" id="quiz-tags-wrapper"></div>
+    <div class="quiz-tags-wrapper" id="quiz-tags-wrapper" aria-label="Tags"></div>
 
     <div class="quiz-meta-badge" id="quiz-category">Quiz</div>
     <h1 class="quiz-title" id="quiz-title">Loading...</h1>
@@ -23,7 +23,7 @@ layout: default
     </div>
 
     <!-- Language Notice (if quiz not available in selected lang) -->
-    <div id="quiz-lang-notice" class="quiz-lang-notice" style="display: none;"></div>
+    <div id="quiz-lang-notice" class="quiz-lang-notice" style="display: none;" role="alert"></div>
   </header>
 
   <!-- Quiz Interactive Stage -->
@@ -32,9 +32,9 @@ layout: default
     <div class="quiz-progress-wrapper">
       <div class="quiz-progress-info">
         <span id="quiz-progress-text"></span>
-        <span id="quiz-progress-percent">0%</span>
+        <span id="quiz-progress-percent" class="tabular-nums">0%</span>
       </div>
-      <div class="quiz-progress-bar">
+      <div class="quiz-progress-bar" role="progressbar" id="quiz-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div id="quiz-progress-fill" class="quiz-progress-fill" style="width: 0%;"></div>
       </div>
     </div>
@@ -45,17 +45,17 @@ layout: default
         <img id="quiz-question-img" src="" alt="Question visual" class="quiz-question-img">
       </div>
       <h2 id="quiz-question-title" class="question-title"></h2>
-      <div id="quiz-options-list" class="options-container"></div>
+      <div id="quiz-options-list" class="options-container" role="group" aria-label="Question options"></div>
     </div>
 
     <!-- Quiz Result Screen (Initially Hidden) -->
-    <div id="quiz-result-card" class="quiz-result-card" style="display: none;">
+    <div id="quiz-result-card" class="quiz-result-card" style="display: none;" role="region" aria-live="polite">
       <div class="result-celebration" id="result-celebration">🎉 Resultado Revelado!</div>
       
       <div id="result-img-wrapper" class="result-img-wrapper" style="display: none;">
-        <img id="result-img" src="" alt="Result" class="result-img">
+        <img id="result-img" src="" alt="Result illustration" class="result-img">
       </div>
-      <div id="result-badge" class="result-badge">🌊</div>
+      <div id="result-badge" class="result-badge" aria-hidden="true">🌊</div>
       
       <h2 id="result-title" class="result-title"></h2>
       <p id="result-description" class="result-description"></p>
@@ -72,7 +72,7 @@ layout: default
           <span id="btn-restart-text">🔄 Refazer Teste</span>
         </button>
       </div>
-      <div id="copy-feedback" class="copy-feedback" style="display: none;">Link copiado com sucesso!</div>
+      <div id="copy-feedback" class="copy-feedback" style="display: none;" role="status">Link copiado com sucesso!</div>
     </div>
   </div>
 </article>

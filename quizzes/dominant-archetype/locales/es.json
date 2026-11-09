@@ -1,6 +1,6 @@
 {
   "title": "¿Cuál es tu Arquetipo Dominante de Personalidad?",
-  "subtitle": "Responde 5 preguntas intuitivas para descubrir el patrón psicológico que guía tus decisiones y fortalezas.",
+  "subtitle": "Descubre el patrón psicológico que guía tus decisiones, instintos y fortalezas naturales.",
   "category": "Personalidad",
   "tags": ["personalidad", "psicología", "autoconocimiento"],
   "cover": "resources/cover-en.svg",
@@ -49,32 +49,41 @@
         { "type": "thinker", "image": "resources/thinker.svg", "text": "Consejos lúcidos, imparciales y profundos." },
         { "type": "caregiver", "image": "resources/caregiver.svg", "text": "Empatía, escucha atenta y un espacio seguro." }
       ]
+    },
+    {
+      "text": "En un gran proyecto en equipo, ¿qué rol te resulta más natural?",
+      "options": [
+        { "type": "leader", "image": "resources/leader.svg", "text": "El estratega que fija objetivos, plazos y exige resultados." },
+        { "type": "creator", "image": "resources/creator.svg", "text": "El diseñador de soluciones que propone ideas disruptivas." },
+        { "type": "thinker", "image": "resources/thinker.svg", "text": "El analista crítico que evalúa riesgos y valida premisas." },
+        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "El conector empático que cuida la motivación y el clima humano." }
+      ]
     }
   ],
   "results": {
     "leader": {
       "badge": "👑",
       "image": "resources/leader.svg",
-      "title": "El Soberano / Líder",
-      "description": "Te destacas por tu claridad y liderazgo natural. No temes tomar decisiones difíciles y sabes cómo transformar la incertidumbre en orden y resultados."
+      "title": "El Comandante / Soberano",
+      "description": "Destacas por tu claridad, proactividad y liderazgo natural. No temes tomar decisiones difíciles y sabes cómo transformar la incertidumbre en orden y resultados concretos."
     },
     "creator": {
       "badge": "🎨",
       "image": "resources/creator.svg",
       "title": "El Visionario / Creador",
-      "description": "Ves el mundo como un lienzo de posibilidades. La rutina te desmotiva, pero con libertad produces soluciones originales que inspiran a todos."
+      "description": "Tu mente descubre oportunidades donde otros solo ven límites. La monotonía te desmotiva, pero cuando tienes libertad, creas soluciones originales que inspiran a todos."
     },
     "thinker": {
       "badge": "🦉",
       "image": "resources/thinker.svg",
       "title": "El Sabio / Pensador",
-      "description": "Te impulsa la búsqueda de la verdad y el pensamiento lúcido. Tienes el don de simplificar ideas complejas con sabiduría y profundidad."
+      "description": "Te guía la búsqueda de la verdad, el rigor lógico y la claridad mental. Valoras el conocimiento profundo y posees el raro don de clarificar lo complejo con sabiduría."
     },
     "caregiver": {
       "badge": "🌿",
       "image": "resources/caregiver.svg",
       "title": "El Guardián / Protector",
-      "description": "Tu superpoder es la empatía y la inteligencia emocional. Creas puentes, percibes lo que otros ignoran y brindas estabilidad a tu entorno."
+      "description": "Tu mayor fortaleza es la inteligencia emocional, la empatía y la lealtad incondicional. Mantienes al equipo cohesionado y creas espacios de confianza y calma."
     }
   }
 }

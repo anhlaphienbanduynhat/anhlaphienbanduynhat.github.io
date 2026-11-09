@@ -49,6 +49,13 @@
   var btnRestartText = document.getElementById('btn-restart-text');
   var copyFeedback = document.getElementById('copy-feedback');
 
+  function calculateEstMinutes(questionCount) {
+    if (questionCount <= 3) return 1;
+    if (questionCount <= 7) return 2;
+    if (questionCount <= 12) return 3;
+    return Math.ceil(questionCount * 0.35);
+  }
+
   function getUI(lang) {
     var i18n = window.SITE_I18N || {};
     return i18n[lang] || i18n.pt || {
@@ -109,11 +116,11 @@
     if (quizSubtitle) quizSubtitle.textContent = quizData.subtitle || '';
     if (quizCategory) quizCategory.textContent = quizData.category || 'Quiz';
 
-    // Completely dynamic question count & time estimation!
+    // Flexible Dynamic Question Count & Duration Estimation
     var total = (quizData.questions || []).length;
-    var estMinutes = Math.max(1, Math.ceil(total * 0.4));
-    if (quizTimeBadge) quizTimeBadge.textContent = '⏱️ ~' + estMinutes + ' min';
-    if (quizCountBadge) quizCountBadge.textContent = '📊 ' + total + ' ' + (ui.questions_label || 'questões');
+    var estMinutes = calculateEstMinutes(total);
+    if (quizTimeBadge) quizTimeBadge.innerHTML = '⏱️ ~<span class="tabular-nums">' + estMinutes + '</span> min';
+    if (quizCountBadge) quizCountBadge.innerHTML = '📊 <span class="tabular-nums">' + total + '</span> ' + (ui.questions_label || 'questões');
 
     // Localized Cover Image
     if (quizData.cover && quizCoverImg && quizCoverWrapper) {
@@ -145,8 +152,9 @@
     var currentNum = index + 1;
     var pct = Math.round((index / totalQuestions) * 100);
 
-    progressText.textContent = (ui.question_of || 'Question') + ' ' + currentNum + ' ' + (ui.of || 'of') + ' ' + totalQuestions;
-    progressPercent.textContent = pct + '%';
+    // Tabular numbers for clean layout without jitter (ui-skills)
+    progressText.innerHTML = (ui.question_of || 'Pergunta') + ' <span class="tabular-nums">' + currentNum + '</span> ' + (ui.of || 'de') + ' <span class="tabular-nums">' + totalQuestions + '</span>';
+    progressPercent.innerHTML = '<span class="tabular-nums">' + pct + '%</span>';
     progressFill.style.width = pct + '%';
 
     // Optional Question Image
@@ -193,8 +201,11 @@
     allBtns.forEach(function(b) { b.classList.add('disabled'); });
     btnElement.classList.add('selected');
 
-    scores[resultType] = (scores[resultType] || 0) + 1;
+    if (resultType) {
+      scores[resultType] = (scores[resultType] || 0) + 1;
+    }
 
+    // Smooth 220ms transition for tactile feedback (ui-skills scale-on-press)
     setTimeout(function() {
       currentIndex++;
       var questions = (quizData && quizData.questions) ? quizData.questions : [];
@@ -203,7 +214,7 @@
       } else {
         showResults();
       }
-    }, 280);
+    }, 220);
   }
 
   function showResults() {
@@ -211,19 +222,24 @@
     var ui = getUI(currentLang);
     var results = (quizData && quizData.results) ? quizData.results : {};
 
-    progressText.textContent = ui.completed;
-    progressPercent.textContent = '100%';
+    progressText.innerHTML = ui.completed;
+    progressPercent.innerHTML = '<span class="tabular-nums">100%</span>';
     progressFill.style.width = '100%';
 
+    // Robust tie-breaking logic
     if (!winningKey) {
       var maxScore = -1;
-      winningKey = Object.keys(results)[0];
+      var topKeys = [];
       for (var key in scores) {
         if (scores[key] > maxScore) {
           maxScore = scores[key];
-          winningKey = key;
+          topKeys = [key];
+        } else if (scores[key] === maxScore) {
+          topKeys.push(key);
         }
       }
+      // If there's a tie, choose deterministically
+      winningKey = topKeys.length > 0 ? topKeys[0] : Object.keys(results)[0];
     }
 
     var winner = results[winningKey] || Object.values(results)[0];

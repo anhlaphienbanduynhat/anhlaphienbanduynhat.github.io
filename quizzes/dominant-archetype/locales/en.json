@@ -1,6 +1,6 @@
 {
   "title": "What Is Your Dominant Personality Archetype?",
-  "subtitle": "Answer 5 intuitive questions to uncover the psychological pattern driving your decisions and natural strengths.",
+  "subtitle": "Uncover the psychological pattern driving your decisions, instincts, and natural strengths.",
   "category": "Personality",
   "tags": ["personality", "psychology", "self-discovery"],
   "cover": "resources/cover-en.svg",
@@ -49,32 +49,41 @@
         { "type": "thinker", "image": "resources/thinker.svg", "text": "Wisdom, clarity, and objective perspective." },
         { "type": "caregiver", "image": "resources/caregiver.svg", "text": "Empathy, loyalty, and a safe place to speak freely." }
       ]
+    },
+    {
+      "text": "In a major collaborative team project, which role feels second nature to you?",
+      "options": [
+        { "type": "leader", "image": "resources/leader.svg", "text": "The strategist setting milestones, driving focus, and securing deadlines." },
+        { "type": "creator", "image": "resources/creator.svg", "text": "The solutions architect pitching bold concepts and creative directions." },
+        { "type": "thinker", "image": "resources/thinker.svg", "text": "The critical analyst stress-testing assumptions and mitigating risks." },
+        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "The culture champion maintaining morale, trust, and team cohesion." }
+      ]
     }
   ],
   "results": {
     "leader": {
       "badge": "👑",
       "image": "resources/leader.svg",
-      "title": "The Sovereign / Leader",
-      "description": "You thrive on clarity, direction, and decisive action. You naturally take ownership of situations, hold high standards, and inspire confidence in moments of uncertainty."
+      "title": "The Commander / Sovereign",
+      "description": "You are recognized for clarity, decisiveness, and natural command. Unafraid of difficult choices, you turn confusion and ambiguity into structure and concrete results."
     },
     "creator": {
       "badge": "🎨",
       "image": "resources/creator.svg",
       "title": "The Visionary / Creator",
-      "description": "You view the world as a canvas of possibilities. Routine stifles you, but when given freedom, you innovate solutions and expressions that leave a lasting mark."
+      "description": "Your mind spots possibility where others see constraints. While monotonous routines drain you, genuine autonomy unleashes breakthrough ideas that inspire everyone."
     },
     "thinker": {
       "badge": "🦉",
       "image": "resources/thinker.svg",
-      "title": "The Sage / Truth-Seeker",
-      "description": "You are driven by understanding, depth, and clarity. You value truth over popularity and possess a natural gift for synthesizing complex ideas into actionable wisdom."
+      "title": "The Sage / Thinker",
+      "description": "You are driven by truth, objective rigor, and deep understanding. You possess the rare gift of distilling intricate concepts into clear, actionable wisdom."
     },
     "caregiver": {
       "badge": "🌿",
       "image": "resources/caregiver.svg",
       "title": "The Guardian / Caregiver",
-      "description": "Your superpower is empathy, community, and genuine emotional intelligence. You build bridges, notice what others miss, and create stability wherever you go."
+      "description": "Your greatest strength is emotional intelligence, empathy, and steadfast loyalty. You keep groups bonded, notice what others miss, and cultivate safety."
     }
   }
 }
