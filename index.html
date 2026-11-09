@@ -3,39 +3,49 @@ layout: default
 title: "Avaliações"
 ---
 
-<!-- Editorial Header -->
-<header class="catalog-header">
-  <h1 class="catalog-title" id="home-hero-title">Avaliações precisas de personalidade e tomada de decisão</h1>
-  <p class="catalog-lead" id="home-hero-subtitle">Testes objetivos fundamentados em psicologia analítica e comportamental. Sem anúncios intrusivos, sem cadastro e com análise imediata.</p>
-</header>
-
-<!-- Filter & Search Toolbar -->
-<section class="toolbar-section" aria-label="Filtro de avaliações">
-  <div class="search-wrap">
-    <svg class="search-glyph" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="11" cy="11" r="8"></circle>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-    <input type="text" id="quiz-search-input" placeholder="Buscar por título, tag ou palavra-chave..." class="search-field" aria-label="Buscar avaliações">
-    <kbd class="search-kbd" title="Pressione / para buscar">/</kbd>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span id="hero-badge-text">Avaliações Psicométricas & Comportamentais</span>
+    </div>
+    <h1 class="hero-title" id="home-hero-title">Descubra seus traços, arquétipos e estilo de decisão</h1>
+    <p class="hero-subtitle" id="home-hero-subtitle">Testes rápidos e objetivos fundamentados em psicologia analítica. Sem anúncios intrusivos, sem cadastro obrigatório e com análise imediata.</p>
   </div>
-
-  <div class="filter-pills" id="tag-filter-bar" role="toolbar" aria-label="Filtrar por tema"></div>
 </section>
 
-<!-- Assessments Feed -->
-<section class="feed-section" aria-label="Lista de avaliações">
-  <div class="feed-meta">
-    <span class="feed-counter" id="catalog-count-label">Carregando avaliações...</span>
-  </div>
+<!-- Filter & Search Toolbar -->
+<section class="toolbar-section">
+  <div class="toolbar-container">
+    <div class="search-box">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="quiz-search-input" placeholder="Buscar por título, tag ou tema..." class="search-input" aria-label="Buscar avaliações">
+      <kbd class="search-shortcut" title="Pressione / para buscar">/</kbd>
+    </div>
 
-  <div class="assessment-list" id="quiz-catalog-collection">
-    <div class="loading-state" id="catalog-loading">Carregando catálogo...</div>
+    <div class="filter-chips-bar" id="tag-filter-bar" role="toolbar" aria-label="Filtrar por tema"></div>
   </div>
+</section>
 
-  <div id="no-results-msg" class="empty-state" style="display: none;">
-    <p id="no-results-text" class="empty-text">Nenhuma avaliação encontrada.</p>
-    <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Limpar busca</button>
+<!-- Cards Catalog Grid -->
+<section class="catalog-section" aria-label="Catálogo de avaliações">
+  <div class="catalog-container">
+    <div class="catalog-meta">
+      <span class="catalog-counter" id="catalog-count-label">Carregando avaliações...</span>
+    </div>
+
+    <div class="quiz-grid" id="quiz-catalog-collection">
+      <div class="loading-state" id="catalog-loading">Carregando catálogo...</div>
+    </div>
+
+    <div id="no-results-msg" class="empty-state" style="display: none;">
+      <p id="no-results-text" class="empty-text">Nenhuma avaliação encontrada para os critérios selecionados.</p>
+      <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Limpar filtros</button>
+    </div>
   </div>
 </section>
 
@@ -92,7 +102,7 @@ title: "Avaliações"
 
       if (heroTitle) heroTitle.textContent = ui.hero_title || '';
       if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
-      if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Buscar por título ou tag...';
+      if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Buscar por título ou tema...';
       if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhuma avaliação encontrada.';
 
       var folders = window.QUIZ_FOLDERS || [];
@@ -151,10 +161,10 @@ title: "Avaliações"
 
       var allBtn = document.createElement('button');
       allBtn.type = 'button';
-      allBtn.className = 'pill-btn' + (activeTag === 'all' ? ' active' : '');
+      allBtn.className = 'chip-btn' + (activeTag === 'all' ? ' active' : '');
       allBtn.textContent = (ui.all_tags || 'Todos');
       allBtn.addEventListener('click', function() {
-        document.querySelectorAll('.pill-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.chip-btn').forEach(function(b) { b.classList.remove('active'); });
         allBtn.classList.add('active');
         activeTag = 'all';
         renderCards();
@@ -164,10 +174,10 @@ title: "Avaliações"
       tags.forEach(function(tag) {
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'pill-btn' + (activeTag === tag ? ' active' : '');
+        btn.className = 'chip-btn' + (activeTag === tag ? ' active' : '');
         btn.textContent = '#' + tag;
         btn.addEventListener('click', function() {
-          document.querySelectorAll('.pill-btn').forEach(function(b) { b.classList.remove('active'); });
+          document.querySelectorAll('.chip-btn').forEach(function(b) { b.classList.remove('active'); });
           btn.classList.add('active');
           activeTag = tag;
           renderCards();
@@ -197,21 +207,30 @@ title: "Avaliações"
         if (matchesTag && matchesQuery) {
           visibleCount++;
           var card = document.createElement('article');
-          card.className = 'assessment-card';
+          card.className = 'quiz-card';
 
           var questionsLabel = ui.questions_label || 'questões';
-          var metaText = q.questionCount + ' ' + questionsLabel + ' · ~' + q.estMinutes + ' min · ' + q.category;
+          var coverHtml = '';
+          if (q.cover) {
+            coverHtml = '<div class="card-visual">' +
+              '<img src="' + q.cover + '" alt="" class="card-cover-img" loading="lazy">' +
+              '<span class="card-tag-badge">' + q.category + '</span>' +
+            '</div>';
+          }
 
-          card.innerHTML = '<a href="' + q.url + '" class="card-anchor">' +
-            '<div class="card-content">' +
-              '<div class="card-header-line">' +
-                '<span class="card-meta tabular-nums">' + metaText + '</span>' +
+          card.innerHTML = '<a href="' + q.url + '" class="quiz-card-link">' +
+            coverHtml +
+            '<div class="card-body">' +
+              '<div class="card-stats-row">' +
+                '<span class="stat-badge tabular-nums">⏱ ~' + q.estMinutes + ' min</span>' +
+                '<span class="stat-dot">·</span>' +
+                '<span class="stat-badge tabular-nums">' + q.questionCount + ' ' + questionsLabel + '</span>' +
               '</div>' +
               '<h2 class="card-title">' + q.title + '</h2>' +
               '<p class="card-desc">' + q.subtitle + '</p>' +
-              '<div class="card-action">' +
-                '<span class="action-label">' + (ui.start_quiz || 'Fazer teste') + '</span>' +
-                '<svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
+              '<div class="card-footer">' +
+                '<span class="card-cta-label">' + (ui.start_quiz || 'Fazer teste') + '</span>' +
+                '<svg class="card-cta-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
               '</div>' +
             '</div>' +
           '</a>';
@@ -221,7 +240,7 @@ title: "Avaliações"
       });
 
       if (catalogCountLabel) {
-        var unit = currentLang === 'en' ? 'assessments' : 'avaliações';
+        var unit = currentLang === 'en' ? 'assessments available' : 'avaliações disponíveis';
         catalogCountLabel.textContent = visibleCount + ' ' + unit;
       }
 

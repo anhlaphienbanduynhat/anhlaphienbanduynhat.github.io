@@ -7,7 +7,7 @@
     "psicologia",
     "autoconhecimento"
   ],
-  "cover": "resources/cover-pt.svg",
+  "cover": "resources/cover.svg",
   "questions": [
     {
       "text": "Diante de um problema imprevisto ou crise, qual é o seu primeiro reflexo?",

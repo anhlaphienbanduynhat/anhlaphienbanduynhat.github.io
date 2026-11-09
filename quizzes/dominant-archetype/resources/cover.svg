@@ -1,46 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="100%" height="100%">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4F46E5"/>
-      <stop offset="50%" stop-color="#6366F1"/>
-      <stop offset="100%" stop-color="#7C3AED"/>
+    <linearGradient id="bgArchetype" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B"/>
+      <stop offset="100%" stop-color="#09090B"/>
     </linearGradient>
-    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
+    <pattern id="gridArchetype" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#27272A" stroke-width="0.75"/>
+    </pattern>
   </defs>
-  <rect width="800" height="450" fill="url(#bgGrad)"/>
-  <rect width="800" height="450" fill="url(#glow)"/>
   
-  <!-- Geometric decorative shapes -->
-  <circle cx="100" cy="80" r="120" fill="#818CF8" opacity="0.3"/>
-  <circle cx="720" cy="380" r="140" fill="#A855F7" opacity="0.35"/>
-  
-  <!-- 4 Archetype Floating Badges -->
-  <g transform="translate(140, 70)">
-    <g transform="translate(0, 40)">
-      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
-      <text x="55" y="72" font-size="52" text-anchor="middle">👑</text>
-      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">LÍDER</text>
+  <rect width="600" height="300" fill="url(#bgArchetype)"/>
+  <rect width="600" height="300" fill="url(#gridArchetype)" opacity="0.6"/>
+
+  <!-- Subtle ambient glow -->
+  <circle cx="300" cy="150" r="140" fill="#3F3F46" opacity="0.15" filter="blur(40px)"/>
+
+  <!-- Archetype Icons in modern geometric frames -->
+  <g transform="translate(100, 85)">
+    <!-- Leader: Geometric Crown -->
+    <g transform="translate(0, 0)">
+      <rect width="80" height="80" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="1.5"/>
+      <path d="M22 54 L26 32 L36 42 L40 26 L44 42 L54 32 L58 54 Z" fill="none" stroke="#F4F4F5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="40" cy="22" r="2.5" fill="#F4F4F5"/>
+      <circle cx="26" cy="28" r="2" fill="#A1A1AA"/>
+      <circle cx="54" cy="28" r="2" fill="#A1A1AA"/>
     </g>
-    <g transform="translate(140, 0)">
-      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
-      <text x="55" y="72" font-size="52" text-anchor="middle">🎨</text>
-      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">CRIADOR</text>
+
+    <!-- Creator: Geometric Prism -->
+    <g transform="translate(110, 0)">
+      <rect width="80" height="80" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="1.5"/>
+      <polygon points="40,20 62,56 18,56" fill="none" stroke="#F4F4F5" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="40" cy="40" r="8" fill="none" stroke="#A1A1AA" stroke-width="2"/>
+      <circle cx="40" cy="40" r="3" fill="#F4F4F5"/>
     </g>
-    <g transform="translate(280, 40)">
-      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
-      <text x="55" y="72" font-size="52" text-anchor="middle">🦉</text>
-      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">PENSADOR</text>
+
+    <!-- Thinker: Geometric Compass / Mind -->
+    <g transform="translate(220, 0)">
+      <rect width="80" height="80" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="20" fill="none" stroke="#F4F4F5" stroke-width="2"/>
+      <circle cx="40" cy="40" r="10" fill="none" stroke="#71717A" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <line x1="40" y1="14" x2="40" y2="66" stroke="#A1A1AA" stroke-width="1.5"/>
+      <line x1="14" y1="40" x2="66" y2="40" stroke="#A1A1AA" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="3" fill="#F4F4F5"/>
     </g>
-    <g transform="translate(420, 0)">
-      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
-      <text x="55" y="72" font-size="52" text-anchor="middle">🌿</text>
-      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GUARDIÃO</text>
+
+    <!-- Caregiver: Interlocking Shields / Harmony -->
+    <g transform="translate(330, 0)">
+      <rect width="80" height="80" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="1.5"/>
+      <path d="M40 24 C28 24 22 34 22 42 C22 54 36 62 40 64 C44 62 58 54 58 42 C58 34 52 24 40 24 Z" fill="none" stroke="#F4F4F5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="40" cy="40" r="5" fill="#71717A"/>
     </g>
   </g>
-  
-  <text x="400" y="350" font-family="-apple-system, Inter, sans-serif" font-size="32" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5">ARQUÉTIPO DOMINANTE</text>
-  <text x="400" y="385" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="500" fill="#E0E7FF" text-anchor="middle">Descubra o padrão psicológico que guia suas decisões e instintos</text>
+
+  <!-- Bottom minimal index line -->
+  <line x1="80" y1="215" x2="520" y2="215" stroke="#27272A" stroke-width="1"/>
+  <circle cx="140" cy="215" r="3" fill="#71717A"/>
+  <circle cx="250" cy="215" r="3" fill="#71717A"/>
+  <circle cx="360" cy="215" r="3" fill="#71717A"/>
+  <circle cx="470" cy="215" r="3" fill="#71717A"/>
 </svg>

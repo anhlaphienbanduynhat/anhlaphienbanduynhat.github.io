@@ -1,38 +1,43 @@
 {% assign current_lang = "pt" %}
 {% assign t = site.data.i18n[current_lang] %}
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-meta-col">
-      <div class="footer-brand">
-        <svg class="brand-mark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M2 12c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 9.3 20.8 8.7 22 8.7"></path>
-          <path d="M2 17c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 14.3 20.8 13.7 22 13.7"></path>
-        </svg>
-        <span>Quiztide</span>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-brand-section">
+        <div class="footer-brand">
+          <div class="brand-icon brand-icon-sm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 9.3 20.8 8.7 22 8.7"></path>
+              <path d="M2 17c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 14.3 20.8 13.7 22 13.7"></path>
+            </svg>
+          </div>
+          <span class="footer-brand-name">Quiztide</span>
+        </div>
+        <p class="footer-tagline" id="footer-desc">{{ t.site_tagline }}</p>
       </div>
-      <p class="footer-tagline" id="footer-desc">{{ t.site_tagline }}</p>
+
+      <div class="footer-nav-col">
+        <h4 id="footer-nav-heading" class="footer-heading">Navegação</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/' | relative_url }}" id="footer-nav-home" class="footer-link">{{ t.nav_home }}</a></li>
+          <li><a href="{{ '/about/' | relative_url }}" id="footer-nav-about" class="footer-link">{{ t.nav_about }}</a></li>
+          <li><a href="{{ '/contact/' | relative_url }}" id="footer-nav-contact" class="footer-link">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 id="footer-legal-heading" class="footer-heading">Legal</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/privacy/' | relative_url }}" id="footer-nav-privacy" class="footer-link">{{ t.nav_privacy }}</a></li>
+          <li><a href="{{ '/terms/' | relative_url }}" id="footer-nav-terms" class="footer-link">Termos</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="footer-links-col">
-      <h4 id="footer-nav-heading" class="footer-heading">Navegação</h4>
-      <ul class="footer-menu">
-        <li><a href="{{ '/' | relative_url }}" id="footer-nav-home" class="footer-link">{{ t.nav_home }}</a></li>
-        <li><a href="{{ '/about/' | relative_url }}" id="footer-nav-about" class="footer-link">{{ t.nav_about }}</a></li>
-        <li><a href="{{ '/contact/' | relative_url }}" id="footer-nav-contact" class="footer-link">Contato</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; {{ 'now' | date: "%Y" }} Quiztide. Todos os direitos reservados.</p>
+      <span class="footer-status-pill"><span class="status-dot"></span> Avaliações ativas</span>
     </div>
-
-    <div class="footer-links-col">
-      <h4 id="footer-legal-heading" class="footer-heading">Legal</h4>
-      <ul class="footer-menu">
-        <li><a href="{{ '/privacy/' | relative_url }}" id="footer-nav-privacy" class="footer-link">{{ t.nav_privacy }}</a></li>
-        <li><a href="{{ '/terms/' | relative_url }}" id="footer-nav-terms" class="footer-link">Termos</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-base">
-    <p class="footer-copy">&copy; {{ 'now' | date: "%Y" }} Quiztide. All rights reserved.</p>
   </div>
 </footer>

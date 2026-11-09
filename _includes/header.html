@@ -1,23 +1,25 @@
-<header class="site-header">
-  <div class="header-inner">
-    <a href="{{ '/' | relative_url }}" class="brand-link" aria-label="Quiztide Home">
-      <svg class="brand-mark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M2 12c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 9.3 20.8 8.7 22 8.7"></path>
-        <path d="M2 17c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 14.3 20.8 13.7 22 13.7"></path>
-      </svg>
-      <span class="brand-name">Quiztide</span>
+<header class="navbar">
+  <div class="nav-container">
+    <a href="{{ '/' | relative_url }}" class="brand" aria-label="Quiztide Home">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 12c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 9.3 20.8 8.7 22 8.7"></path>
+          <path d="M2 17c.6 0 1.2-.4 1.5-1 1.2-2.3 3.3-3.7 5.8-3.7 2.4 0 4.5 1.3 5.7 3.5.4.7 1.1 1.2 1.9 1.2h.1c.9 0 1.7-.5 2.1-1.3C19.8 14.3 20.8 13.7 22 13.7"></path>
+        </svg>
+      </div>
+      <span class="brand-title">Quiztide</span>
     </a>
 
-    <div class="header-right">
-      <nav class="header-nav" aria-label="Main navigation">
-        <a href="{{ '/' | relative_url }}" id="nav-link-home" class="nav-anchor">Avaliações</a>
-        <a href="{{ '/about/' | relative_url }}" id="nav-link-about" class="nav-anchor">Sobre</a>
+    <div class="nav-actions">
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="{{ '/' | relative_url }}" id="nav-link-home" class="nav-item">Avaliações</a>
+        <a href="{{ '/about/' | relative_url }}" id="nav-link-about" class="nav-item">Sobre</a>
       </nav>
 
-      <div class="lang-switch" role="radiogroup" aria-label="Select language">
-        <button type="button" class="lang-btn" data-lang="pt" onclick="window.setLanguage('pt')">pt</button>
-        <button type="button" class="lang-btn" data-lang="en" onclick="window.setLanguage('en')">en</button>
-        <button type="button" class="lang-btn" data-lang="es" onclick="window.setLanguage('es')">es</button>
+      <div class="lang-selector" role="radiogroup" aria-label="Select language">
+        <button type="button" class="lang-btn" data-lang="pt" onclick="window.setLanguage('pt')">PT</button>
+        <button type="button" class="lang-btn" data-lang="en" onclick="window.setLanguage('en')">EN</button>
+        <button type="button" class="lang-btn" data-lang="es" onclick="window.setLanguage('es')">ES</button>
       </div>
     </div>
   </div>

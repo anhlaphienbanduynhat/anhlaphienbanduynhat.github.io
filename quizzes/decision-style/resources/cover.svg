@@ -1,32 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="100%" height="100%">
   <defs>
-    <linearGradient id="dsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6"/>
-      <stop offset="100%" stop-color="#1D4ED8"/>
+    <linearGradient id="bgDecision" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B"/>
+      <stop offset="100%" stop-color="#09090B"/>
     </linearGradient>
-    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05"/>
-    </linearGradient>
+    <pattern id="gridDecision" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#27272A" stroke-width="0.75"/>
+    </pattern>
   </defs>
-  <rect width="800" height="450" fill="url(#dsGrad)"/>
-  <circle cx="700" cy="80" r="180" fill="#60A5FA" opacity="0.3"/>
-  <circle cx="100" cy="380" r="140" fill="#1E40AF" opacity="0.4"/>
-  
-  <g transform="translate(180, 80)">
-    <!-- Scale / Compass graphic -->
-    <circle cx="220" cy="110" r="70" fill="url(#cardGrad)" stroke="#93C5FD" stroke-width="3"/>
-    <path d="M220 60 L235 110 L220 160 L205 110 Z" fill="#FBBF24"/>
-    <circle cx="220" cy="110" r="10" fill="#FFFFFF"/>
-    
-    <!-- Balance elements -->
-    <line x1="120" y1="180" x2="320" y2="180" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-    <rect x="130" y="190" width="60" height="40" rx="8" fill="#FFFFFF" opacity="0.9"/>
-    <text x="160" y="215" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="bold" fill="#1E3A8A" text-anchor="middle">DADOS</text>
-    
-    <rect x="250" y="190" width="60" height="40" rx="8" fill="#FDE047" opacity="0.95"/>
-    <text x="280" y="215" font-family="-apple-system, Inter, sans-serif" font-size="14" font-weight="bold" fill="#854D0E" text-anchor="middle">INSTINTO</text>
+
+  <rect width="600" height="300" fill="url(#bgDecision)"/>
+  <rect width="600" height="300" fill="url(#gridDecision)" opacity="0.6"/>
+
+  <!-- Decision Matrix / Path Geometry -->
+  <g transform="translate(150, 60)">
+    <!-- Main Center Node -->
+    <circle cx="150" cy="90" r="28" fill="#27272A" stroke="#3F3F46" stroke-width="2"/>
+    <circle cx="150" cy="90" r="10" fill="#F4F4F5"/>
+
+    <!-- Path Lines to 4 styles -->
+    <!-- Up-Left: Rational (data nodes) -->
+    <path d="M130 75 L60 30" stroke="#71717A" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle cx="60" cy="30" r="20" fill="#27272A" stroke="#52525B" stroke-width="2"/>
+    <rect x="52" y="22" width="16" height="16" rx="3" fill="none" stroke="#F4F4F5" stroke-width="2"/>
+
+    <!-- Up-Right: Intuitive (spark/radiant) -->
+    <path d="M170 75 L240 30" stroke="#71717A" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle cx="240" cy="30" r="20" fill="#27272A" stroke="#52525B" stroke-width="2"/>
+    <polygon points="240,18 244,27 253,30 244,33 240,42 236,33 227,30 236,27" fill="#F4F4F5"/>
+
+    <!-- Down-Left: Collaborative (linked circles) -->
+    <path d="M130 105 L60 150" stroke="#71717A" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle cx="60" cy="150" r="20" fill="#27272A" stroke="#52525B" stroke-width="2"/>
+    <circle cx="55" cy="150" r="6" fill="none" stroke="#F4F4F5" stroke-width="1.5"/>
+    <circle cx="65" cy="150" r="6" fill="none" stroke="#A1A1AA" stroke-width="1.5"/>
+
+    <!-- Down-Right: Action / Agile (forward bolt) -->
+    <path d="M170 105 L240 150" stroke="#71717A" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle cx="240" cy="150" r="20" fill="#27272A" stroke="#52525B" stroke-width="2"/>
+    <polyline points="236,140 246,150 236,160" fill="none" stroke="#F4F4F5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <text x="400" y="380" font-family="-apple-system, Inter, sans-serif" font-size="28" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5">ESTILO DE DECISÃO</text>
-  <text x="400" y="410" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="500" fill="#BFDBFE" text-anchor="middle">Racional • Intuitivo • Colaborativo • Ágil</text>
+
+  <!-- Ambient axis indicators -->
+  <line x1="80" y1="240" x2="520" y2="240" stroke="#27272A" stroke-width="1"/>
+  <circle cx="300" cy="240" r="4" fill="#A1A1AA"/>
 </svg>

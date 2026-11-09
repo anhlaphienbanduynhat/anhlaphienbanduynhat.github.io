@@ -2,52 +2,116 @@
   "title": "Mental Energy & Resilience Index",
   "subtitle": "Assess your current cognitive battery, recovery rhythm, and stress tolerance.",
   "category": "Wellbeing",
-  "tags": ["wellbeing", "mental health", "productivity"],
+  "tags": [
+    "wellbeing",
+    "mental health",
+    "productivity"
+  ],
   "cover": "resources/cover.svg",
   "questions": [
     {
       "text": "How do you wake up on most weekdays?",
       "options": [
-        { "type": "peak", "text": "Energized and mentally clear to tackle the day's challenges." },
-        { "type": "balanced", "text": "Decent; need a few minutes and a coffee to hit my stride." },
-        { "type": "alert", "text": "Fatigued, dreading the upcoming list of obligations." },
-        { "type": "depleted", "text": "Exhausted, feeling like sleep did nothing to restore my brain." }
+        {
+          "type": "peak",
+          "text": "Energized and mentally clear to tackle the day's challenges."
+        },
+        {
+          "type": "balanced",
+          "text": "Decent; need a few minutes and a coffee to hit my stride."
+        },
+        {
+          "type": "alert",
+          "text": "Fatigued, dreading the upcoming list of obligations."
+        },
+        {
+          "type": "depleted",
+          "text": "Exhausted, feeling like sleep did nothing to restore my brain."
+        }
       ]
     },
     {
       "text": "When an urgent surprise disrupts your schedule mid-day:",
       "options": [
-        { "type": "peak", "text": "I pivot calmly and handle it without lingering distress." },
-        { "type": "balanced", "text": "I get slightly tense, but take a breath and re-prioritize." },
-        { "type": "alert", "text": "I feel immediate irritation and like things are spiraling." },
-        { "type": "depleted", "text": "I feel like quitting; any new demand feels like an avalanche." }
+        {
+          "type": "peak",
+          "text": "I pivot calmly and handle it without lingering distress."
+        },
+        {
+          "type": "balanced",
+          "text": "I get slightly tense, but take a breath and re-prioritize."
+        },
+        {
+          "type": "alert",
+          "text": "I feel immediate irritation and like things are spiraling."
+        },
+        {
+          "type": "depleted",
+          "text": "I feel like quitting; any new demand feels like an avalanche."
+        }
       ]
     },
     {
       "text": "How is your ability to focus on deep, demanding work lately?",
       "options": [
-        { "type": "peak", "text": "High; entering flow state feels natural and sustained." },
-        { "type": "balanced", "text": "Good; occasional mild distractions, but easily managed." },
-        { "type": "alert", "text": "Fickle; taking longer to engage and switching tabs constantly." },
-        { "type": "depleted", "text": "Very poor; re-reading the same sentence in a constant brain fog." }
+        {
+          "type": "peak",
+          "text": "High; entering flow state feels natural and sustained."
+        },
+        {
+          "type": "balanced",
+          "text": "Good; occasional mild distractions, but easily managed."
+        },
+        {
+          "type": "alert",
+          "text": "Fickle; taking longer to engage and switching tabs constantly."
+        },
+        {
+          "type": "depleted",
+          "text": "Very poor; re-reading the same sentence in a constant brain fog."
+        }
       ]
     },
     {
       "text": "Over weekends or days off, are you truly able to unplug?",
       "options": [
-        { "type": "peak", "text": "Yes, I completely immerse in leisure and fully recharge." },
-        { "type": "balanced", "text": "Mostly, although occasional work thoughts pop into mind." },
-        { "type": "alert", "text": "I struggle; I feel guilty resting or keep checking updates." },
-        { "type": "depleted", "text": "Impossible; I spend days off paralyzed with dread about Monday." }
+        {
+          "type": "peak",
+          "text": "Yes, I completely immerse in leisure and fully recharge."
+        },
+        {
+          "type": "balanced",
+          "text": "Mostly, although occasional work thoughts pop into mind."
+        },
+        {
+          "type": "alert",
+          "text": "I struggle; I feel guilty resting or keep checking updates."
+        },
+        {
+          "type": "depleted",
+          "text": "Impossible; I spend days off paralyzed with dread about Monday."
+        }
       ]
     },
     {
       "text": "Which quote best captures your pace over the past few weeks?",
       "options": [
-        { "type": "peak", "text": "'I am in the driver seat, building at a sustainable pace.'" },
-        { "type": "balanced", "text": "'Things are intense, but I still have a steady hand on the wheel.'" },
-        { "type": "alert", "text": "'I am near the red line; if I don't slow down, something will snap.'" },
-        { "type": "depleted", "text": "'I am running on autopilot out of pure survival mode.'" }
+        {
+          "type": "peak",
+          "text": "'I am in the driver seat, building at a sustainable pace.'"
+        },
+        {
+          "type": "balanced",
+          "text": "'Things are intense, but I still have a steady hand on the wheel.'"
+        },
+        {
+          "type": "alert",
+          "text": "'I am near the red line; if I don't slow down, something will snap.'"
+        },
+        {
+          "type": "depleted",
+          "text": "'I am running on autopilot out of pure survival mode.'"
+        }
       ]
     }
   ],

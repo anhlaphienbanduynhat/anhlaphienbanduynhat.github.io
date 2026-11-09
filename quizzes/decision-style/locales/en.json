@@ -2,52 +2,116 @@
   "title": "What is Your Decision-Making Style?",
   "subtitle": "Discover how your mind processes risks, choices, and tradeoffs under real-world pressure.",
   "category": "Career",
-  "tags": ["career", "leadership", "strategy"],
+  "tags": [
+    "career",
+    "leadership",
+    "strategy"
+  ],
   "cover": "resources/cover.svg",
   "questions": [
     {
       "text": "When you have to make a critical choice with limited time, what is your go-to move?",
       "options": [
-        { "type": "rational", "text": "Gather as much concrete data as possible before pulling the trigger." },
-        { "type": "intuitive", "text": "Trust my immediate gut instinct; it rarely steers me wrong." },
-        { "type": "collaborative", "text": "Consult trusted mentors or team members for their input." },
-        { "type": "action", "text": "Make a quick call to test in reality and iterate along the way." }
+        {
+          "type": "rational",
+          "text": "Gather as much concrete data as possible before pulling the trigger."
+        },
+        {
+          "type": "intuitive",
+          "text": "Trust my immediate gut instinct; it rarely steers me wrong."
+        },
+        {
+          "type": "collaborative",
+          "text": "Consult trusted mentors or team members for their input."
+        },
+        {
+          "type": "action",
+          "text": "Make a quick call to test in reality and iterate along the way."
+        }
       ]
     },
     {
       "text": "What makes you most uncomfortable during decision-making?",
       "options": [
-        { "type": "rational", "text": "A total lack of verifiable metrics or clear evidence." },
-        { "type": "intuitive", "text": "Having to over-explain a hunch I already know is right." },
-        { "type": "collaborative", "text": "Knowing a key stakeholder is strongly against the plan." },
-        { "type": "action", "text": "Endless bureaucracy, meetings, and indecision." }
+        {
+          "type": "rational",
+          "text": "A total lack of verifiable metrics or clear evidence."
+        },
+        {
+          "type": "intuitive",
+          "text": "Having to over-explain a hunch I already know is right."
+        },
+        {
+          "type": "collaborative",
+          "text": "Knowing a key stakeholder is strongly against the plan."
+        },
+        {
+          "type": "action",
+          "text": "Endless bureaucracy, meetings, and indecision."
+        }
       ]
     },
     {
       "text": "What is your typical posture during high-stakes strategic meetings?",
       "options": [
-        { "type": "rational", "text": "Stress-test assumptions and request hard facts." },
-        { "type": "intuitive", "text": "Propose bold, out-of-the-box directions others overlooked." },
-        { "type": "collaborative", "text": "Synthesize differing viewpoints into common ground." },
-        { "type": "action", "text": "Push for actionable next steps and strict deadlines." }
+        {
+          "type": "rational",
+          "text": "Stress-test assumptions and request hard facts."
+        },
+        {
+          "type": "intuitive",
+          "text": "Propose bold, out-of-the-box directions others overlooked."
+        },
+        {
+          "type": "collaborative",
+          "text": "Synthesize differing viewpoints into common ground."
+        },
+        {
+          "type": "action",
+          "text": "Push for actionable next steps and strict deadlines."
+        }
       ]
     },
     {
       "text": "How do you evaluate whether a past decision was truly a success?",
       "options": [
-        { "type": "rational", "text": "By the measurable ROI and performance metrics." },
-        { "type": "intuitive", "text": "By the clarity of purpose and long-term impact created." },
-        { "type": "collaborative", "text": "By team satisfaction and alignment across stakeholders." },
-        { "type": "action", "text": "By execution speed and the tangible milestones conquered." }
+        {
+          "type": "rational",
+          "text": "By the measurable ROI and performance metrics."
+        },
+        {
+          "type": "intuitive",
+          "text": "By the clarity of purpose and long-term impact created."
+        },
+        {
+          "type": "collaborative",
+          "text": "By team satisfaction and alignment across stakeholders."
+        },
+        {
+          "type": "action",
+          "text": "By execution speed and the tangible milestones conquered."
+        }
       ]
     },
     {
       "text": "If you could unlock one professional superpower, which would it be?",
       "options": [
-        { "type": "rational", "text": "The power to forecast probabilistic outcomes with mathematical certainty." },
-        { "type": "intuitive", "text": "Visionary foresight to spot paradigm shifts years before the crowd." },
-        { "type": "collaborative", "text": "A magnetic ability to unite any group toward a shared mission." },
-        { "type": "action", "text": "Infinite momentum to turn ideas into reality without friction." }
+        {
+          "type": "rational",
+          "text": "The power to forecast probabilistic outcomes with mathematical certainty."
+        },
+        {
+          "type": "intuitive",
+          "text": "Visionary foresight to spot paradigm shifts years before the crowd."
+        },
+        {
+          "type": "collaborative",
+          "text": "A magnetic ability to unite any group toward a shared mission."
+        },
+        {
+          "type": "action",
+          "text": "Infinite momentum to turn ideas into reality without friction."
+        }
       ]
     }
   ],

@@ -11,9 +11,9 @@
   <!-- Typography: Inter Variable & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Stylesheet with Cache-Buster -->
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   
   <!-- Minimalist Favicon -->
@@ -64,16 +64,14 @@
     };
   </script>
 </head>
-<body>
-  <div class="site-wrapper">
-    {% include header.html %}
+<body class="site-body">
+  {% include header.html %}
 
-    <main class="page-container" id="main-content">
-      {{ content }}
-    </main>
+  <main class="site-main" id="main-content">
+    {{ content }}
+  </main>
 
-    {% include footer.html %}
-  </div>
+  {% include footer.html %}
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

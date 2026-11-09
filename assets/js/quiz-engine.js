@@ -70,7 +70,7 @@
       breakdown_title: 'Distribuição dos Seus Traços',
       share_whatsapp: 'Compartilhar no WhatsApp',
       copy_link: 'Copiar Link',
-      copied_success: 'Link copiado para a área de transferência.',
+      copied_success: 'Link copiado com sucesso!',
       retake_quiz: 'Refazer Teste'
     };
   }
@@ -131,11 +131,11 @@
     if (quizTimePill) quizTimePill.textContent = '~' + estMinutes + ' min';
 
     if (btnCopyText) btnCopyText.textContent = ui.copy_link || 'Copiar Link';
-    if (btnWhatsappText) btnWhatsappText.textContent = ui.share_whatsapp || 'Compartilhar no WhatsApp';
+    if (btnWhatsappText) btnWhatsappText.textContent = ui.share_whatsapp || 'WhatsApp';
     if (btnRestartText) btnRestartText.textContent = ui.retake_quiz || 'Refazer Teste';
     if (resultCelebration) resultCelebration.textContent = ui.celebration || 'Resultado da Avaliação';
     if (traitBreakdownTitle) traitBreakdownTitle.textContent = ui.breakdown_title || 'Distribuição dos Seus Traços';
-    if (copyFeedback) copyFeedback.textContent = ui.copied_success || 'Link copiado para a área de transferência.';
+    if (copyFeedback) copyFeedback.textContent = ui.copied_success || 'Link copiado com sucesso!';
   }
 
   function renderQuestion(index) {
@@ -178,20 +178,17 @@
     }
 
     if (optionsList) {
-      optionsList.className = 'options-group';
       optionsList.innerHTML = '';
 
       (q.options || []).forEach(function(opt, optIndex) {
         var btn = document.createElement('button');
-        btn.className = 'option-btn';
+        btn.className = 'quiz-option-button';
         btn.type = 'button';
         btn.setAttribute('data-index', optIndex);
         btn.setAttribute('data-key', String.fromCharCode(65 + optIndex));
 
-        var inner = '<div class="opt-content">' +
-          '<span class="option-marker">' + String.fromCharCode(65 + optIndex) + '</span>' +
-          '<span class="option-text">' + opt.text + '</span>' +
-        '</div>';
+        var inner = '<span class="option-key-badge">' + String.fromCharCode(65 + optIndex) + '</span>' +
+          '<span class="option-label-text">' + opt.text + '</span>';
 
         btn.innerHTML = inner;
         btn.addEventListener('click', function() {
@@ -204,7 +201,7 @@
   }
 
   function handleOptionSelect(btnElement, resultType) {
-    var allBtns = optionsList.querySelectorAll('.option-btn');
+    var allBtns = optionsList.querySelectorAll('.quiz-option-button');
     allBtns.forEach(function(b) { b.classList.add('disabled'); });
     btnElement.classList.add('selected');
 
@@ -220,7 +217,7 @@
       } else {
         showResults();
       }
-    }, 150);
+    }, 160);
   }
 
   // Keyboard shortcut listener (A, B, C, D or 1, 2, 3, 4)
@@ -236,7 +233,7 @@
     else if (key === 'D' || key === '4') optIndex = 3;
 
     if (optIndex !== -1 && optionsList) {
-      var buttons = optionsList.querySelectorAll('.option-btn');
+      var buttons = optionsList.querySelectorAll('.quiz-option-button');
       if (buttons[optIndex] && !buttons[optIndex].classList.contains('disabled')) {
         e.preventDefault();
         buttons[optIndex].click();
@@ -311,13 +308,13 @@
         var percentage = Math.round((count / totalAnswered) * 100);
 
         var barRow = document.createElement('div');
-        barRow.className = 'trait-bar-row';
-        barRow.innerHTML = '<div class="trait-bar-info">' +
-          '<span class="trait-name">' + (rItem.badge ? rItem.badge + ' ' : '') + rItem.title + '</span>' +
-          '<span class="trait-pct tabular-nums">' + percentage + '%</span>' +
+        barRow.className = 'breakdown-bar-item';
+        barRow.innerHTML = '<div class="bar-info-row">' +
+          '<span class="bar-trait-title">' + (rItem.badge ? rItem.badge + ' ' : '') + rItem.title + '</span>' +
+          '<span class="bar-trait-value tabular-nums">' + percentage + '%</span>' +
         '</div>' +
-        '<div class="trait-bar-track">' +
-          '<div class="trait-bar-fill' + (rk === winningKey ? ' is-winner' : '') + '" style="width: ' + percentage + '%;"></div>' +
+        '<div class="bar-track-wrap">' +
+          '<div class="bar-fill-amount' + (rk === winningKey ? ' is-winner' : '') + '" style="width: ' + percentage + '%;"></div>' +
         '</div>';
 
         traitBarsContainer.appendChild(barRow);
@@ -342,7 +339,7 @@
     });
   }
 
-  // Social Share
+  // Social Share Handlers
   if (btnWhatsapp) {
     btnWhatsapp.addEventListener('click', function() {
       if (!quizData) return;
@@ -366,7 +363,7 @@
       navigator.clipboard.writeText(window.location.href).then(function() {
         if (copyFeedback) {
           copyFeedback.style.display = 'block';
-          setTimeout(function() { copyFeedback.style.display = 'none'; }, 2500);
+          setTimeout(function() { copyFeedback.style.display = 'none'; }, 2200);
         }
       });
     });

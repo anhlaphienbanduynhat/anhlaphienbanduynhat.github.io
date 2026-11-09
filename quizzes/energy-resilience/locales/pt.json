@@ -2,52 +2,116 @@
   "title": "Índice de Energia Mental & Resiliência",
   "subtitle": "Avalie sua capacidade atual de recuperação, foco cognitivo e resistência ao estresse.",
   "category": "Bem-Estar",
-  "tags": ["bem-estar", "saúde mental", "produtividade"],
+  "tags": [
+    "bem-estar",
+    "saúde mental",
+    "produtividade"
+  ],
   "cover": "resources/cover.svg",
   "questions": [
     {
       "text": "Como você acorda na maioria dos dias úteis?",
       "options": [
-        { "type": "peak", "text": "Disposto e com clareza mental para iniciar os desafios." },
-        { "type": "balanced", "text": "Normal; preciso de alguns minutos e um café para engatar o ritmo." },
-        { "type": "alert", "text": "Cansado, já antecipando com apreensão a lista de tarefas." },
-        { "type": "depleted", "text": "Exausto, sentindo que o sono não foi suficiente para restaurar nada." }
+        {
+          "type": "peak",
+          "text": "Disposto e com clareza mental para iniciar os desafios."
+        },
+        {
+          "type": "balanced",
+          "text": "Normal; preciso de alguns minutos e um café para engatar o ritmo."
+        },
+        {
+          "type": "alert",
+          "text": "Cansado, já antecipando com apreensão a lista de tarefas."
+        },
+        {
+          "type": "depleted",
+          "text": "Exausto, sentindo que o sono não foi suficiente para restaurar nada."
+        }
       ]
     },
     {
       "text": "Quando um imprevisto urgente surge no meio do seu dia:",
       "options": [
-        { "type": "peak", "text": "Adapto minha agenda com calma e resolvo sem estresse excessivo." },
-        { "type": "balanced", "text": "Fico um pouco tenso, mas respiro fundo e reorganizo as prioridades." },
-        { "type": "alert", "text": "Sinto irritação imediata e fico com a sensação de perda de controle." },
-        { "type": "depleted", "text": "Sinto vontade de largar tudo; qualquer novidade parece um peso insuportável." }
+        {
+          "type": "peak",
+          "text": "Adapto minha agenda com calma e resolvo sem estresse excessivo."
+        },
+        {
+          "type": "balanced",
+          "text": "Fico um pouco tenso, mas respiro fundo e reorganizo as prioridades."
+        },
+        {
+          "type": "alert",
+          "text": "Sinto irritação imediata e fico com a sensação de perda de controle."
+        },
+        {
+          "type": "depleted",
+          "text": "Sinto vontade de largar tudo; qualquer novidade parece um peso insuportável."
+        }
       ]
     },
     {
       "text": "Como está sua capacidade de concentração em tarefas complexas ultimamente?",
       "options": [
-        { "type": "peak", "text": "Alta; consigo entrar em estado de fluxo facilmente por horas." },
-        { "type": "balanced", "text": "Boa, com pequenas distrações normais que consigo contornar." },
-        { "type": "alert", "text": "Oscilante; demoro para focar e troco de abas constantemente." },
-        { "type": "depleted", "text": "Muito baixa; releio a mesma frase várias vezes e me sinto em névoa mental." }
+        {
+          "type": "peak",
+          "text": "Alta; consigo entrar em estado de fluxo facilmente por horas."
+        },
+        {
+          "type": "balanced",
+          "text": "Boa, com pequenas distrações normais que consigo contornar."
+        },
+        {
+          "type": "alert",
+          "text": "Oscilante; demoro para focar e troco de abas constantemente."
+        },
+        {
+          "type": "depleted",
+          "text": "Muito baixa; releio a mesma frase várias vezes e me sinto em névoa mental."
+        }
       ]
     },
     {
       "text": "No final de semana ou dias de folga, você realmente consegue se desligar?",
       "options": [
-        { "type": "peak", "text": "Sim, aproveito 100% o lazer e recarrego totalmente a bateria." },
-        { "type": "balanced", "text": "Na maior parte do tempo, embora às vezes lembre de pendências." },
-        { "type": "alert", "text": "Tenho dificuldade; sinto culpa por descansar ou checo mensagens." },
-        { "type": "depleted", "text": "Não consigo; passo o tempo ansioso com a segunda-feira ou paralisado." }
+        {
+          "type": "peak",
+          "text": "Sim, aproveito 100% o lazer e recarrego totalmente a bateria."
+        },
+        {
+          "type": "balanced",
+          "text": "Na maior parte do tempo, embora às vezes lembre de pendências."
+        },
+        {
+          "type": "alert",
+          "text": "Tenho dificuldade; sinto culpa por descansar ou checo mensagens."
+        },
+        {
+          "type": "depleted",
+          "text": "Não consigo; passo o tempo ansioso com a segunda-feira ou paralisado."
+        }
       ]
     },
     {
       "text": "Qual frase melhor resume seu ritmo de vida nas últimas semanas?",
       "options": [
-        { "type": "peak", "text": "'Estou no comando e construindo no meu ritmo sustentável.'" },
-        { "type": "balanced", "text": "'A rotina está puxada, mas ainda mantenho o leme firme.'" },
-        { "type": "alert", "text": "'Estou no limite de começar a queimar a largada se não desacelerar.'" },
-        { "type": "depleted", "text": "'Estou no piloto automático por pura inércia e sobrevivência.'" }
+        {
+          "type": "peak",
+          "text": "'Estou no comando e construindo no meu ritmo sustentável.'"
+        },
+        {
+          "type": "balanced",
+          "text": "'A rotina está puxada, mas ainda mantenho o leme firme.'"
+        },
+        {
+          "type": "alert",
+          "text": "'Estou no limite de começar a queimar a largada se não desacelerar.'"
+        },
+        {
+          "type": "depleted",
+          "text": "'Estou no piloto automático por pura inércia e sobrevivência.'"
+        }
       ]
     }
   ],

@@ -2,103 +2,104 @@
 layout: default
 ---
 
-<article class="quiz-container">
-  <!-- Top Navigation -->
-  <div class="quiz-nav-bar">
-    <a href="{{ '/' | relative_url }}" class="back-link" id="quiz-back-link">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+<article class="quiz-view-wrapper">
+  <!-- Top Navigation & Meta -->
+  <div class="quiz-topbar">
+    <a href="{{ '/' | relative_url }}" class="quiz-back-button" id="quiz-back-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       <span>Todos os testes</span>
     </a>
-    <div class="quiz-tags-row">
-      <span class="badge-mono" id="quiz-category-pill">Personalidade</span>
-      <span class="badge-mono tabular-nums" id="quiz-time-pill">~2 min</span>
+    <div class="quiz-pill-badges">
+      <span class="quiz-tag-pill" id="quiz-category-pill">Personalidade</span>
+      <span class="quiz-tag-pill tabular-nums" id="quiz-time-pill">~2 min</span>
     </div>
   </div>
 
-  <!-- Quiz Header -->
-  <header class="quiz-header">
-    <h1 class="quiz-headline" id="quiz-title">Carregando avaliação...</h1>
-    <p class="quiz-subheadline" id="quiz-subtitle"></p>
+  <!-- Quiz Intro Header -->
+  <header class="quiz-intro-header">
+    <h1 class="quiz-main-title" id="quiz-title">Carregando avaliação...</h1>
+    <p class="quiz-main-subtitle" id="quiz-subtitle"></p>
 
-    <div id="quiz-lang-notice" class="notice-box" style="display: none;" role="alert"></div>
+    <div id="quiz-lang-notice" class="quiz-notice-box" style="display: none;" role="alert"></div>
   </header>
 
   <!-- Interactive Stage -->
-  <div id="quiz-stage" class="quiz-stage">
-    <!-- Progress Indicator -->
-    <div class="quiz-progress-section">
-      <div class="progress-meta">
-        <span class="progress-step-text" id="quiz-progress-text">Questão 01 de 05</span>
-        <span class="progress-pct-text tabular-nums" id="quiz-progress-percent">0%</span>
+  <div id="quiz-stage" class="quiz-interactive-stage">
+    <!-- Progress Stepper -->
+    <div class="quiz-progress-module">
+      <div class="progress-info-row">
+        <span class="progress-step-indicator" id="quiz-progress-text">Questão 01 de 05</span>
+        <span class="progress-pct-indicator tabular-nums" id="quiz-progress-percent">0%</span>
       </div>
-      <div class="progress-track" role="progressbar" id="quiz-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <div id="quiz-progress-fill" class="progress-fill" style="width: 0%;"></div>
+      <div class="progress-track-bar" role="progressbar" id="quiz-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="quiz-progress-fill" class="progress-track-fill" style="width: 0%;"></div>
       </div>
     </div>
 
     <!-- Active Question Card -->
-    <div id="quiz-question-card" class="question-surface">
-      <div id="quiz-question-img-wrapper" class="question-media-wrap" style="display: none;">
-        <img id="quiz-question-img" src="" alt="Visual da questão" class="question-media">
+    <div id="quiz-question-card" class="question-card-surface">
+      <div id="quiz-question-img-wrapper" class="question-media-wrapper" style="display: none;">
+        <img id="quiz-question-img" src="" alt="Visual da questão" class="question-media-img">
       </div>
       
-      <div class="question-meta-line">
-        <span class="question-counter-badge" id="question-eyebrow">QUESTÃO 01</span>
+      <div class="question-eyebrow-row">
+        <span class="question-eyebrow-tag" id="question-eyebrow">QUESTÃO 01</span>
       </div>
-      <h2 id="quiz-question-title" class="question-text"></h2>
+      <h2 id="quiz-question-title" class="question-prompt-text"></h2>
 
-      <!-- Keyboard tip -->
-      <div class="keyboard-hint-row" id="keyboard-tip-bar">
-        <span class="hint-label">Atalhos:</span>
-        <kbd class="kbd-pill">A</kbd>
-        <kbd class="kbd-pill">B</kbd>
-        <kbd class="kbd-pill">C</kbd>
-        <kbd class="kbd-pill">D</kbd>
+      <!-- Keyboard shortcuts guide -->
+      <div class="keyboard-guide-bar" id="keyboard-tip-bar">
+        <span class="guide-text">Teclas de atalho:</span>
+        <kbd class="guide-key">A</kbd>
+        <kbd class="guide-key">B</kbd>
+        <kbd class="guide-key">C</kbd>
+        <kbd class="guide-key">D</kbd>
       </div>
 
-      <!-- Options List -->
-      <div id="quiz-options-list" class="options-group" role="group" aria-label="Opções de resposta"></div>
+      <!-- Options Container -->
+      <div id="quiz-options-list" class="options-wrapper" role="group" aria-label="Opções de resposta"></div>
     </div>
 
-    <!-- Quiz Result Card (Hidden until finished) -->
-    <div id="quiz-result-card" class="result-surface" style="display: none;" role="region" aria-live="polite">
-      <div class="result-eyebrow-line">
-        <span class="badge-mono" id="result-celebration">Resultado da Avaliação</span>
+    <!-- Quiz Result Screen (Initially Hidden) -->
+    <div id="quiz-result-card" class="result-card-surface" style="display: none;" role="region" aria-live="polite">
+      <div class="result-celebration-pill">
+        <span class="celebration-dot"></span>
+        <span id="result-celebration">Resultado da Avaliação</span>
       </div>
 
-      <div id="result-img-wrapper" class="result-media-wrap" style="display: none;">
-        <img id="result-img" src="" alt="Resultado" class="result-media">
+      <div id="result-img-wrapper" class="result-media-box" style="display: none;">
+        <img id="result-img" src="" alt="Resultado" class="result-media-img">
       </div>
 
-      <div id="result-badge" class="result-icon-badge" style="display: none;"></div>
-      <h2 id="result-title" class="result-headline"></h2>
-      <p id="result-description" class="result-summary"></p>
+      <div id="result-badge" class="result-symbol-box" style="display: none;"></div>
+      <h2 id="result-title" class="result-archetype-title"></h2>
+      <p id="result-description" class="result-narrative-text"></p>
 
-      <!-- Trait Breakdown Bars -->
-      <div class="trait-breakdown-section">
-        <h3 class="trait-breakdown-heading" id="trait-breakdown-title">Distribuição dos Seus Traços</h3>
-        <div id="trait-bars-container" class="trait-bars-list"></div>
+      <!-- Trait Breakdown Section -->
+      <div class="trait-breakdown-card">
+        <h3 class="breakdown-card-heading" id="trait-breakdown-title">Distribuição dos Seus Traços</h3>
+        <div id="trait-bars-container" class="breakdown-bars-stack"></div>
       </div>
 
-      <!-- Action Panel -->
-      <div class="result-actions-row">
-        <button id="btn-share-whatsapp" class="btn btn-primary" type="button">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.98-.276-.1-.477-.15-.678.15-.201.3-.777.98-.953 1.181-.176.2-.352.226-.653.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.785-1.677-2.086-.176-.301-.019-.464.132-.614.135-.135.301-.352.452-.528.15-.176.201-.301.301-.502.101-.201.05-.377-.025-.528s-.678-1.634-.929-2.237c-.244-.587-.493-.507-.678-.516-.176-.009-.377-.01-.577-.01s-.528.075-.804.377c-.276.301-1.055 1.03-1.055 2.513s1.08 2.915 1.231 3.116c.15.201 2.125 3.245 5.148 4.551.719.311 1.281.497 1.719.636.723.23 1.381.197 1.901.12.579-.087 1.78-.728 2.031-1.431.251-.703.251-1.306.176-1.431-.075-.125-.276-.201-.577-.352zM12.04 2c-5.523 0-10 4.477-10 10 0 1.769.46 3.486 1.334 5.006l-1.374 5.016 5.143-1.349c1.472.802 3.136 1.232 4.897 1.232 5.523 0 10-4.477 10-10s-4.477-10-10-10z"/></svg>
+      <!-- Action Buttons Panel -->
+      <div class="result-cta-panel">
+        <button id="btn-share-whatsapp" class="btn btn-whatsapp" type="button">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.98-.276-.1-.477-.15-.678.15-.201.3-.777.98-.953 1.181-.176.2-.352.226-.653.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.785-1.677-2.086-.176-.301-.019-.464.132-.614.135-.135.301-.352.452-.528.15-.176.201-.301.301-.502.101-.201.05-.377-.025-.528s-.678-1.634-.929-2.237c-.244-.587-.493-.507-.678-.516-.176-.009-.377-.01-.577-.01s-.528.075-.804.377c-.276.301-1.055 1.03-1.055 2.513s1.08 2.915 1.231 3.116c.15.201 2.125 3.245 5.148 4.551.719.311 1.281.497 1.719.636.723.23 1.381.197 1.901.12.579-.087 1.78-.728 2.031-1.431.251-.703.251-1.306.176-1.431-.075-.125-.276-.201-.577-.352zM12.04 2c-5.523 0-10 4.477-10 10 0 1.769.46 3.486 1.334 5.006l-1.374 5.016 5.143-1.349c1.472.802 3.136 1.232 4.897 1.232 5.523 0 10-4.477 10-10s-4.477-10-10-10z"/></svg>
           <span id="btn-whatsapp-text">Compartilhar no WhatsApp</span>
         </button>
 
         <button id="btn-copy-link" class="btn btn-secondary" type="button">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
           <span id="btn-copy-text">Copiar Link</span>
         </button>
 
         <button id="btn-restart-quiz" class="btn btn-ghost" type="button">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
           <span id="btn-restart-text">Refazer Teste</span>
         </button>
       </div>
 
-      <div id="copy-feedback" class="copy-feedback" style="display: none;" role="status">Link copiado para a área de transferência.</div>
+      <div id="copy-feedback" class="copy-toast" style="display: none;" role="status">Link copiado com sucesso!</div>
     </div>
   </div>
 </article>
@@ -106,4 +107,4 @@ layout: default
 <script>
   window.QUIZ_BASE_URL = {{ page.url | relative_url | jsonify }};
 </script>
-<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}?v=4.0.{{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}?v=5.0.{{ site.time | date: '%s' }}"></script>

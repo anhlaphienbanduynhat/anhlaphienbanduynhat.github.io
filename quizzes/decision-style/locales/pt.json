@@ -2,52 +2,116 @@
   "title": "Qual é o seu Estilo de Tomada de Decisão?",
   "subtitle": "Descubra como sua mente processa riscos, escolhas e caminhos sob pressão.",
   "category": "Carreira",
-  "tags": ["carreira", "liderança", "estratégia"],
+  "tags": [
+    "carreira",
+    "liderança",
+    "estratégia"
+  ],
   "cover": "resources/cover.svg",
   "questions": [
     {
       "text": "Quando você precisa fazer uma escolha importante com pouco tempo, o que você faz?",
       "options": [
-        { "type": "rational", "text": "Reúno o máximo de dados e fatos disponíveis antes de bater o martelo." },
-        { "type": "intuitive", "text": "Confio na minha intuição inicial; ela quase nunca erra." },
-        { "type": "collaborative", "text": "Pergunto a opinião de colegas ou pessoas de confiança." },
-        { "type": "action", "text": "Tomo uma decisão rápida para testar na prática e ajustar no caminho." }
+        {
+          "type": "rational",
+          "text": "Reúno o máximo de dados e fatos disponíveis antes de bater o martelo."
+        },
+        {
+          "type": "intuitive",
+          "text": "Confio na minha intuição inicial; ela quase nunca erra."
+        },
+        {
+          "type": "collaborative",
+          "text": "Pergunto a opinião de colegas ou pessoas de confiança."
+        },
+        {
+          "type": "action",
+          "text": "Tomo uma decisão rápida para testar na prática e ajustar no caminho."
+        }
       ]
     },
     {
       "text": "O que mais te causa desconforto ao tomar uma decisão?",
       "options": [
-        { "type": "rational", "text": "Falta de evidências concretas ou métricas confiáveis." },
-        { "type": "intuitive", "text": "Ter que justificar excessivamente um sentimento que já tenho certeza." },
-        { "type": "collaborative", "text": "Saber que alguém importante na equipe discorda profundamente." },
-        { "type": "action", "text": "A lentidão dos processos e a indecisão alheia." }
+        {
+          "type": "rational",
+          "text": "Falta de evidências concretas ou métricas confiáveis."
+        },
+        {
+          "type": "intuitive",
+          "text": "Ter que justificar excessivamente um sentimento que já tenho certeza."
+        },
+        {
+          "type": "collaborative",
+          "text": "Saber que alguém importante na equipe discorda profundamente."
+        },
+        {
+          "type": "action",
+          "text": "A lentidão dos processos e a indecisão alheia."
+        }
       ]
     },
     {
       "text": "Em reuniões estratégicas, qual é a sua postura típica?",
       "options": [
-        { "type": "rational", "text": "Questiono premissas e peço números para embasar o debate." },
-        { "type": "intuitive", "text": "Proponho caminhos inovadores que ninguém estava enxergando." },
-        { "type": "collaborative", "text": "Ajudo a sintetizar as opiniões para encontrar um consenso forte." },
-        { "type": "action", "text": "Pressiono para definir os próximos passos e prazos imediatos." }
+        {
+          "type": "rational",
+          "text": "Questiono premissas e peço números para embasar o debate."
+        },
+        {
+          "type": "intuitive",
+          "text": "Proponho caminhos inovadores que ninguém estava enxergando."
+        },
+        {
+          "type": "collaborative",
+          "text": "Ajudo a sintetizar as opiniões para encontrar um consenso forte."
+        },
+        {
+          "type": "action",
+          "text": "Pressiono para definir os próximos passos e prazos imediatos."
+        }
       ]
     },
     {
       "text": "Como você avalia se uma decisão passada foi bem-sucedida?",
       "options": [
-        { "type": "rational", "text": "Pelos resultados mensuráveis e retorno sobre o investimento." },
-        { "type": "intuitive", "text": "Pela clareza de propósito e impacto transformador que ela gerou." },
-        { "type": "collaborative", "text": "Pelo engajamento e satisfação das pessoas envolvidas." },
-        { "type": "action", "text": "Pela velocidade de execução e marcos conquistados." }
+        {
+          "type": "rational",
+          "text": "Pelos resultados mensuráveis e retorno sobre o investimento."
+        },
+        {
+          "type": "intuitive",
+          "text": "Pela clareza de propósito e impacto transformador que ela gerou."
+        },
+        {
+          "type": "collaborative",
+          "text": "Pelo engajamento e satisfação das pessoas envolvidas."
+        },
+        {
+          "type": "action",
+          "text": "Pela velocidade de execução e marcos conquistados."
+        }
       ]
     },
     {
       "text": "Se você pudesse ter um superpoder profissional, qual seria?",
       "options": [
-        { "type": "rational", "text": "Capacidade instantânea de prever cenários com precisão matemática." },
-        { "type": "intuitive", "text": "Visão de futuro para antecipar tendências anos antes de todos." },
-        { "type": "collaborative", "text": "Poder magnético para alinhar qualquer grupo em torno de um objetivo." },
-        { "type": "action", "text": "Velocidade infinita para tirar qualquer ideia do papel sem travas." }
+        {
+          "type": "rational",
+          "text": "Capacidade instantânea de prever cenários com precisão matemática."
+        },
+        {
+          "type": "intuitive",
+          "text": "Visão de futuro para antecipar tendências anos antes de todos."
+        },
+        {
+          "type": "collaborative",
+          "text": "Poder magnético para alinhar qualquer grupo em torno de um objetivo."
+        },
+        {
+          "type": "action",
+          "text": "Velocidade infinita para tirar qualquer ideia do papel sem travas."
+        }
       ]
     }
   ],

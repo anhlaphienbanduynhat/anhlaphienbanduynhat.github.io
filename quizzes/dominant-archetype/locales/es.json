@@ -7,7 +7,7 @@
     "psicología",
     "autoconocimiento"
   ],
-  "cover": "resources/cover-en.svg",
+  "cover": "resources/cover.svg",
   "questions": [
     {
       "text": "Ante una crisis inesperada, ¿cuál es tu primer reflejo?",
