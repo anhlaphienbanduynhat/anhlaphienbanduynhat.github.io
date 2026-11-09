@@ -8,7 +8,12 @@
   <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} - {{ site.tagline }}{% endif %}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
 
-  <!-- Main Stylesheet (Quiet, Editorial, High-Contrast UI) -->
+  <!-- Fonts: Inter Variable & JetBrains Mono (from DESIGN.md) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   
   <!-- Favicon -->
@@ -65,9 +70,11 @@
 <body>
   {% include header.html %}
 
-  <!-- Top Ad Slot (AdSense Ready) -->
+  <!-- Top Ad Slot (Editorial AdSense Ready) -->
   <div class="container ad-container ad-top">
-    <div class="ad-placeholder"><span>Advertisement</span></div>
+    <div class="ad-slot-editorial">
+      <span class="ad-tag">Advertisement</span>
+    </div>
   </div>
 
   <!-- Main Content Surface -->
@@ -75,9 +82,11 @@
     {{ content }}
   </main>
 
-  <!-- Bottom Ad Slot (AdSense Ready) -->
+  <!-- Bottom Ad Slot (Editorial AdSense Ready) -->
   <div class="container ad-container ad-bottom">
-    <div class="ad-placeholder"><span>Advertisement</span></div>
+    <div class="ad-slot-editorial">
+      <span class="ad-tag">Advertisement</span>
+    </div>
   </div>
 
   {% include footer.html %}

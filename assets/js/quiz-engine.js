@@ -14,21 +14,22 @@
   var isFinished = false;
 
   // DOM Elements
+  var quizBackLink = document.getElementById('quiz-back-link');
+  var quizCategoryPill = document.getElementById('quiz-category-pill');
+  var quizTimePill = document.getElementById('quiz-time-pill');
   var quizTitle = document.getElementById('quiz-title');
   var quizSubtitle = document.getElementById('quiz-subtitle');
-  var quizCategory = document.getElementById('quiz-category');
-  var quizTimeBadge = document.getElementById('quiz-time-badge');
-  var quizCountBadge = document.getElementById('quiz-count-badge');
   var quizCoverWrapper = document.getElementById('quiz-cover-wrapper');
   var quizCoverImg = document.getElementById('quiz-cover-img');
-  var quizTagsWrapper = document.getElementById('quiz-tags-wrapper');
   var quizLangNotice = document.getElementById('quiz-lang-notice');
 
   var progressText = document.getElementById('quiz-progress-text');
   var progressPercent = document.getElementById('quiz-progress-percent');
   var progressFill = document.getElementById('quiz-progress-fill');
+  var progressBar = document.getElementById('quiz-progress-bar');
 
   var questionCard = document.getElementById('quiz-question-card');
+  var questionEyebrow = document.getElementById('question-eyebrow');
   var questionImgWrapper = document.getElementById('quiz-question-img-wrapper');
   var questionImg = document.getElementById('quiz-question-img');
   var questionTitle = document.getElementById('quiz-question-title');
@@ -41,8 +42,11 @@
   var resultBadge = document.getElementById('result-badge');
   var resultTitle = document.getElementById('result-title');
   var resultDesc = document.getElementById('result-description');
+  var traitBreakdownTitle = document.getElementById('trait-breakdown-title');
+  var traitBarsContainer = document.getElementById('trait-bars-container');
 
   var btnWhatsapp = document.getElementById('btn-share-whatsapp');
+  var btnWhatsappText = document.getElementById('btn-whatsapp-text');
   var btnCopy = document.getElementById('btn-copy-link');
   var btnCopyText = document.getElementById('btn-copy-text');
   var btnRestart = document.getElementById('btn-restart-quiz');
@@ -59,11 +63,13 @@
   function getUI(lang) {
     var i18n = window.SITE_I18N || {};
     return i18n[lang] || i18n.pt || {
-      question_of: 'Pergunta',
+      back_to_catalog: '← Todos os testes',
+      step_label: 'Questão',
       of: 'de',
       questions_label: 'questões',
-      completed: 'Concluído!',
-      celebration: '🎉 Resultado Revelado!',
+      completed: 'Avaliação Concluída',
+      celebration: 'Perfil Psicológico Revelado',
+      breakdown_title: 'Distribuição dos Seus Traços',
       share_whatsapp: 'Compartilhar no WhatsApp',
       copy_link: 'Copiar Link',
       copied_success: 'Link copiado com sucesso!',
@@ -99,8 +105,8 @@
             quizData = fallbackData;
             if (quizLangNotice) {
               quizLangNotice.textContent = targetLang === 'en' 
-                ? 'This quiz is not available in English yet. Displaying in Portuguese.'
-                : 'Este quiz ainda não está disponível no idioma selecionado.';
+                ? 'This assessment is not available in English yet. Displaying in Portuguese.'
+                : 'Esta avaliação ainda não está disponível no idioma selecionado.';
               quizLangNotice.style.display = 'block';
             }
             return fallbackData;
@@ -112,33 +118,26 @@
     if (!quizData) return;
     var ui = getUI(currentLang);
 
+    if (quizBackLink) quizBackLink.textContent = ui.back_to_catalog || '← Todos os testes';
     if (quizTitle) quizTitle.textContent = quizData.title || '';
     if (quizSubtitle) quizSubtitle.textContent = quizData.subtitle || '';
-    if (quizCategory) quizCategory.textContent = quizData.category || 'Quiz';
+    if (quizCategoryPill) quizCategoryPill.textContent = quizData.category || 'Personalidade';
 
-    // Flexible Dynamic Question Count & Duration Estimation
     var total = (quizData.questions || []).length;
     var estMinutes = calculateEstMinutes(total);
-    if (quizTimeBadge) quizTimeBadge.innerHTML = '⏱️ ~<span class="tabular-nums">' + estMinutes + '</span> min';
-    if (quizCountBadge) quizCountBadge.innerHTML = '📊 <span class="tabular-nums">' + total + '</span> ' + (ui.questions_label || 'questões');
+    if (quizTimePill) quizTimePill.textContent = '⏱ ~' + estMinutes + ' min';
 
-    // Localized Cover Image
     if (quizData.cover && quizCoverImg && quizCoverWrapper) {
       quizCoverImg.src = baseUrl + quizData.cover;
       quizCoverWrapper.style.display = 'block';
     }
 
-    // Localized Tags
-    if (quizTagsWrapper && quizData.tags) {
-      quizTagsWrapper.innerHTML = quizData.tags.map(function(tag) {
-        return '<span class="quiz-tag-pill">#' + tag + '</span>';
-      }).join('');
-    }
-
-    if (btnCopyText) btnCopyText.textContent = ui.copy_link;
-    if (btnRestartText) btnRestartText.textContent = ui.retake_quiz;
-    if (resultCelebration) resultCelebration.textContent = ui.celebration;
-    if (copyFeedback) copyFeedback.textContent = ui.copied_success;
+    if (btnCopyText) btnCopyText.textContent = ui.copy_link || 'Copiar Link';
+    if (btnWhatsappText) btnWhatsappText.textContent = ui.share_whatsapp || 'WhatsApp';
+    if (btnRestartText) btnRestartText.textContent = ui.retake_quiz || 'Refazer Teste';
+    if (resultCelebration) resultCelebration.textContent = ui.celebration || 'Perfil Psicológico Revelado';
+    if (traitBreakdownTitle) traitBreakdownTitle.textContent = ui.breakdown_title || 'Distribuição dos Seus Traços';
+    if (copyFeedback) copyFeedback.textContent = ui.copied_success || 'Link copiado com sucesso!';
   }
 
   function renderQuestion(index) {
@@ -152,12 +151,23 @@
     var currentNum = index + 1;
     var pct = Math.round((index / totalQuestions) * 100);
 
-    // Tabular numbers for clean layout without jitter (ui-skills)
-    progressText.innerHTML = (ui.question_of || 'Pergunta') + ' <span class="tabular-nums">' + currentNum + '</span> ' + (ui.of || 'de') + ' <span class="tabular-nums">' + totalQuestions + '</span>';
-    progressPercent.innerHTML = '<span class="tabular-nums">' + pct + '%</span>';
-    progressFill.style.width = pct + '%';
+    if (questionEyebrow) {
+      questionEyebrow.textContent = (ui.step_label || 'QUESTÃO') + ' ' + (currentNum < 10 ? '0' + currentNum : currentNum);
+    }
 
-    // Optional Question Image
+    if (progressText) {
+      progressText.innerHTML = (ui.step_label || 'Questão') + ' <span class="tabular-nums">' + (currentNum < 10 ? '0' + currentNum : currentNum) + '</span> ' + (ui.of || 'de') + ' <span class="tabular-nums">' + (totalQuestions < 10 ? '0' + totalQuestions : totalQuestions) + '</span>';
+    }
+    if (progressPercent) {
+      progressPercent.innerHTML = '<span class="tabular-nums">' + pct + '%</span>';
+    }
+    if (progressFill) {
+      progressFill.style.width = pct + '%';
+    }
+    if (progressBar) {
+      progressBar.setAttribute('aria-valuenow', pct);
+    }
+
     if (q.image) {
       questionImg.src = baseUrl + q.image;
       questionImgWrapper.style.display = 'block';
@@ -165,10 +175,8 @@
       questionImgWrapper.style.display = 'none';
     }
 
-    // Question Title
     questionTitle.textContent = q.text || '';
 
-    // Render Options (Flexible for any number of options per question: 2, 3, 4, 6...)
     var hasImages = q.options && q.options.some(function(opt) { return !!opt.image; });
     optionsList.className = hasImages ? 'options-container options-grid-visual' : 'options-container options-list-vertical';
     optionsList.innerHTML = '';
@@ -177,10 +185,12 @@
       var btn = document.createElement('button');
       btn.className = 'option-btn' + (opt.image ? ' has-image' : '');
       btn.type = 'button';
+      btn.setAttribute('data-index', optIndex);
+      btn.setAttribute('data-key', String.fromCharCode(65 + optIndex));
 
       var inner = '';
       if (opt.image) {
-        inner += '<div class="opt-img-box"><img src="' + baseUrl + opt.image + '" alt="Option ' + (optIndex + 1) + '"></div>';
+        inner += '<div class="opt-img-box"><img src="' + baseUrl + opt.image + '" alt="Opção ' + String.fromCharCode(65 + optIndex) + '"></div>';
       }
       inner += '<div class="opt-content">' +
         '<span class="option-marker">' + String.fromCharCode(65 + optIndex) + '</span>' +
@@ -205,7 +215,6 @@
       scores[resultType] = (scores[resultType] || 0) + 1;
     }
 
-    // Smooth 220ms transition for tactile feedback (ui-skills scale-on-press)
     setTimeout(function() {
       currentIndex++;
       var questions = (quizData && quizData.questions) ? quizData.questions : [];
@@ -214,19 +223,43 @@
       } else {
         showResults();
       }
-    }, 220);
+    }, 200);
   }
+
+  // Keyboard shortcut listener for options (A, B, C, D or 1, 2, 3, 4)
+  window.addEventListener('keydown', function(e) {
+    if (isFinished || !questionCard || questionCard.style.display === 'none') return;
+    
+    var key = e.key.toUpperCase();
+    var optIndex = -1;
+
+    if (key === 'A' || key === '1') optIndex = 0;
+    else if (key === 'B' || key === '2') optIndex = 1;
+    else if (key === 'C' || key === '3') optIndex = 2;
+    else if (key === 'D' || key === '4') optIndex = 3;
+
+    if (optIndex !== -1) {
+      var buttons = optionsList.querySelectorAll('.option-btn');
+      if (buttons[optIndex] && !buttons[optIndex].classList.contains('disabled')) {
+        e.preventDefault();
+        buttons[optIndex].click();
+      }
+    }
+  });
 
   function showResults() {
     isFinished = true;
     var ui = getUI(currentLang);
     var results = (quizData && quizData.results) ? quizData.results : {};
+    var questions = (quizData && quizData.questions) ? quizData.questions : [];
+    var totalQuestions = questions.length || 1;
 
-    progressText.innerHTML = ui.completed;
-    progressPercent.innerHTML = '<span class="tabular-nums">100%</span>';
-    progressFill.style.width = '100%';
+    if (progressText) progressText.innerHTML = ui.completed || 'Avaliação Concluída';
+    if (progressPercent) progressPercent.innerHTML = '<span class="tabular-nums">100%</span>';
+    if (progressFill) progressFill.style.width = '100%';
+    if (progressBar) progressBar.setAttribute('aria-valuenow', 100);
 
-    // Robust tie-breaking logic
+    // Calculate winning archetype
     if (!winningKey) {
       var maxScore = -1;
       var topKeys = [];
@@ -238,7 +271,6 @@
           topKeys.push(key);
         }
       }
-      // If there's a tie, choose deterministically
       winningKey = topKeys.length > 0 ? topKeys[0] : Object.keys(results)[0];
     }
 
@@ -258,6 +290,34 @@
     resultBadge.textContent = winner.badge || '🌊';
     resultTitle.textContent = winner.title || '';
     resultDesc.textContent = winner.description || '';
+
+    // Render Trait Breakdown Bars
+    if (traitBarsContainer) {
+      traitBarsContainer.innerHTML = '';
+      var totalAnswered = 0;
+      for (var sk in scores) {
+        totalAnswered += scores[sk];
+      }
+      if (totalAnswered === 0) totalAnswered = totalQuestions;
+
+      for (var rk in results) {
+        var rItem = results[rk];
+        var count = scores[rk] || 0;
+        var percentage = Math.round((count / totalAnswered) * 100);
+
+        var barRow = document.createElement('div');
+        barRow.className = 'trait-bar-row';
+        barRow.innerHTML = '<div class="trait-bar-info">' +
+          '<span class="trait-name">' + (rItem.badge ? rItem.badge + ' ' : '') + rItem.title + '</span>' +
+          '<span class="trait-pct tabular-nums">' + percentage + '%</span>' +
+        '</div>' +
+        '<div class="trait-bar-track">' +
+          '<div class="trait-bar-fill' + (rk === winningKey ? ' is-winner' : '') + '" style="width: ' + percentage + '%;"></div>' +
+        '</div>';
+
+        traitBarsContainer.appendChild(barRow);
+      }
+    }
 
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
@@ -288,8 +348,8 @@
       var qTitle = quizData.title || '';
       var rTitle = winner.title || '';
       var shareText = currentLang === 'en'
-        ? 'I took the "' + qTitle + '" quiz on Quiztide and got: ' + rTitle + '! Check yours here: ' + window.location.href
-        : 'Fiz o quiz "' + qTitle + '" no Quiztide e meu resultado foi: ' + rTitle + '! Descubra o seu: ' + window.location.href;
+        ? 'I took the "' + qTitle + '" assessment on Quiztide and got: ' + rTitle + '! Discover yours: ' + window.location.href
+        : 'Fiz a avaliação "' + qTitle + '" no Quiztide e meu resultado foi: ' + rTitle + '! Descubra o seu: ' + window.location.href;
 
       var url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareText);
       window.open(url, '_blank');
@@ -313,7 +373,7 @@
     });
   }
 
-  // Language Change Listener: Seamless Mid-Quiz Switch!
+  // Reactive mid-quiz language switch
   window.addEventListener('quiztide:langchange', function(e) {
     var newLang = e.detail.lang || 'pt';
     loadLocale(newLang).then(function() {

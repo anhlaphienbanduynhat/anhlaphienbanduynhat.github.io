@@ -4,32 +4,50 @@ title: "Home"
 ---
 
 <!-- Hero Section -->
-<div class="hero-section container">
-  <span class="hero-badge">🌊 Quiztide</span>
-  <h1 class="hero-title" id="home-hero-title"></h1>
-  <p class="hero-subtitle" id="home-hero-subtitle"></p>
+<section class="hero-section container">
+  <div class="hero-eyebrow">
+    <span class="hero-dot"></span>
+    <span id="home-hero-badge">⚡ Interactive Assessments & Archetypes</span>
+  </div>
+  
+  <h1 class="hero-title" id="home-hero-title">Descubra os padrões que guiam sua mente.</h1>
+  <p class="hero-subtitle" id="home-hero-subtitle">Avaliações interativas, sem distrações e com rigor editorial. Resultados imediatos sobre sua personalidade e instintos.</p>
 
-  <!-- Live Search Box -->
-  <div class="search-box-wrapper">
-    <input type="text" id="quiz-search-input" placeholder="🔍" class="search-input" aria-label="Search quizzes">
+  <!-- Developer-Style Search Console with Keyboard Shortcut -->
+  <div class="search-console-wrapper">
+    <div class="search-input-shell">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="quiz-search-input" placeholder="Filtrar avaliações por título ou tag..." class="search-input" aria-label="Filtrar avaliações">
+      <kbd class="kbd-shortcut" title="Pressione / para buscar">/</kbd>
+    </div>
   </div>
 
-  <!-- Dynamic Localized Tag Filter Bar -->
-  <div class="tag-filter-bar" id="tag-filter-bar" role="toolbar" aria-label="Tag filters"></div>
-</div>
+  <!-- Tag Filter Bar -->
+  <div class="tag-filter-bar" id="tag-filter-bar" role="toolbar" aria-label="Filtro de tags"></div>
+</section>
 
-<!-- Quizzes Grid -->
-<section class="container" aria-label="Quiz catalog">
+<!-- Assessment Catalog Grid -->
+<section class="container catalog-section" aria-label="Catálogo de avaliações">
+  <div class="catalog-header-bar">
+    <span class="catalog-count-label" id="catalog-count-label">Carregando avaliações...</span>
+  </div>
+
   <div class="quiz-grid" id="quiz-catalog-grid">
-    <div class="catalog-loading" id="catalog-loading">Carregando quizzes...</div>
+    <div class="catalog-loading" id="catalog-loading">Carregando catálogo de testes...</div>
   </div>
 
   <div id="no-results-msg" class="no-results-msg" style="display: none;">
-    <p id="no-results-text">Nenhum quiz disponível neste idioma.</p>
+    <div class="no-results-box">
+      <p id="no-results-text">Nenhuma avaliação encontrada com estes filtros.</p>
+      <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Limpar filtros</button>
+    </div>
   </div>
 </section>
 
-<!-- Inject All Quiz Directory URLs -->
+<!-- Inject Quiz Directory URLs -->
 <script>
   window.QUIZ_FOLDERS = [
     {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
@@ -46,8 +64,11 @@ title: "Home"
     var searchInput = document.getElementById('quiz-search-input');
     var tagFilterBar = document.getElementById('tag-filter-bar');
     var catalogGrid = document.getElementById('quiz-catalog-grid');
+    var catalogCountLabel = document.getElementById('catalog-count-label');
     var noResults = document.getElementById('no-results-msg');
     var noResultsText = document.getElementById('no-results-text');
+    var btnReset = document.getElementById('btn-reset-filters');
+    var heroBadge = document.getElementById('home-hero-badge');
     var heroTitle = document.getElementById('home-hero-title');
     var heroSubtitle = document.getElementById('home-hero-subtitle');
 
@@ -67,15 +88,23 @@ title: "Home"
       return i18n[currentLang] || i18n.pt || {};
     }
 
-    // Load available quizzes for the selected language
+    // Global keyboard shortcut: pressing '/' focuses search input
+    window.addEventListener('keydown', function(e) {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        if (searchInput) searchInput.focus();
+      }
+    });
+
     function loadCatalog(lang) {
       currentLang = lang;
       var ui = getUI();
 
+      if (heroBadge) heroBadge.textContent = ui.hero_badge || '⚡ Interactive Assessments';
       if (heroTitle) heroTitle.textContent = ui.hero_title || '';
       if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
-      if (searchInput) searchInput.placeholder = ui.search_placeholder || '🔍';
-      if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhum quiz disponível neste idioma.';
+      if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Filtrar avaliações...';
+      if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhuma avaliação encontrada.';
 
       var folders = window.QUIZ_FOLDERS || [];
       if (folders.length === 0) {
@@ -98,7 +127,7 @@ title: "Home"
                 url: url,
                 title: data.title,
                 subtitle: data.subtitle,
-                category: data.category,
+                category: data.category || 'Personality',
                 tags: data.tags || [],
                 cover: data.cover ? (url + data.cover) : null,
                 questionCount: qCount,
@@ -134,7 +163,7 @@ title: "Home"
       var allBtn = document.createElement('button');
       allBtn.type = 'button';
       allBtn.className = 'tag-filter-btn' + (activeTag === 'all' ? ' active' : '');
-      allBtn.textContent = '✨ ' + (ui.all_tags || 'Todos');
+      allBtn.textContent = (ui.all_tags || 'Todos');
       allBtn.addEventListener('click', function() {
         document.querySelectorAll('.tag-filter-btn').forEach(function(b) { b.classList.remove('active'); });
         allBtn.classList.add('active');
@@ -181,7 +210,7 @@ title: "Home"
           var card = document.createElement('article');
           card.className = 'quiz-card';
 
-          var tagsHtml = (q.tags || []).map(function(t) {
+          var tagsHtml = (q.tags || []).slice(0, 2).map(function(t) {
             return '<span class="card-tag">#' + t + '</span>';
           }).join('');
 
@@ -189,21 +218,24 @@ title: "Home"
           if (q.cover) {
             coverHtml = '<div class="card-cover-wrapper">' +
               '<img src="' + q.cover + '" alt="' + q.title + '" class="card-cover-img" loading="lazy">' +
+              '<div class="card-category-badge">' + q.category + '</div>' +
             '</div>';
           }
 
           var questionsLabel = ui.questions_label || 'questões';
-          var metaStats = '📊 <span class="tabular-nums">' + q.questionCount + '</span> ' + questionsLabel + ' · ⏱️ ~<span class="tabular-nums">' + q.estMinutes + '</span> min';
+          var metaStats = q.questionCount + ' ' + questionsLabel + ' · ~' + q.estMinutes + ' min';
 
           card.innerHTML = '<a href="' + q.url + '" class="card-link-wrapper">' +
             coverHtml +
             '<div class="card-body">' +
-              '<div class="card-tags">' + tagsHtml + '</div>' +
+              '<div class="card-meta-line">' +
+                '<span class="card-meta-stat tabular-nums">' + metaStats + '</span>' +
+                '<div class="card-tags-inline">' + tagsHtml + '</div>' +
+              '</div>' +
               '<h3 class="card-title">' + q.title + '</h3>' +
               '<p class="card-desc">' + q.subtitle + '</p>' +
               '<div class="card-footer">' +
-                '<span class="card-meta-time">' + metaStats + '</span>' +
-                '<span class="card-cta-btn">' + (ui.start_quiz || 'Começar Quiz') + ' &rarr;</span>' +
+                '<span class="card-cta-action">' + (ui.start_quiz || 'Iniciar Teste') + ' <span class="arrow-glyph" aria-hidden="true">&rarr;</span></span>' +
               '</div>' +
             '</div>' +
           '</a>';
@@ -212,6 +244,10 @@ title: "Home"
         }
       });
 
+      if (catalogCountLabel) {
+        catalogCountLabel.textContent = visibleCount + ' ' + (visibleCount === 1 ? 'avaliação disponível' : 'avaliações disponíveis');
+      }
+
       if (noResults) {
         noResults.style.display = visibleCount === 0 ? 'block' : 'none';
       }
@@ -219,6 +255,15 @@ title: "Home"
 
     if (searchInput) {
       searchInput.addEventListener('input', renderCards);
+    }
+
+    if (btnReset) {
+      btnReset.addEventListener('click', function() {
+        if (searchInput) searchInput.value = '';
+        activeTag = 'all';
+        renderTagFilterBar();
+        renderCards();
+      });
     }
 
     window.addEventListener('quiztide:langchange', function(e) {
