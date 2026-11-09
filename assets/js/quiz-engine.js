@@ -2,7 +2,6 @@
   'use strict';
 
   var baseUrl = window.QUIZ_BASE_URL || './';
-  // Ensure trailing slash
   if (baseUrl.charAt(baseUrl.length - 1) !== '/') {
     baseUrl += '/';
   }
@@ -55,6 +54,7 @@
     return i18n[lang] || i18n.pt || {
       question_of: 'Pergunta',
       of: 'de',
+      questions_label: 'questões',
       completed: 'Concluído!',
       celebration: '🎉 Resultado Revelado!',
       share_whatsapp: 'Compartilhar no WhatsApp',
@@ -78,8 +78,7 @@
         if (quizLangNotice) quizLangNotice.style.display = 'none';
         return data;
       })
-      .catch(function(err) {
-        // Fallback to pt or en if requested lang is missing
+      .catch(function() {
         var fallbackLang = targetLang === 'pt' ? 'en' : 'pt';
         var fallbackUrl = baseUrl + 'locales/' + fallbackLang + '.json';
 
@@ -110,9 +109,11 @@
     if (quizSubtitle) quizSubtitle.textContent = quizData.subtitle || '';
     if (quizCategory) quizCategory.textContent = quizData.category || 'Quiz';
 
+    // Completely dynamic question count & time estimation!
     var total = (quizData.questions || []).length;
-    if (quizTimeBadge) quizTimeBadge.textContent = '⏱️ ' + (quizData.time || '2 min');
-    if (quizCountBadge) quizCountBadge.textContent = '📊 ' + total + ' ' + (ui.question_of || 'questions');
+    var estMinutes = Math.max(1, Math.ceil(total * 0.4));
+    if (quizTimeBadge) quizTimeBadge.textContent = '⏱️ ~' + estMinutes + ' min';
+    if (quizCountBadge) quizCountBadge.textContent = '📊 ' + total + ' ' + (ui.questions_label || 'questões');
 
     // Localized Cover Image
     if (quizData.cover && quizCoverImg && quizCoverWrapper) {
@@ -159,7 +160,7 @@
     // Question Title
     questionTitle.textContent = q.text || '';
 
-    // Render Options
+    // Render Options (Flexible for any number of options per question: 2, 3, 4, 6...)
     var hasImages = q.options && q.options.some(function(opt) { return !!opt.image; });
     optionsList.className = hasImages ? 'options-container options-grid-visual' : 'options-container options-list-vertical';
     optionsList.innerHTML = '';
@@ -302,9 +303,9 @@
     loadLocale(newLang).then(function() {
       updateHeader();
       if (isFinished) {
-        showResults(); // refresh result card in new language
+        showResults();
       } else {
-        renderQuestion(currentIndex); // refresh question & options in new language! Progress preserved!
+        renderQuestion(currentIndex);
       }
     });
   });

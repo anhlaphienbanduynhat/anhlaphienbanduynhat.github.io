@@ -77,15 +77,16 @@ title: "Home"
         return;
       }
 
-      // Concurrently test and fetch each quiz's locale JSON
       var fetchPromises = folders.map(function(rawUrl) {
         var url = rawUrl;
         if (url.charAt(url.length - 1) !== '/') url += '/';
 
         return fetch(url + 'locales/' + lang + '.json')
           .then(function(res) {
-            if (!res.ok) return null; // Quiz does NOT support this language!
+            if (!res.ok) return null;
             return res.json().then(function(data) {
+              var qCount = (data.questions || []).length;
+              var estMinutes = Math.max(1, Math.ceil(qCount * 0.4));
               return {
                 url: url,
                 title: data.title,
@@ -93,7 +94,8 @@ title: "Home"
                 category: data.category,
                 tags: data.tags || [],
                 cover: data.cover ? (url + data.cover) : null,
-                time: data.time || '2 min'
+                questionCount: qCount,
+                estMinutes: estMinutes
               };
             });
           })
@@ -103,7 +105,6 @@ title: "Home"
       });
 
       Promise.all(fetchPromises).then(function(results) {
-        // Filter out nulls (quizzes that don't have this language)
         loadedQuizzes = results.filter(function(q) { return q !== null; });
         activeTag = 'all';
         renderTagFilterBar();
@@ -111,7 +112,6 @@ title: "Home"
       });
     }
 
-    // Build dynamic tag buttons from the loaded quizzes
     function renderTagFilterBar() {
       var ui = getUI();
       var tagSet = {};
@@ -185,6 +185,9 @@ title: "Home"
             '</div>';
           }
 
+          var questionsLabel = ui.questions_label || 'questões';
+          var metaStats = '📊 ' + q.questionCount + ' ' + questionsLabel + ' · ⏱️ ~' + q.estMinutes + ' min';
+
           card.innerHTML = '<a href="' + q.url + '" class="card-link-wrapper">' +
             coverHtml +
             '<div class="card-body">' +
@@ -192,7 +195,7 @@ title: "Home"
               '<h3 class="card-title">' + q.title + '</h3>' +
               '<p class="card-desc">' + q.subtitle + '</p>' +
               '<div class="card-footer">' +
-                '<span class="card-meta-time">⏱️ ' + (q.time || '2 min') + '</span>' +
+                '<span class="card-meta-time">' + metaStats + '</span>' +
                 '<span class="card-cta-btn">' + (ui.start_quiz || 'Começar Quiz') + ' &rarr;</span>' +
               '</div>' +
             '</div>' +
@@ -211,12 +214,10 @@ title: "Home"
       searchInput.addEventListener('input', renderCards);
     }
 
-    // Listen to global language change
     window.addEventListener('quiztide:langchange', function(e) {
       loadCatalog(e.detail.lang || 'pt');
     });
 
-    // Initial catalog load
     loadCatalog(currentLang);
   })();
 </script>
