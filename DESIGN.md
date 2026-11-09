@@ -1,7 +1,7 @@
 ---
 version: alpha
-name: UI Skills
-description: Design language for UI Skills.
+name: Quiztide
+description: Design language for Quiztide.
 colors:
   page-default: "#FFFFFF"
   surface-default: "#FFFFFF"
@@ -62,7 +62,7 @@ typography:
 
 ## Overview
 
-Quiet, editorial, and code-first. UI Skills should feel like a precise developer tool, not a marketing site.
+Quiet, editorial, and code-first. Quiztide should feel like a precise editorial assessment tool, not a noisy marketing site.
 
 ## Colors
 
@@ -76,7 +76,7 @@ Quiet, editorial, and code-first. UI Skills should feel like a precise developer
 ## Typography
 
 - Use Inter Variable for interface copy.
-- Use JetBrains Mono for commands, code, and technical identifiers.
+- Use JetBrains Mono for commands, code, counters, and technical identifiers.
 - Use `text-4xl`, weight 450, `leading-tight`, and `tracking-tight` for H1.
 - Use `text-xl`, weight 450, `leading-tight`, and `tracking-tight` for H2.
 - Use `text-sm`, weight 400, `leading-normal`, and `tracking-normal` for body md.
@@ -86,34 +86,28 @@ Quiet, editorial, and code-first. UI Skills should feel like a precise developer
 
 ## Layout
 
-- Use `container-7xl` for large page layouts and `container-3xl` for small page layouts.
-- Both layout utilities center their content, fill the available width, and apply `px-5` horizontal padding.
+- Centered framed container with subtle borders.
+- Center content, fill available width, and apply responsive padding.
 - Use generous vertical spacing and light section boundaries.
 - Use responsive grids for collections.
 - Keep mobile padding consistent.
-- Let long technical strings wrap or scroll.
 
 ## Elevation & Depth
 
 - Use white surfaces with `shadow-2xs`.
-- On larger screens, use `ring-1 ring-line-default` instead of visible borders.
-- On mobile, use thin top and bottom borders for full-width surfaces.
+- On larger screens, use hairline borders `1px solid #EDEDED`.
 - Keep elevation subtle.
 
 ## Shapes
 
 - Use restrained rounded corners for cards, controls, dialogs, and code blocks.
-- Keep long-form content rectangular.
 - Use `fill-subtle` and `fill-strong` for hover states.
 
 ## Components
 
-- Skill cards show the identifier, description, then source.
-- Website buttons use three sizes: lg (`h-10 px-5 gap-2 rounded-xl`), md (`h-8 px-3 gap-1.5 rounded-lg`), and sm (`h-7 px-2 gap-1 rounded-lg`), all with `text-sm` and zero vertical padding.
 - Website buttons use primary, secondary, and ghost variants. Primary uses `fill-inverse` with `content-inverse`; secondary uses `fill-default`, `line-default`, and `fill-subtle` on hover; ghost uses `fill-strong` and switches from `content-secondary` to `content-primary` on hover.
-- Buttons use square corners by default and a full-radius rounded shape when requested.
-- Code blocks use monospace text, clear surfaces, scrolling, and copy support.
-- Search uses a focused dialog with keyboard navigation and a clear empty state.
+- Scale on press feedback on buttons and options.
+- Search uses a focused bar with keyboard navigation (`/`) and a clear empty state.
 
 ## Do's and Don'ts
 

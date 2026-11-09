@@ -8,13 +8,13 @@
   <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }} - {{ site.tagline }}{% endif %}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
 
-  <!-- Fonts: Inter Variable & JetBrains Mono (from DESIGN.md) -->
+  <!-- Fonts: Inter Variable & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <!-- Main Stylesheet (with cache-busting timestamp to prevent stale browser cache) -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v=3.1.{{ site.time | date: '%s' }}">
   
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
@@ -67,29 +67,18 @@
     };
   </script>
 </head>
-<body>
-  {% include header.html %}
+<body class="editorial-body">
+  <!-- Framed Editorial Canvas -->
+  <div class="framed-canvas">
+    {% include header.html %}
 
-  <!-- Top Ad Slot (Editorial AdSense Ready) -->
-  <div class="container ad-container ad-top">
-    <div class="ad-slot-editorial">
-      <span class="ad-tag">Advertisement</span>
-    </div>
+    <!-- Main Content Surface -->
+    <main class="main-content" id="main-content">
+      {{ content }}
+    </main>
+
+    {% include footer.html %}
   </div>
-
-  <!-- Main Content Surface -->
-  <main class="main-content" id="main-content">
-    {{ content }}
-  </main>
-
-  <!-- Bottom Ad Slot (Editorial AdSense Ready) -->
-  <div class="container ad-container ad-bottom">
-    <div class="ad-slot-editorial">
-      <span class="ad-tag">Advertisement</span>
-    </div>
-  </div>
-
-  {% include footer.html %}
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

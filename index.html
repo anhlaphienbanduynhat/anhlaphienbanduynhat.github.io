@@ -3,51 +3,114 @@ layout: default
 title: "Home"
 ---
 
-<!-- Hero Section -->
-<section class="hero-section container">
-  <div class="hero-eyebrow">
-    <span class="hero-dot"></span>
-    <span id="home-hero-badge">⚡ Interactive Assessments & Archetypes</span>
-  </div>
-  
-  <h1 class="hero-title" id="home-hero-title">Descubra os padrões que guiam sua mente.</h1>
-  <p class="hero-subtitle" id="home-hero-subtitle">Avaliações interativas, sem distrações e com rigor editorial. Resultados imediatos sobre sua personalidade e instintos.</p>
+<!-- Hero Section with Spotlight Assessment -->
+<section class="hero-spotlight-section">
+  <div class="hero-inner">
+    <div class="spotlight-dossier">
+      <div class="hero-eyebrow">
+        <span class="hero-dot"></span>
+        <span id="home-hero-badge">⚡ Avaliações de Autoconhecimento & Arquétipos</span>
+      </div>
+      
+      <h1 class="hero-title" id="home-hero-title">Descubra os padrões que guiam sua mente.</h1>
+      <p class="hero-subtitle" id="home-hero-subtitle">Avaliações psicométricas interativas, sem distrações e com rigor editorial. Resultados imediatos com análise detalhada dos seus traços psicológicos.</p>
 
-  <!-- Developer-Style Search Console with Keyboard Shortcut -->
-  <div class="search-console-wrapper">
-    <div class="search-input-shell">
-      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <!-- Featured Assessment Action Card -->
+      <div class="spotlight-featured-box" id="spotlight-box">
+        <div class="spotlight-header">
+          <span class="spotlight-kicker" id="spotlight-kicker">AVALIAÇÃO EM DESTAQUE</span>
+          <span class="spotlight-time-tag tabular-nums" id="spotlight-time-tag">⏱ ~2 min · 6 questões</span>
+        </div>
+        <h2 class="spotlight-title" id="spotlight-title">Qual é o seu Arquétipo Dominante de Personalidade?</h2>
+        <p class="spotlight-desc" id="spotlight-desc">Descubra o padrão psicológico que guia suas decisões, instintos e forças naturais em cenários práticos do cotidiano.</p>
+        
+        <div class="spotlight-action-row">
+          <a href="{{ '/quizzes/dominant-archetype/' | relative_url }}" class="btn btn-primary" id="spotlight-cta">
+            <span id="spotlight-cta-text">Iniciar Avaliação Agora</span>
+            <span class="arrow-glyph" aria-hidden="true">&rarr;</span>
+          </a>
+          <span class="spotlight-free-tag">100% gratuito · Sem cadastro</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Archetypes Visual Showcase Micro-Grid -->
+    <div class="spotlight-archetype-preview" aria-hidden="true">
+      <div class="archetype-preview-header">
+        <span class="preview-label">4 Arquétipos Mapeados</span>
+        <span class="preview-sub">Psicologia Analítica</span>
+      </div>
+      <div class="archetype-micro-grid">
+        <div class="archetype-micro-card">
+          <div class="archetype-card-badge">👑</div>
+          <div class="archetype-card-name">Comandante</div>
+          <div class="archetype-card-sub">Estratégia & Ordem</div>
+        </div>
+        <div class="archetype-micro-card">
+          <div class="archetype-card-badge">🎨</div>
+          <div class="archetype-card-name">Visionário</div>
+          <div class="archetype-card-sub">Criação & Ruptura</div>
+        </div>
+        <div class="archetype-micro-card">
+          <div class="archetype-card-badge">🦉</div>
+          <div class="archetype-card-name">Sábio</div>
+          <div class="archetype-card-sub">Lógica & Verdade</div>
+        </div>
+        <div class="archetype-micro-card">
+          <div class="archetype-card-badge">🌿</div>
+          <div class="archetype-card-name">Guardião</div>
+          <div class="archetype-card-sub">Empatia & União</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter & Search Toolbar -->
+<section class="catalog-toolbar-section">
+  <div class="toolbar-header">
+    <div class="toolbar-search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="text" id="quiz-search-input" placeholder="Filtrar avaliações por título ou tag..." class="search-input" aria-label="Filtrar avaliações">
-      <kbd class="kbd-shortcut" title="Pressione / para buscar">/</kbd>
+      <input type="text" id="quiz-search-input" placeholder="Buscar avaliações por título, arquétipo ou tag..." class="toolbar-search-input" aria-label="Buscar avaliações">
+      <kbd class="kbd-shortcut" title="Atalho: pressione / no teclado">/</kbd>
+    </div>
+
+    <div class="view-mode-toggle" role="group" aria-label="Modo de visualização">
+      <button type="button" class="view-toggle-btn active" id="view-mode-grid" title="Visualização em Grade">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </button>
+      <button type="button" class="view-toggle-btn" id="view-mode-list" title="Visualização em Lista">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
     </div>
   </div>
 
-  <!-- Tag Filter Bar -->
-  <div class="tag-filter-bar" id="tag-filter-bar" role="toolbar" aria-label="Filtro de tags"></div>
+  <!-- Dynamic Tag Filter Bar -->
+  <div class="tag-filter-bar" id="tag-filter-bar" role="toolbar" aria-label="Tags"></div>
 </section>
 
-<!-- Assessment Catalog Grid -->
-<section class="container catalog-section" aria-label="Catálogo de avaliações">
-  <div class="catalog-header-bar">
-    <span class="catalog-count-label" id="catalog-count-label">Carregando avaliações...</span>
+<!-- Assessments Collection -->
+<section class="catalog-feed-section" aria-label="Catálogo completo de avaliações">
+  <div class="catalog-status-bar">
+    <span class="catalog-count-label" id="catalog-count-label">Carregando catálogo...</span>
   </div>
 
-  <div class="quiz-grid" id="quiz-catalog-grid">
-    <div class="catalog-loading" id="catalog-loading">Carregando catálogo de testes...</div>
+  <div class="quiz-collection view-grid" id="quiz-catalog-collection">
+    <div class="catalog-loading" id="catalog-loading">Carregando avaliações disponíveis...</div>
   </div>
 
   <div id="no-results-msg" class="no-results-msg" style="display: none;">
     <div class="no-results-box">
-      <p id="no-results-text">Nenhuma avaliação encontrada com estes filtros.</p>
-      <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Limpar filtros</button>
+      <p id="no-results-text">Nenhuma avaliação encontrada com estes critérios.</p>
+      <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Redefinir filtros</button>
     </div>
   </div>
 </section>
 
-<!-- Inject Quiz Directory URLs -->
+<!-- Inject All Quiz Directory URLs -->
 <script>
   window.QUIZ_FOLDERS = [
     {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
@@ -63,17 +126,24 @@ title: "Home"
 
     var searchInput = document.getElementById('quiz-search-input');
     var tagFilterBar = document.getElementById('tag-filter-bar');
-    var catalogGrid = document.getElementById('quiz-catalog-grid');
+    var catalogCollection = document.getElementById('quiz-catalog-collection');
     var catalogCountLabel = document.getElementById('catalog-count-label');
     var noResults = document.getElementById('no-results-msg');
     var noResultsText = document.getElementById('no-results-text');
     var btnReset = document.getElementById('btn-reset-filters');
+    var viewModeGridBtn = document.getElementById('view-mode-grid');
+    var viewModeListBtn = document.getElementById('view-mode-list');
+
     var heroBadge = document.getElementById('home-hero-badge');
     var heroTitle = document.getElementById('home-hero-title');
     var heroSubtitle = document.getElementById('home-hero-subtitle');
+    var spotlightTitle = document.getElementById('spotlight-title');
+    var spotlightDesc = document.getElementById('spotlight-desc');
+    var spotlightCtaText = document.getElementById('spotlight-cta-text');
 
     var currentLang = window.CURRENT_LANG || 'pt';
     var activeTag = 'all';
+    var activeView = 'grid';
     var loadedQuizzes = [];
 
     function calculateEstMinutes(questionCount) {
@@ -88,7 +158,7 @@ title: "Home"
       return i18n[currentLang] || i18n.pt || {};
     }
 
-    // Global keyboard shortcut: pressing '/' focuses search input
+    // Keyboard shortcut '/' focuses search
     window.addEventListener('keydown', function(e) {
       if (e.key === '/' && document.activeElement !== searchInput) {
         e.preventDefault();
@@ -96,19 +166,36 @@ title: "Home"
       }
     });
 
+    if (viewModeGridBtn && viewModeListBtn) {
+      viewModeGridBtn.addEventListener('click', function() {
+        activeView = 'grid';
+        viewModeGridBtn.classList.add('active');
+        viewModeListBtn.classList.remove('active');
+        catalogCollection.className = 'quiz-collection view-grid';
+      });
+
+      viewModeListBtn.addEventListener('click', function() {
+        activeView = 'list';
+        viewModeListBtn.classList.add('active');
+        viewModeGridBtn.classList.remove('active');
+        catalogCollection.className = 'quiz-collection view-list';
+      });
+    }
+
     function loadCatalog(lang) {
       currentLang = lang;
       var ui = getUI();
 
-      if (heroBadge) heroBadge.textContent = ui.hero_badge || '⚡ Interactive Assessments';
+      if (heroBadge) heroBadge.textContent = ui.hero_badge || '⚡ Avaliações de Autoconhecimento & Arquétipos';
       if (heroTitle) heroTitle.textContent = ui.hero_title || '';
       if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
-      if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Filtrar avaliações...';
+      if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Buscar avaliações por título ou tag...';
       if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhuma avaliação encontrada.';
+      if (spotlightCtaText) spotlightCtaText.textContent = (ui.start_quiz || 'Iniciar Avaliação') + ' Agora';
 
       var folders = window.QUIZ_FOLDERS || [];
       if (folders.length === 0) {
-        catalogGrid.innerHTML = '';
+        catalogCollection.innerHTML = '';
         if (noResults) noResults.style.display = 'block';
         return;
       }
@@ -127,7 +214,7 @@ title: "Home"
                 url: url,
                 title: data.title,
                 subtitle: data.subtitle,
-                category: data.category || 'Personality',
+                category: data.category || 'Personalidade',
                 tags: data.tags || [],
                 cover: data.cover ? (url + data.cover) : null,
                 questionCount: qCount,
@@ -142,6 +229,14 @@ title: "Home"
 
       Promise.all(fetchPromises).then(function(results) {
         loadedQuizzes = results.filter(function(q) { return q !== null; });
+
+        // Update Spotlight card with first available quiz
+        if (loadedQuizzes.length > 0) {
+          var firstQ = loadedQuizzes[0];
+          if (spotlightTitle) spotlightTitle.textContent = firstQ.title;
+          if (spotlightDesc) spotlightDesc.textContent = firstQ.subtitle;
+        }
+
         activeTag = 'all';
         renderTagFilterBar();
         renderCards();
@@ -192,7 +287,7 @@ title: "Home"
       var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
       var visibleCount = 0;
 
-      catalogGrid.innerHTML = '';
+      catalogCollection.innerHTML = '';
 
       loadedQuizzes.forEach(function(q) {
         var title = (q.title || '').toLowerCase();
@@ -207,45 +302,48 @@ title: "Home"
 
         if (matchesTag && matchesQuery) {
           visibleCount++;
-          var card = document.createElement('article');
-          card.className = 'quiz-card';
+          var item = document.createElement('article');
+          item.className = 'quiz-entry-item';
 
           var tagsHtml = (q.tags || []).slice(0, 2).map(function(t) {
-            return '<span class="card-tag">#' + t + '</span>';
+            return '<span class="entry-tag">#' + t + '</span>';
           }).join('');
 
           var coverHtml = '';
           if (q.cover) {
-            coverHtml = '<div class="card-cover-wrapper">' +
-              '<img src="' + q.cover + '" alt="' + q.title + '" class="card-cover-img" loading="lazy">' +
-              '<div class="card-category-badge">' + q.category + '</div>' +
+            coverHtml = '<div class="entry-cover-box">' +
+              '<img src="' + q.cover + '" alt="' + q.title + '" class="entry-cover-img" loading="lazy">' +
+              '<span class="entry-cat-pill">' + q.category + '</span>' +
             '</div>';
           }
 
           var questionsLabel = ui.questions_label || 'questões';
           var metaStats = q.questionCount + ' ' + questionsLabel + ' · ~' + q.estMinutes + ' min';
 
-          card.innerHTML = '<a href="' + q.url + '" class="card-link-wrapper">' +
+          item.innerHTML = '<a href="' + q.url + '" class="entry-link">' +
             coverHtml +
-            '<div class="card-body">' +
-              '<div class="card-meta-line">' +
-                '<span class="card-meta-stat tabular-nums">' + metaStats + '</span>' +
-                '<div class="card-tags-inline">' + tagsHtml + '</div>' +
+            '<div class="entry-body">' +
+              '<div class="entry-meta-row">' +
+                '<span class="entry-stat tabular-nums">' + metaStats + '</span>' +
+                '<div class="entry-tags-inline">' + tagsHtml + '</div>' +
               '</div>' +
-              '<h3 class="card-title">' + q.title + '</h3>' +
-              '<p class="card-desc">' + q.subtitle + '</p>' +
-              '<div class="card-footer">' +
-                '<span class="card-cta-action">' + (ui.start_quiz || 'Iniciar Teste') + ' <span class="arrow-glyph" aria-hidden="true">&rarr;</span></span>' +
+              '<h3 class="entry-title">' + q.title + '</h3>' +
+              '<p class="entry-desc">' + q.subtitle + '</p>' +
+              '<div class="entry-footer">' +
+                '<span class="entry-cta">' + (ui.start_quiz || 'Iniciar Teste') + ' <span class="arrow-glyph" aria-hidden="true">&rarr;</span></span>' +
               '</div>' +
             '</div>' +
           '</a>';
 
-          catalogGrid.appendChild(card);
+          catalogCollection.appendChild(item);
         }
       });
 
       if (catalogCountLabel) {
-        catalogCountLabel.textContent = visibleCount + ' ' + (visibleCount === 1 ? 'avaliação disponível' : 'avaliações disponíveis');
+        var labelStr = currentLang === 'en' 
+          ? visibleCount + ' assessment' + (visibleCount === 1 ? '' : 's') + ' available'
+          : visibleCount + ' ' + (visibleCount === 1 ? 'avaliação disponível' : 'avaliações disponíveis');
+        catalogCountLabel.textContent = labelStr;
       }
 
       if (noResults) {
