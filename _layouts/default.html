@@ -21,92 +21,28 @@
 
   {% seo %}
 
-  <!-- Multilingual Data Dictionary & Vector Flags -->
+  <!-- i18n Global Dictionary -->
   <script>
     window.SITE_I18N = {{ site.data.i18n | jsonify }};
     window.CURRENT_LANG = localStorage.getItem('quiztide_lang') || 'pt';
-
-    var FLAG_SVGS = {
-      pt: '<svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="15" rx="2" fill="#009B3A"/><polygon points="10,2 18,7.5 10,13 2,7.5" fill="#FEDF00"/><circle cx="10" cy="7.5" r="3.2" fill="#002776"/><path d="M7.2 7.7 C8.2 6.5, 11.8 6.5, 12.8 7.7" stroke="#FFFFFF" stroke-width="0.6" fill="none"/></svg>',
-      en: '<svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="15" rx="2" fill="#B22234"/><line x1="0" y1="2.3" x2="20" y2="2.3" stroke="#FFFFFF" stroke-width="1.15"/><line x1="0" y1="4.6" x2="20" y2="4.6" stroke="#FFFFFF" stroke-width="1.15"/><line x1="0" y1="6.9" x2="20" y2="6.9" stroke="#FFFFFF" stroke-width="1.15"/><line x1="0" y1="9.2" x2="20" y2="9.2" stroke="#FFFFFF" stroke-width="1.15"/><line x1="0" y1="11.5" x2="20" y2="11.5" stroke="#FFFFFF" stroke-width="1.15"/><line x1="0" y1="13.8" x2="20" y2="13.8" stroke="#FFFFFF" stroke-width="1.15"/><rect width="8.5" height="8" rx="1" fill="#3C3B6E"/><circle cx="2.2" cy="2" r="0.6" fill="#FFFFFF"/><circle cx="4.25" cy="2" r="0.6" fill="#FFFFFF"/><circle cx="6.3" cy="2" r="0.6" fill="#FFFFFF"/><circle cx="3.2" cy="4" r="0.6" fill="#FFFFFF"/><circle cx="5.3" cy="4" r="0.6" fill="#FFFFFF"/><circle cx="2.2" cy="6" r="0.6" fill="#FFFFFF"/><circle cx="4.25" cy="6" r="0.6" fill="#FFFFFF"/><circle cx="6.3" cy="6" r="0.6" fill="#FFFFFF"/></svg>',
-      es: '<svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="15" rx="2" fill="#AA151B"/><rect y="3.75" width="20" height="7.5" fill="#F1BF00"/><rect x="4" y="6" width="2.5" height="3" rx="0.5" fill="#AA151B"/><circle cx="5.25" cy="5.2" r="0.6" fill="#AA151B"/></svg>'
-    };
-
-    var LANG_LABELS = {
-      pt: 'Português',
-      en: 'English',
-      es: 'Español'
-    };
-
-    window.toggleLangDropdown = function() {
-      var dropdown = document.getElementById('lang-dropdown');
-      var trigger = document.getElementById('lang-dropdown-btn');
-      if (!dropdown) return;
-      var isOpen = dropdown.classList.toggle('is-open');
-      if (trigger) trigger.setAttribute('aria-expanded', isOpen);
-    };
-
-    document.addEventListener('click', function(e) {
-      var dropdown = document.getElementById('lang-dropdown');
-      var trigger = document.getElementById('lang-dropdown-btn');
-      if (dropdown && !dropdown.contains(e.target)) {
-        dropdown.classList.remove('is-open');
-        if (trigger) trigger.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        var dropdown = document.getElementById('lang-dropdown');
-        var trigger = document.getElementById('lang-dropdown-btn');
-        if (dropdown) dropdown.classList.remove('is-open');
-        if (trigger) trigger.setAttribute('aria-expanded', 'false');
-      }
-    });
 
     window.setLanguage = function(lang) {
       window.CURRENT_LANG = lang;
       localStorage.setItem('quiztide_lang', lang);
       document.documentElement.lang = lang;
 
-      var flagBox = document.getElementById('current-flag-box');
-      var nameBox = document.getElementById('current-lang-name');
-      if (flagBox && FLAG_SVGS[lang]) flagBox.innerHTML = FLAG_SVGS[lang];
-      if (nameBox && LANG_LABELS[lang]) nameBox.textContent = LANG_LABELS[lang];
-
-      document.querySelectorAll('.lang-option-item').forEach(function(item) {
-        item.classList.toggle('active', item.dataset.lang === lang);
-      });
+      var flagImg = document.getElementById('current-flag-img');
+      var langName = document.getElementById('current-lang-name');
+      var flagMap = {
+        pt: { flag: '{{ "/assets/images/flags/br.svg" | relative_url }}', name: 'Português' },
+        en: { flag: '{{ "/assets/images/flags/us.svg" | relative_url }}', name: 'English' },
+        es: { flag: '{{ "/assets/images/flags/es.svg" | relative_url }}', name: 'Español' }
+      };
+      if (flagImg && flagMap[lang]) flagImg.src = flagMap[lang].flag;
+      if (langName && flagMap[lang]) langName.textContent = flagMap[lang].name;
 
       var dropdown = document.getElementById('lang-dropdown');
-      var trigger = document.getElementById('lang-dropdown-btn');
-      if (dropdown) dropdown.classList.remove('is-open');
-      if (trigger) trigger.setAttribute('aria-expanded', 'false');
-
-      var t = window.SITE_I18N[lang] || window.SITE_I18N.pt || {};
-      
-      var navHome = document.getElementById('nav-link-home');
-      var navAbout = document.getElementById('nav-link-about');
-      if (navHome) navHome.textContent = t.nav_home;
-      if (navAbout) navAbout.textContent = t.nav_about;
-
-      var footerDesc = document.getElementById('footer-desc');
-      var footerNavHeading = document.getElementById('footer-nav-heading');
-      var footerNavHome = document.getElementById('footer-nav-home');
-      var footerNavAbout = document.getElementById('footer-nav-about');
-      var footerNavContact = document.getElementById('footer-nav-contact');
-      var footerLegalHeading = document.getElementById('footer-legal-heading');
-      var footerNavPrivacy = document.getElementById('footer-nav-privacy');
-      var footerNavTerms = document.getElementById('footer-nav-terms');
-
-      if (footerDesc) footerDesc.textContent = t.site_tagline;
-      if (footerNavHeading) footerNavHeading.textContent = t.nav_heading;
-      if (footerNavHome) footerNavHome.textContent = t.nav_home;
-      if (footerNavAbout) footerNavAbout.textContent = t.nav_about;
-      if (footerNavContact) footerNavContact.textContent = t.nav_contact;
-      if (footerLegalHeading) footerLegalHeading.textContent = t.legal_heading;
-      if (footerNavPrivacy) footerNavPrivacy.textContent = t.nav_privacy;
-      if (footerNavTerms) footerNavTerms.textContent = t.nav_terms;
+      if (dropdown) dropdown.removeAttribute('open');
 
       window.dispatchEvent(new CustomEvent('quiztide:langchange', { detail: { lang: lang } }));
     };
@@ -124,6 +60,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       window.setLanguage(window.CURRENT_LANG);
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        var dropdown = document.getElementById('lang-dropdown');
+        if (dropdown && dropdown.hasAttribute('open') && !dropdown.contains(e.target)) {
+          dropdown.removeAttribute('open');
+        }
+      });
     });
   </script>
 </body>

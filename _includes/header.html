@@ -16,76 +16,31 @@
         <a href="{{ '/about/' | relative_url }}" id="nav-link-about" class="nav-item">Sobre</a>
       </nav>
 
-      <!-- Custom Language Select with Real SVG Flags -->
-      <div class="lang-dropdown" id="lang-dropdown">
-        <button type="button" class="lang-dropdown-trigger" id="lang-dropdown-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Selecionar idioma" onclick="window.toggleLangDropdown()">
-          <span class="current-flag-box" id="current-flag-box">
-            <svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="20" height="15" rx="2" fill="#009B3A"/>
-              <polygon points="10,2 18,7.5 10,13 2,7.5" fill="#FEDF00"/>
-              <circle cx="10" cy="7.5" r="3.2" fill="#002776"/>
-              <path d="M7.2 7.7 C8.2 6.5, 11.8 6.5, 12.8 7.7" stroke="#FFFFFF" stroke-width="0.6" fill="none"/>
-            </svg>
-          </span>
+      <!-- Language Dropdown with Real Flag Images -->
+      <details class="lang-dropdown" id="lang-dropdown">
+        <summary class="lang-dropdown-trigger" aria-label="Selecionar idioma">
+          <img src="{{ '/assets/images/flags/br.svg' | relative_url }}" alt="Português" class="current-flag-img" id="current-flag-img" width="20" height="15">
           <span class="current-lang-name" id="current-lang-name">Português</span>
           <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
-        </button>
+        </summary>
 
-        <div class="lang-dropdown-menu" id="lang-dropdown-menu" role="listbox" aria-label="Opções de idioma">
-          <button type="button" class="lang-option-item active" role="option" data-lang="pt" onclick="window.setLanguage('pt')">
-            <span class="flag-wrap">
-              <svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="20" height="15" rx="2" fill="#009B3A"/>
-                <polygon points="10,2 18,7.5 10,13 2,7.5" fill="#FEDF00"/>
-                <circle cx="10" cy="7.5" r="3.2" fill="#002776"/>
-                <path d="M7.2 7.7 C8.2 6.5, 11.8 6.5, 12.8 7.7" stroke="#FFFFFF" stroke-width="0.6" fill="none"/>
-              </svg>
-            </span>
+        <div class="lang-dropdown-menu" role="menu">
+          <button type="button" class="lang-option-item" onclick="window.setLanguage('pt')">
+            <img src="{{ '/assets/images/flags/br.svg' | relative_url }}" alt="Português" width="20" height="15" class="menu-flag-img">
             <span class="lang-label">Português</span>
-            <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </button>
-
-          <button type="button" class="lang-option-item" role="option" data-lang="en" onclick="window.setLanguage('en')">
-            <span class="flag-wrap">
-              <svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="20" height="15" rx="2" fill="#B22234"/>
-                <line x1="0" y1="2.3" x2="20" y2="2.3" stroke="#FFFFFF" stroke-width="1.15"/>
-                <line x1="0" y1="4.6" x2="20" y2="4.6" stroke="#FFFFFF" stroke-width="1.15"/>
-                <line x1="0" y1="6.9" x2="20" y2="6.9" stroke="#FFFFFF" stroke-width="1.15"/>
-                <line x1="0" y1="9.2" x2="20" y2="9.2" stroke="#FFFFFF" stroke-width="1.15"/>
-                <line x1="0" y1="11.5" x2="20" y2="11.5" stroke="#FFFFFF" stroke-width="1.15"/>
-                <line x1="0" y1="13.8" x2="20" y2="13.8" stroke="#FFFFFF" stroke-width="1.15"/>
-                <rect width="8.5" height="8" rx="1" fill="#3C3B6E"/>
-                <circle cx="2.2" cy="2" r="0.6" fill="#FFFFFF"/>
-                <circle cx="4.25" cy="2" r="0.6" fill="#FFFFFF"/>
-                <circle cx="6.3" cy="2" r="0.6" fill="#FFFFFF"/>
-                <circle cx="3.2" cy="4" r="0.6" fill="#FFFFFF"/>
-                <circle cx="5.3" cy="4" r="0.6" fill="#FFFFFF"/>
-                <circle cx="2.2" cy="6" r="0.6" fill="#FFFFFF"/>
-                <circle cx="4.25" cy="6" r="0.6" fill="#FFFFFF"/>
-                <circle cx="6.3" cy="6" r="0.6" fill="#FFFFFF"/>
-              </svg>
-            </span>
+          <button type="button" class="lang-option-item" onclick="window.setLanguage('en')">
+            <img src="{{ '/assets/images/flags/us.svg' | relative_url }}" alt="English" width="20" height="15" class="menu-flag-img">
             <span class="lang-label">English</span>
-            <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </button>
-
-          <button type="button" class="lang-option-item" role="option" data-lang="es" onclick="window.setLanguage('es')">
-            <span class="flag-wrap">
-              <svg class="flag-icon" width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="20" height="15" rx="2" fill="#AA151B"/>
-                <rect y="3.75" width="20" height="7.5" fill="#F1BF00"/>
-                <rect x="4" y="6" width="2.5" height="3" rx="0.5" fill="#AA151B"/>
-                <circle cx="5.25" cy="5.2" r="0.6" fill="#AA151B"/>
-              </svg>
-            </span>
+          <button type="button" class="lang-option-item" onclick="window.setLanguage('es')">
+            <img src="{{ '/assets/images/flags/es.svg' | relative_url }}" alt="Español" width="20" height="15" class="menu-flag-img">
             <span class="lang-label">Español</span>
-            <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </button>
         </div>
-      </div>
+      </details>
     </div>
   </div>
 </header>

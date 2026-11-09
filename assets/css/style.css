@@ -180,6 +180,14 @@ input:focus:not(:focus-visible) {
   position: relative;
 }
 
+summary.lang-dropdown-trigger {
+  list-style: none;
+}
+
+summary.lang-dropdown-trigger::-webkit-details-marker {
+  display: none;
+}
+
 .lang-dropdown-trigger {
   display: inline-flex;
   align-items: center;
@@ -196,6 +204,7 @@ input:focus:not(:focus-visible) {
   color: var(--text-primary);
   box-shadow: var(--shadow-sm);
   transition: all 120ms ease;
+  user-select: none;
 }
 
 .lang-dropdown-trigger:hover {
@@ -203,19 +212,15 @@ input:focus:not(:focus-visible) {
   background: #f8fafc;
 }
 
-.current-flag-box {
-  display: flex;
-  align-items: center;
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
-}
-
-.flag-icon {
-  display: block;
+.current-flag-img,
+.menu-flag-img {
+  display: inline-block;
   width: 20px;
   height: 15px;
   border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .current-lang-name {
@@ -229,7 +234,8 @@ input:focus:not(:focus-visible) {
   transition: transform 150ms ease;
 }
 
-.lang-dropdown.is-open .dropdown-chevron {
+.lang-dropdown.is-open .dropdown-chevron,
+details.lang-dropdown[open] .dropdown-chevron {
   transform: rotate(180deg);
 }
 
@@ -255,7 +261,8 @@ input:focus:not(:focus-visible) {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.lang-dropdown.is-open .lang-dropdown-menu {
+.lang-dropdown.is-open .lang-dropdown-menu,
+details.lang-dropdown[open] .lang-dropdown-menu {
   display: flex;
 }
 

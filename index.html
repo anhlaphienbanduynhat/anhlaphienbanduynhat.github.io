@@ -35,31 +35,21 @@ title: "Avaliações"
 <section class="catalog-section" aria-label="Catálogo de avaliações">
   <div class="catalog-container">
     <div class="catalog-meta">
-      <span class="catalog-counter" id="catalog-count-label">Carregando avaliações...</span>
+      <span class="catalog-counter" id="catalog-count-label"></span>
     </div>
 
-    <div class="quiz-grid" id="quiz-catalog-collection">
-      <div class="loading-state" id="catalog-loading">Carregando catálogo...</div>
-    </div>
+    <div class="quiz-grid" id="quiz-catalog-collection"></div>
 
     <div id="no-results-msg" class="empty-state" style="display: none;">
-      <p id="no-results-text" class="empty-text">Nenhuma avaliação encontrada para os critérios selecionados.</p>
+      <p id="no-results-text" class="empty-text">Nenhuma avaliação encontrada.</p>
       <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Limpar filtros</button>
     </div>
   </div>
 </section>
 
-<!-- Inject All Quiz Directory URLs -->
 <script>
-  window.QUIZ_FOLDERS = [
-    {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
-    {% for q in quiz_pages %}
-      "{{ q.url | relative_url }}"{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
-</script>
+  window.QUIZZES = {{ site.data.quizzes | jsonify }};
 
-<script>
   (function() {
     'use strict';
 
@@ -68,91 +58,33 @@ title: "Avaliações"
     var catalogCollection = document.getElementById('quiz-catalog-collection');
     var catalogCountLabel = document.getElementById('catalog-count-label');
     var noResults = document.getElementById('no-results-msg');
-    var noResultsText = document.getElementById('no-results-text');
     var btnReset = document.getElementById('btn-reset-filters');
+    var heroBadge = document.getElementById('hero-badge-text');
     var heroTitle = document.getElementById('home-hero-title');
     var heroSubtitle = document.getElementById('home-hero-subtitle');
 
-    var currentLang = window.CURRENT_LANG || 'pt';
     var activeTag = 'all';
-    var loadedQuizzes = [];
 
-    function calculateEstMinutes(questionCount) {
-      if (questionCount <= 3) return 1;
-      if (questionCount <= 7) return 2;
-      if (questionCount <= 12) return 3;
-      return Math.ceil(questionCount * 0.35);
+    function getLang() {
+      return window.CURRENT_LANG || 'pt';
     }
 
-    function getUI() {
-      var i18n = window.SITE_I18N || {};
-      return i18n[currentLang] || i18n.pt || {};
-    }
-
-    window.addEventListener('keydown', function(e) {
-      if (e.key === '/' && document.activeElement !== searchInput) {
-        e.preventDefault();
-        if (searchInput) searchInput.focus();
-      }
-    });
-
-    function loadCatalog(lang) {
-      currentLang = lang;
-      var ui = getUI();
-
-      if (heroTitle) heroTitle.textContent = ui.hero_title || '';
-      if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
-      if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Buscar por título ou tema...';
-      if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhuma avaliação encontrada.';
-
-      var folders = window.QUIZ_FOLDERS || [];
-      if (folders.length === 0) {
-        catalogCollection.innerHTML = '';
-        if (noResults) noResults.style.display = 'block';
-        return;
-      }
-
-      var fetchPromises = folders.map(function(rawUrl) {
-        var url = rawUrl;
-        if (url.charAt(url.length - 1) !== '/') url += '/';
-
-        return fetch(url + 'locales/' + lang + '.json')
-          .then(function(res) {
-            if (!res.ok) return null;
-            return res.json().then(function(data) {
-              var qCount = (data.questions || []).length;
-              var estMinutes = calculateEstMinutes(qCount);
-              return {
-                url: url,
-                title: data.title,
-                subtitle: data.subtitle,
-                category: data.category || 'Personalidade',
-                tags: data.tags || [],
-                cover: data.cover ? (url + data.cover) : null,
-                questionCount: qCount,
-                estMinutes: estMinutes
-              };
-            });
-          })
-          .catch(function() {
-            return null;
-          });
-      });
-
-      Promise.all(fetchPromises).then(function(results) {
-        loadedQuizzes = results.filter(function(q) { return q !== null; });
-        activeTag = 'all';
-        renderTagFilterBar();
-        renderCards();
-      });
+    function getI18n() {
+      var lang = getLang();
+      var dict = window.SITE_I18N || {};
+      return dict[lang] || dict.pt || {};
     }
 
     function renderTagFilterBar() {
-      var ui = getUI();
+      var lang = getLang();
+      var t = getI18n();
+      var quizzes = window.QUIZZES || [];
       var tagSet = {};
-      loadedQuizzes.forEach(function(q) {
-        (q.tags || []).forEach(function(t) {
-          tagSet[t] = true;
+
+      quizzes.forEach(function(q) {
+        var loc = q[lang] || q.pt || {};
+        (loc.tags || []).forEach(function(tag) {
+          tagSet[tag] = true;
         });
       });
 
@@ -162,7 +94,7 @@ title: "Avaliações"
       var allBtn = document.createElement('button');
       allBtn.type = 'button';
       allBtn.className = 'chip-btn' + (activeTag === 'all' ? ' active' : '');
-      allBtn.textContent = (ui.all_tags || 'Todos');
+      allBtn.textContent = (t.all_tags || 'Todos');
       allBtn.addEventListener('click', function() {
         document.querySelectorAll('.chip-btn').forEach(function(b) { b.classList.remove('active'); });
         allBtn.classList.add('active');
@@ -187,61 +119,73 @@ title: "Avaliações"
     }
 
     function renderCards() {
-      var ui = getUI();
+      var lang = getLang();
+      var t = getI18n();
       var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+      var quizzes = window.QUIZZES || [];
       var visibleCount = 0;
+
+      // Update hero texts
+      if (heroBadge && t.hero_badge) heroBadge.textContent = t.hero_badge;
+      if (heroTitle && t.hero_title) heroTitle.textContent = t.hero_title;
+      if (heroSubtitle && t.hero_subtitle) heroSubtitle.textContent = t.hero_subtitle;
+      if (searchInput && t.search_placeholder) searchInput.placeholder = t.search_placeholder;
 
       catalogCollection.innerHTML = '';
 
-      loadedQuizzes.forEach(function(q) {
-        var title = (q.title || '').toLowerCase();
-        var subtitle = (q.subtitle || '').toLowerCase();
-        var tagsLower = (q.tags || []).map(function(t) { return t.toLowerCase(); });
+      quizzes.forEach(function(q) {
+        var loc = q[lang] || q.pt || {};
+        var title = loc.title || '';
+        var subtitle = loc.subtitle || '';
+        var category = loc.category || '';
+        var tags = loc.tags || [];
 
-        var matchesTag = (activeTag === 'all') || tagsLower.indexOf(activeTag.toLowerCase()) !== -1;
+        var matchesTag = (activeTag === 'all') || tags.some(function(tg) {
+          return tg.toLowerCase() === activeTag.toLowerCase();
+        });
+
         var matchesQuery = !query ||
-          title.indexOf(query) !== -1 ||
-          subtitle.indexOf(query) !== -1 ||
-          tagsLower.some(function(t) { return t.indexOf(query) !== -1; });
+          title.toLowerCase().indexOf(query) !== -1 ||
+          subtitle.toLowerCase().indexOf(query) !== -1 ||
+          category.toLowerCase().indexOf(query) !== -1 ||
+          tags.some(function(tg) { return tg.toLowerCase().indexOf(query) !== -1; });
 
         if (matchesTag && matchesQuery) {
           visibleCount++;
           var card = document.createElement('article');
           card.className = 'quiz-card';
 
-          var questionsLabel = ui.questions_label || 'questões';
-          var coverHtml = '';
-          if (q.cover) {
-            coverHtml = '<div class="card-visual">' +
-              '<img src="' + q.cover + '" alt="" class="card-cover-img" loading="lazy">' +
-              '<span class="card-tag-badge">' + q.category + '</span>' +
-            '</div>';
-          }
+          var questionsLabel = t.questions_label || 'questões';
+          var startQuizLabel = t.start_quiz || 'Fazer teste';
 
-          card.innerHTML = '<a href="' + q.url + '" class="quiz-card-link">' +
-            coverHtml +
-            '<div class="card-body">' +
-              '<div class="card-stats-row">' +
-                '<span class="stat-badge tabular-nums">⏱ ~' + q.estMinutes + ' min</span>' +
-                '<span class="stat-dot">·</span>' +
-                '<span class="stat-badge tabular-nums">' + q.questionCount + ' ' + questionsLabel + '</span>' +
+          card.innerHTML =
+            '<a href="' + (q.url || '#') + '" class="quiz-card-link">' +
+              '<div class="card-visual">' +
+                '<img src="' + q.cover + '" alt="" class="card-cover-img" loading="lazy">' +
+                '<span class="card-tag-badge">' + category + '</span>' +
               '</div>' +
-              '<h2 class="card-title">' + q.title + '</h2>' +
-              '<p class="card-desc">' + q.subtitle + '</p>' +
-              '<div class="card-footer">' +
-                '<span class="card-cta-label">' + (ui.start_quiz || 'Fazer teste') + '</span>' +
-                '<svg class="card-cta-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
+              '<div class="card-body">' +
+                '<div class="card-stats-row">' +
+                  '<span class="stat-badge tabular-nums">⏱ ~' + q.est_minutes + ' min</span>' +
+                  '<span class="stat-dot">·</span>' +
+                  '<span class="stat-badge card-stat-questions tabular-nums">' + q.questions_count + ' ' + questionsLabel + '</span>' +
+                '</div>' +
+                '<h2 class="card-title">' + title + '</h2>' +
+                '<p class="card-desc">' + subtitle + '</p>' +
+                '<div class="card-footer">' +
+                  '<span class="card-cta-label">' + startQuizLabel + '</span>' +
+                  '<svg class="card-cta-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' +
+                '</div>' +
               '</div>' +
-            '</div>' +
-          '</a>';
+            '</a>';
 
           catalogCollection.appendChild(card);
         }
       });
 
       if (catalogCountLabel) {
-        var unit = currentLang === 'en' ? 'assessments available' : 'avaliações disponíveis';
-        catalogCountLabel.textContent = visibleCount + ' ' + unit;
+        var countUnit = lang === 'en' ? 'assessments available' : (lang === 'es' ? 'evaluaciones disponibles' : 'avaliações disponíveis');
+        catalogCountLabel.textContent = visibleCount + ' ' + countUnit;
       }
 
       if (noResults) {
@@ -262,10 +206,24 @@ title: "Avaliações"
       });
     }
 
-    window.addEventListener('quiztide:langchange', function(e) {
-      loadCatalog(e.detail.lang || 'pt');
+    // Keyboard shortcut '/' to focus search
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
     });
 
-    loadCatalog(currentLang);
+    window.addEventListener('quiztide:langchange', function() {
+      renderTagFilterBar();
+      renderCards();
+    });
+
+    // Initial render
+    renderTagFilterBar();
+    renderCards();
   })();
 </script>

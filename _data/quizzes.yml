@@ -1,0 +1,94 @@
+- id: dominant-archetype
+  url: /quizzes/dominant-archetype/
+  cover: /quizzes/dominant-archetype/resources/cover.svg
+  pt:
+    title: Qual é o seu Arquétipo Dominante de Personalidade?
+    subtitle: Descubra o padrão psicológico que guia suas decisões, instintos e forças
+      naturais.
+    category: Personalidade
+    tags:
+    - personalidade
+    - psicologia
+    - autoconhecimento
+  questions_count: 6
+  est_minutes: 2
+  en:
+    title: What Is Your Dominant Personality Archetype?
+    subtitle: Uncover the psychological pattern driving your decisions, instincts,
+      and natural strengths.
+    category: Personality
+    tags:
+    - personality
+    - psychology
+    - self-discovery
+  es:
+    title: ¿Cuál es tu Arquetipo Dominante de Personalidad?
+    subtitle: Descubre el patrón psicológico que guía tus decisiones, instintos y
+      fortalezas naturales.
+    category: Personalidad
+    tags:
+    - personalidad
+    - psicología
+    - autoconocimiento
+- id: decision-style
+  url: /quizzes/decision-style/
+  cover: /quizzes/decision-style/resources/cover.svg
+  pt:
+    title: Qual é o seu Estilo de Tomada de Decisão?
+    subtitle: Descubra como sua mente processa riscos, escolhas e caminhos sob pressão.
+    category: Carreira
+    tags:
+    - carreira
+    - liderança
+    - estratégia
+  questions_count: 5
+  est_minutes: 2
+  en:
+    title: What is Your Decision-Making Style?
+    subtitle: Discover how your mind processes risks, choices, and tradeoffs under
+      real-world pressure.
+    category: Career
+    tags:
+    - career
+    - leadership
+    - strategy
+  es:
+    title: ¿Cuál es tu Estilo de Toma de Decisiones?
+    subtitle: Descubre cómo tu mente procesa riesgos, elecciones y prioridades bajo
+      presión real.
+    category: Carrera
+    tags:
+    - carrera
+    - liderazgo
+    - estrategia
+- id: energy-resilience
+  url: /quizzes/energy-resilience/
+  cover: /quizzes/energy-resilience/resources/cover.svg
+  pt:
+    title: Índice de Energia Mental & Resiliência
+    subtitle: Avalie sua capacidade atual de recuperação, foco cognitivo e resistência
+      ao estresse.
+    category: Bem-Estar
+    tags:
+    - bem-estar
+    - saúde mental
+    - produtividade
+  questions_count: 5
+  est_minutes: 2
+  en:
+    title: Mental Energy & Resilience Index
+    subtitle: Assess your current cognitive battery, recovery rhythm, and stress tolerance.
+    category: Wellbeing
+    tags:
+    - wellbeing
+    - mental health
+    - productivity
+  es:
+    title: Índice de Energía Mental y Resiliencia
+    subtitle: Evalúa tu nivel de recuperación, enfoque cognitivo y resistencia al
+      estrés.
+    category: Bienestar
+    tags:
+    - bienestar
+    - salud mental
+    - productividad
