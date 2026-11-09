@@ -31,9 +31,10 @@
       localStorage.setItem('quiztide_lang', lang);
       document.documentElement.lang = lang;
 
-      document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
+      var langSelect = document.getElementById('lang-select');
+      if (langSelect && langSelect.value !== lang) {
+        langSelect.value = lang;
+      }
 
       var t = window.SITE_I18N[lang] || window.SITE_I18N.pt || {};
       
