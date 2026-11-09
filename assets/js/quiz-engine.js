@@ -19,8 +19,6 @@
   var quizTimePill = document.getElementById('quiz-time-pill');
   var quizTitle = document.getElementById('quiz-title');
   var quizSubtitle = document.getElementById('quiz-subtitle');
-  var quizCoverWrapper = document.getElementById('quiz-cover-wrapper');
-  var quizCoverImg = document.getElementById('quiz-cover-img');
   var quizLangNotice = document.getElementById('quiz-lang-notice');
 
   var progressText = document.getElementById('quiz-progress-text');
@@ -68,11 +66,11 @@
       of: 'de',
       questions_label: 'questões',
       completed: 'Avaliação Concluída',
-      celebration: 'Perfil Psicológico Revelado',
+      celebration: 'Resultado da Avaliação',
       breakdown_title: 'Distribuição dos Seus Traços',
       share_whatsapp: 'Compartilhar no WhatsApp',
       copy_link: 'Copiar Link',
-      copied_success: 'Link copiado com sucesso!',
+      copied_success: 'Link copiado para a área de transferência.',
       retake_quiz: 'Refazer Teste'
     };
   }
@@ -118,26 +116,26 @@
     if (!quizData) return;
     var ui = getUI(currentLang);
 
-    if (quizBackLink) quizBackLink.textContent = ui.back_to_catalog || '← Todos os testes';
+    if (quizBackLink) {
+      var backSpan = quizBackLink.querySelector('span');
+      if (backSpan) {
+        backSpan.textContent = ui.back_to_catalog ? ui.back_to_catalog.replace('← ', '') : 'Todos os testes';
+      }
+    }
     if (quizTitle) quizTitle.textContent = quizData.title || '';
     if (quizSubtitle) quizSubtitle.textContent = quizData.subtitle || '';
     if (quizCategoryPill) quizCategoryPill.textContent = quizData.category || 'Personalidade';
 
     var total = (quizData.questions || []).length;
     var estMinutes = calculateEstMinutes(total);
-    if (quizTimePill) quizTimePill.textContent = '⏱ ~' + estMinutes + ' min';
-
-    if (quizData.cover && quizCoverImg && quizCoverWrapper) {
-      quizCoverImg.src = baseUrl + quizData.cover;
-      quizCoverWrapper.style.display = 'block';
-    }
+    if (quizTimePill) quizTimePill.textContent = '~' + estMinutes + ' min';
 
     if (btnCopyText) btnCopyText.textContent = ui.copy_link || 'Copiar Link';
-    if (btnWhatsappText) btnWhatsappText.textContent = ui.share_whatsapp || 'WhatsApp';
+    if (btnWhatsappText) btnWhatsappText.textContent = ui.share_whatsapp || 'Compartilhar no WhatsApp';
     if (btnRestartText) btnRestartText.textContent = ui.retake_quiz || 'Refazer Teste';
-    if (resultCelebration) resultCelebration.textContent = ui.celebration || 'Perfil Psicológico Revelado';
+    if (resultCelebration) resultCelebration.textContent = ui.celebration || 'Resultado da Avaliação';
     if (traitBreakdownTitle) traitBreakdownTitle.textContent = ui.breakdown_title || 'Distribuição dos Seus Traços';
-    if (copyFeedback) copyFeedback.textContent = ui.copied_success || 'Link copiado com sucesso!';
+    if (copyFeedback) copyFeedback.textContent = ui.copied_success || 'Link copiado para a área de transferência.';
   }
 
   function renderQuestion(index) {
@@ -168,42 +166,41 @@
       progressBar.setAttribute('aria-valuenow', pct);
     }
 
-    if (q.image) {
+    if (q.image && questionImg && questionImgWrapper) {
       questionImg.src = baseUrl + q.image;
       questionImgWrapper.style.display = 'block';
-    } else {
+    } else if (questionImgWrapper) {
       questionImgWrapper.style.display = 'none';
     }
 
-    questionTitle.textContent = q.text || '';
+    if (questionTitle) {
+      questionTitle.textContent = q.text || '';
+    }
 
-    var hasImages = q.options && q.options.some(function(opt) { return !!opt.image; });
-    optionsList.className = hasImages ? 'options-container options-grid-visual' : 'options-container options-list-vertical';
-    optionsList.innerHTML = '';
+    if (optionsList) {
+      optionsList.className = 'options-group';
+      optionsList.innerHTML = '';
 
-    (q.options || []).forEach(function(opt, optIndex) {
-      var btn = document.createElement('button');
-      btn.className = 'option-btn' + (opt.image ? ' has-image' : '');
-      btn.type = 'button';
-      btn.setAttribute('data-index', optIndex);
-      btn.setAttribute('data-key', String.fromCharCode(65 + optIndex));
+      (q.options || []).forEach(function(opt, optIndex) {
+        var btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.type = 'button';
+        btn.setAttribute('data-index', optIndex);
+        btn.setAttribute('data-key', String.fromCharCode(65 + optIndex));
 
-      var inner = '';
-      if (opt.image) {
-        inner += '<div class="opt-img-box"><img src="' + baseUrl + opt.image + '" alt="Opção ' + String.fromCharCode(65 + optIndex) + '"></div>';
-      }
-      inner += '<div class="opt-content">' +
-        '<span class="option-marker">' + String.fromCharCode(65 + optIndex) + '</span>' +
-        '<span class="option-text">' + opt.text + '</span>' +
-      '</div>';
+        var inner = '<div class="opt-content">' +
+          '<span class="option-marker">' + String.fromCharCode(65 + optIndex) + '</span>' +
+          '<span class="option-text">' + opt.text + '</span>' +
+        '</div>';
 
-      btn.innerHTML = inner;
-      btn.addEventListener('click', function() {
-        handleOptionSelect(btn, opt.type);
+        btn.innerHTML = inner;
+        btn.addEventListener('click', function() {
+          handleOptionSelect(btn, opt.type);
+        });
+
+        optionsList.appendChild(btn);
       });
-
-      optionsList.appendChild(btn);
-    });
+    }
   }
 
   function handleOptionSelect(btnElement, resultType) {
@@ -223,10 +220,10 @@
       } else {
         showResults();
       }
-    }, 200);
+    }, 150);
   }
 
-  // Keyboard shortcut listener for options (A, B, C, D or 1, 2, 3, 4)
+  // Keyboard shortcut listener (A, B, C, D or 1, 2, 3, 4)
   window.addEventListener('keydown', function(e) {
     if (isFinished || !questionCard || questionCard.style.display === 'none') return;
     
@@ -238,7 +235,7 @@
     else if (key === 'C' || key === '3') optIndex = 2;
     else if (key === 'D' || key === '4') optIndex = 3;
 
-    if (optIndex !== -1) {
+    if (optIndex !== -1 && optionsList) {
       var buttons = optionsList.querySelectorAll('.option-btn');
       if (buttons[optIndex] && !buttons[optIndex].classList.contains('disabled')) {
         e.preventDefault();
@@ -259,7 +256,7 @@
     if (progressFill) progressFill.style.width = '100%';
     if (progressBar) progressBar.setAttribute('aria-valuenow', 100);
 
-    // Calculate winning archetype
+    // Calculate top trait
     if (!winningKey) {
       var maxScore = -1;
       var topKeys = [];
@@ -277,19 +274,27 @@
     var winner = results[winningKey] || Object.values(results)[0];
     if (!winner) return;
 
-    questionCard.style.display = 'none';
-    resultCard.style.display = 'block';
+    if (questionCard) questionCard.style.display = 'none';
+    if (resultCard) resultCard.style.display = 'block';
 
-    if (winner.image) {
+    if (winner.image && resultImg && resultImgWrapper) {
       resultImg.src = baseUrl + winner.image;
       resultImgWrapper.style.display = 'block';
-    } else {
+    } else if (resultImgWrapper) {
       resultImgWrapper.style.display = 'none';
     }
 
-    resultBadge.textContent = winner.badge || '🌊';
-    resultTitle.textContent = winner.title || '';
-    resultDesc.textContent = winner.description || '';
+    if (resultBadge) {
+      if (winner.badge) {
+        resultBadge.textContent = winner.badge;
+        resultBadge.style.display = 'inline-block';
+      } else {
+        resultBadge.style.display = 'none';
+      }
+    }
+
+    if (resultTitle) resultTitle.textContent = winner.title || '';
+    if (resultDesc) resultDesc.textContent = winner.description || '';
 
     // Render Trait Breakdown Bars
     if (traitBarsContainer) {
@@ -337,7 +342,7 @@
     });
   }
 
-  // Social Share Handlers
+  // Social Share
   if (btnWhatsapp) {
     btnWhatsapp.addEventListener('click', function() {
       if (!quizData) return;
@@ -386,6 +391,6 @@
     });
   });
 
-  // Start initial quiz
+  // Start
   initQuiz(currentLang);
 })();

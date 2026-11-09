@@ -2,61 +2,137 @@
   "title": "¿Cuál es tu Arquetipo Dominante de Personalidad?",
   "subtitle": "Descubre el patrón psicológico que guía tus decisiones, instintos y fortalezas naturales.",
   "category": "Personalidad",
-  "tags": ["personalidad", "psicología", "autoconocimiento"],
+  "tags": [
+    "personalidad",
+    "psicología",
+    "autoconocimiento"
+  ],
   "cover": "resources/cover-en.svg",
   "questions": [
     {
       "text": "Ante una crisis inesperada, ¿cuál es tu primer reflejo?",
       "options": [
-        { "type": "leader", "image": "resources/leader.svg", "text": "Tomo el mando, organizo el caos y distribuyo tareas." },
-        { "type": "creator", "image": "resources/creator.svg", "text": "Busco una salida creativa e innovadora que a nadie se le ocurrió." },
-        { "type": "thinker", "image": "resources/thinker.svg", "text": "Doy un paso atrás para analizar la causa con datos y lógica." },
-        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "Me aseguro de que las personas se sientan seguras y apoyadas." }
+        {
+          "type": "leader",
+          "text": "Tomo el mando, organizo el caos y distribuyo tareas."
+        },
+        {
+          "type": "creator",
+          "text": "Busco una salida creativa e innovadora que a nadie se le ocurrió."
+        },
+        {
+          "type": "thinker",
+          "text": "Doy un paso atrás para analizar la causa con datos y lógica."
+        },
+        {
+          "type": "caregiver",
+          "text": "Me aseguro de que las personas se sientan seguras y apoyadas."
+        }
       ]
     },
     {
       "text": "¿Cuál de estos elogios tiene más significado para ti?",
       "options": [
-        { "type": "leader", "image": "resources/leader.svg", "text": "'Conseguiste resultados cuando parecía imposible.'" },
-        { "type": "creator", "image": "resources/creator.svg", "text": "'Nunca vi a nadie tener una idea tan original.'" },
-        { "type": "thinker", "image": "resources/thinker.svg", "text": "'Tu explicación aclaró todo lo que parecía confuso.'" },
-        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "'Tu presencia trajo una paz y contención esenciales.'" }
+        {
+          "type": "leader",
+          "text": "'Conseguiste resultados cuando parecía imposible.'"
+        },
+        {
+          "type": "creator",
+          "text": "'Nunca vi a nadie tener una idea tan original.'"
+        },
+        {
+          "type": "thinker",
+          "text": "'Tu explicación aclaró todo lo que parecía confuso.'"
+        },
+        {
+          "type": "caregiver",
+          "text": "'Tu presencia trajo una paz y contención esenciales.'"
+        }
       ]
     },
     {
       "text": "¿Qué es lo que más te irrita en el día a día?",
       "options": [
-        { "type": "leader", "image": "resources/leader.svg", "text": "La indecisión crónica y la falta de responsabilidad." },
-        { "type": "creator", "image": "resources/creator.svg", "text": "Las reglas rígidas y la burocracia que asfixia." },
-        { "type": "thinker", "image": "resources/thinker.svg", "text": "Las opiniones superficiales sin investigación ni lógica." },
-        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "La frialdad, la crueldad y el egoísmo innecesario." }
+        {
+          "type": "leader",
+          "text": "La indecisión crónica y la falta de responsabilidad."
+        },
+        {
+          "type": "creator",
+          "text": "Las reglas rígidas y la burocracia que asfixia."
+        },
+        {
+          "type": "thinker",
+          "text": "Las opiniones superficiales sin investigación ni lógica."
+        },
+        {
+          "type": "caregiver",
+          "text": "La frialdad, la crueldad y el egoísmo innecesario."
+        }
       ]
     },
     {
       "text": "¿Cómo prefieres pasar una tarde libre sin compromisos?",
       "options": [
-        { "type": "leader", "image": "resources/leader.svg", "text": "Organizando mis metas y planificando mi estrategia." },
-        { "type": "creator", "image": "resources/creator.svg", "text": "Creando, escribiendo o experimentando con un nuevo proyecto." },
-        { "type": "thinker", "image": "resources/thinker.svg", "text": "Leyendo o viendo un documental sobre un tema fascinante." },
-        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "Reuniendo a amigos para compartir una comida agradable." }
+        {
+          "type": "leader",
+          "text": "Organizando mis metas y planificando mi estrategia."
+        },
+        {
+          "type": "creator",
+          "text": "Creando, escribiendo o experimentando con un nuevo proyecto."
+        },
+        {
+          "type": "thinker",
+          "text": "Leyendo o viendo un documental sobre un tema fascinante."
+        },
+        {
+          "type": "caregiver",
+          "text": "Reuniendo a amigos para compartir una comida agradable."
+        }
       ]
     },
     {
       "text": "¿Qué suelen buscar más tus amigos en ti?",
       "options": [
-        { "type": "leader", "image": "resources/leader.svg", "text": "Dirección práctica y determinación para actuar." },
-        { "type": "creator", "image": "resources/creator.svg", "text": "Inspiración y una mirada fresca sobre la vida." },
-        { "type": "thinker", "image": "resources/thinker.svg", "text": "Consejos lúcidos, imparciales y profundos." },
-        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "Empatía, escucha atenta y un espacio seguro." }
+        {
+          "type": "leader",
+          "text": "Dirección práctica y determinación para actuar."
+        },
+        {
+          "type": "creator",
+          "text": "Inspiración y una mirada fresca sobre la vida."
+        },
+        {
+          "type": "thinker",
+          "text": "Consejos lúcidos, imparciales y profundos."
+        },
+        {
+          "type": "caregiver",
+          "text": "Empatía, escucha atenta y un espacio seguro."
+        }
       ]
     },
     {
       "text": "En un gran proyecto en equipo, ¿qué rol te resulta más natural?",
       "options": [
-        { "type": "leader", "image": "resources/leader.svg", "text": "El estratega que fija objetivos, plazos y exige resultados." },
-        { "type": "creator", "image": "resources/creator.svg", "text": "El diseñador de soluciones que propone ideas disruptivas." },
-        { "type": "thinker", "image": "resources/thinker.svg", "text": "El analista crítico que evalúa riesgos y valida premisas." },
-        { "type": "caregiver", "image": "resources/caregiver.svg", "text": "El conector empático que cuida la motivación y el clima humano." }
+        {
+          "type": "leader",
+          "text": "El estratega que fija objetivos, plazos y exige resultados."
+        },
+        {
+          "type": "creator",
+          "text": "El diseñador de soluciones que propone ideas disruptivas."
+        },
+        {
+          "type": "thinker",
+          "text": "El analista crítico que evalúa riesgos y valida premisas."
+        },
+        {
+          "type": "caregiver",
+          "text": "El conector empático que cuida la motivación y el clima humano."
+        }
       ]
     }
   ],
