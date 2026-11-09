@@ -2,94 +2,72 @@
 
 Interactive, multilingual, visual quiz platform built with Jekyll and zero-dependency vanilla JavaScript.
 
-## 📁 Architecture & Folder Structure
+## 📁 Scalable Architecture
 
-Each quiz lives inside its own self-contained folder under `quizzes/`:
+Each quiz is a self-contained directory under `quizzes/`:
 
 ```text
 quizzes/
-  └── dominant-archetype/          # Quiz slug folder
-      ├── index.md                 # Single multilingual quiz definition
-      └── resources/               # All images and assets for this quiz
-          ├── cover.svg            # Optional cover banner
-          ├── leader.svg           # Option / result image
-          ├── creator.svg
-          ├── thinker.svg
-          └── caregiver.svg
+  └── dominant-archetype/
+      ├── index.md                 # Minimalist: only declares `layout: quiz`
+      ├── resources/               # Image assets
+      │   ├── cover-pt.svg         # Localized cover (if text on banner)
+      │   ├── cover-en.svg         # Localized cover (if text on banner)
+      │   ├── leader.svg           # Option and result graphics
+      │   ├── creator.svg
+      │   ├── thinker.svg
+      │   └── caregiver.svg
+      └── locales/                 # One standalone JSON per language
+          ├── pt.json              # Portuguese (title, subtitle, localized tags, cover, questions, results)
+          ├── en.json              # English (title, subtitle, localized tags, cover, questions, results)
+          └── es.json              # Spanish (title, subtitle, localized tags, cover, questions, results)
 ```
 
 ---
 
 ## 🚀 How to Add a New Quiz
 
-To add a new quiz, simply create a new folder under `quizzes/<your-slug>/` with an `index.md` file:
+1. Create a folder: `quizzes/<your-quiz-name>/`
+2. Create `quizzes/<your-quiz-name>/index.md`:
+   ```markdown
+   ---
+   layout: quiz
+   ---
+   ```
+3. Put images inside `resources/`.
+4. Create your language files inside `locales/` (e.g. `locales/pt.json`):
+   ```json
+   {
+     "title": "Título do Quiz",
+     "subtitle": "Subtítulo explicativo",
+     "category": "Personalidade",
+     "tags": ["personalidade", "carreira"],
+     "cover": "resources/cover-pt.svg",
+     "questions": [
+       {
+         "text": "Pergunta número 1?",
+         "image": "resources/q1.svg",
+         "options": [
+           { "type": "result_a", "text": "Opção A", "image": "resources/opt_a.svg" },
+           { "type": "result_b", "text": "Opção B", "image": "resources/opt_b.svg" }
+         ]
+       }
+     ],
+     "results": {
+       "result_a": {
+         "badge": "👑",
+         "image": "resources/result_a.svg",
+         "title": "Nome do Resultado A",
+         "description": "Descrição detalhada..."
+       }
+     }
+   }
+   ```
 
-```yaml
 ---
-layout: quiz
-slug: "your-quiz-slug"
-cover_image: "resources/cover.svg"       # Optional quiz banner image
-tags: ["personality", "career", "fun"]    # Tags for search and filtering
-default_lang: "pt"
 
-i18n:
-  pt:
-    title: "Título do Quiz em Português"
-    subtitle: "Subtítulo explicativo"
-    category: "Personalidade"
-    time: "2 min"
-    questions:
-      - question: "Pergunta número 1?"
-        image: "resources/question1.webp" # Optional question image
-        options:
-          - text: "Opção A"
-            type: "result_a"
-            image: "resources/opt_a.webp" # Optional option image
-          - text: "Opção B"
-            type: "result_b"
-            image: "resources/opt_b.webp"
-    results:
-      result_a:
-        badge: "👑"
-        title: "Nome do Resultado A"
-        image: "resources/result_a.webp"  # Optional result image
-        description: "Descrição detalhada do resultado..."
-      result_b:
-        badge: "🎨"
-        title: "Nome do Resultado B"
-        image: "resources/result_b.webp"
-        description: "Descrição detalhada do resultado..."
+## 🌐 Dynamic Language Filtering & Switching
 
-  en:
-    title: "Quiz Title in English"
-    subtitle: "English subtitle"
-    category: "Personality"
-    time: "2 min"
-    questions:
-      - question: "Question number 1?"
-        options:
-          - text: "Option A"
-            type: "result_a"
-            image: "resources/opt_a.webp"
-          - text: "Option B"
-            type: "result_b"
-            image: "resources/opt_b.webp"
-    results:
-      result_a:
-        badge: "👑"
-        title: "Result A Title"
-        image: "resources/result_a.webp"
-        description: "Detailed description in English..."
-      result_b:
-        badge: "🎨"
-        title: "Result B Title"
-        image: "resources/result_b.webp"
-        description: "Detailed description in English..."
----
-```
-
-### ✨ Built-in Features:
-1. **Multilingual Switcher (`PT | EN | ES`):** Seamless instant toggling in the header. The quiz questions, options, and results switch immediately without reloading.
-2. **Visual Options & Results:** If you provide `image: "resources/..."` on options, they automatically display in a responsive image-card grid.
-3. **Live Search & Tags:** Homepage features instant keyword search and tag filtering.
-4. **Viral Social Sharing:** Native WhatsApp and Copy Link buttons with pre-formatted localized result text.
+* **Automatic Language Discovery:** If a quiz has `locales/en.json`, it appears when the site is set to English. If it only has `locales/pt.json`, it is **automatically hidden** from the English catalog!
+* **Localized Tags & Covers:** Tags (`#personality` vs `#personalidade`) and covers (`cover-en.svg` vs `cover-pt.svg`) are completely localized inside their respective JSON files.
+* **Mid-Quiz Switching:** Users can switch language at any point during a quiz without losing progress or current answers.

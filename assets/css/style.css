@@ -798,3 +798,21 @@ body {
   .footer-inner { grid-template-columns: 1fr; }
   .options-grid-visual { grid-template-columns: 1fr; }
 }
+
+.quiz-lang-notice {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-top: 14px;
+  display: inline-block;
+}
+
+.catalog-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+}

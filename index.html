@@ -14,37 +14,27 @@ title: "Home"
     <input type="text" id="quiz-search-input" placeholder="🔍" class="search-input">
   </div>
 
-  <!-- Tag Filter Bar -->
-  <div class="tag-filter-bar" id="tag-filter-bar">
-    <button type="button" class="tag-filter-btn active" data-tag="all" id="btn-tag-all">✨ Todos</button>
-    <button type="button" class="tag-filter-btn" data-tag="personalidade">#personalidade</button>
-    <button type="button" class="tag-filter-btn" data-tag="psicologia">#psicologia</button>
-    <button type="button" class="tag-filter-btn" data-tag="autoconhecimento">#autoconhecimento</button>
-  </div>
+  <!-- Dynamic Localized Tag Filter Bar -->
+  <div class="tag-filter-bar" id="tag-filter-bar"></div>
 </div>
 
 <!-- Quizzes Grid -->
 <section class="container">
-  <div class="quiz-grid" id="quiz-catalog-grid"></div>
+  <div class="quiz-grid" id="quiz-catalog-grid">
+    <div class="catalog-loading" id="catalog-loading">Carregando quizzes...</div>
+  </div>
 
   <div id="no-results-msg" class="no-results-msg" style="display: none;">
-    <p id="no-results-text">Nenhum quiz encontrado.</p>
+    <p id="no-results-text">Nenhum quiz disponível neste idioma.</p>
   </div>
 </section>
 
-<!-- Inject Quizzes Data for Reactive Catalog -->
+<!-- Inject All Quiz Directory URLs -->
 <script>
-  window.QUIZZES_CATALOG = [
+  window.QUIZ_FOLDERS = [
     {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
     {% for q in quiz_pages %}
-    {
-      url: {{ q.url | relative_url | jsonify }},
-      slug: {{ q.slug | jsonify }},
-      cover_image: {{ q.cover_image | relative_url | jsonify }},
-      tags: {{ q.tags | jsonify }},
-      title: {{ q.title | jsonify }},
-      subtitle: {{ q.subtitle | jsonify }}
-    }{% unless forloop.last %},{% endunless %}
+      "{{ q.url | relative_url }}"{% unless forloop.last %},{% endunless %}
     {% endfor %}
   ];
 </script>
@@ -54,57 +44,130 @@ title: "Home"
     'use strict';
 
     var searchInput = document.getElementById('quiz-search-input');
-    var tagButtons = document.querySelectorAll('.tag-filter-btn');
+    var tagFilterBar = document.getElementById('tag-filter-bar');
     var catalogGrid = document.getElementById('quiz-catalog-grid');
     var noResults = document.getElementById('no-results-msg');
     var noResultsText = document.getElementById('no-results-text');
     var heroTitle = document.getElementById('home-hero-title');
     var heroSubtitle = document.getElementById('home-hero-subtitle');
-    var btnTagAll = document.getElementById('btn-tag-all');
 
     var currentLang = window.CURRENT_LANG || 'pt';
     var activeTag = 'all';
+    var loadedQuizzes = [];
 
     function getUI() {
       var i18n = window.SITE_I18N || {};
       return i18n[currentLang] || i18n.pt || {};
     }
 
-    function getText(obj) {
-      if (!obj) return '';
-      if (typeof obj === 'string') return obj;
-      return obj[currentLang] || obj.pt || obj.en || obj.es || '';
-    }
-
-    function renderView() {
+    // Load available quizzes for the selected language
+    function loadCatalog(lang) {
+      currentLang = lang;
       var ui = getUI();
+
       if (heroTitle) heroTitle.textContent = ui.hero_title || '';
       if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
-      if (searchInput) searchInput.placeholder = ui.search_placeholder || '🔍 Buscar quizzes...';
-      if (btnTagAll) btnTagAll.textContent = '✨ ' + (ui.all_tags || 'Todos');
-      if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhum quiz encontrado.';
+      if (searchInput) searchInput.placeholder = ui.search_placeholder || '🔍';
+      if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhum quiz disponível neste idioma.';
 
-      renderCards();
+      var folders = window.QUIZ_FOLDERS || [];
+      if (folders.length === 0) {
+        catalogGrid.innerHTML = '';
+        if (noResults) noResults.style.display = 'block';
+        return;
+      }
+
+      // Concurrently test and fetch each quiz's locale JSON
+      var fetchPromises = folders.map(function(rawUrl) {
+        var url = rawUrl;
+        if (url.charAt(url.length - 1) !== '/') url += '/';
+
+        return fetch(url + 'locales/' + lang + '.json')
+          .then(function(res) {
+            if (!res.ok) return null; // Quiz does NOT support this language!
+            return res.json().then(function(data) {
+              return {
+                url: url,
+                title: data.title,
+                subtitle: data.subtitle,
+                category: data.category,
+                tags: data.tags || [],
+                cover: data.cover ? (url + data.cover) : null,
+                time: data.time || '2 min'
+              };
+            });
+          })
+          .catch(function() {
+            return null;
+          });
+      });
+
+      Promise.all(fetchPromises).then(function(results) {
+        // Filter out nulls (quizzes that don't have this language)
+        loadedQuizzes = results.filter(function(q) { return q !== null; });
+        activeTag = 'all';
+        renderTagFilterBar();
+        renderCards();
+      });
+    }
+
+    // Build dynamic tag buttons from the loaded quizzes
+    function renderTagFilterBar() {
+      var ui = getUI();
+      var tagSet = {};
+      loadedQuizzes.forEach(function(q) {
+        (q.tags || []).forEach(function(t) {
+          tagSet[t] = true;
+        });
+      });
+
+      var tags = Object.keys(tagSet);
+      tagFilterBar.innerHTML = '';
+
+      var allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.className = 'tag-filter-btn' + (activeTag === 'all' ? ' active' : '');
+      allBtn.textContent = '✨ ' + (ui.all_tags || 'Todos');
+      allBtn.addEventListener('click', function() {
+        document.querySelectorAll('.tag-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        allBtn.classList.add('active');
+        activeTag = 'all';
+        renderCards();
+      });
+      tagFilterBar.appendChild(allBtn);
+
+      tags.forEach(function(tag) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tag-filter-btn' + (activeTag === tag ? ' active' : '');
+        btn.textContent = '#' + tag;
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.tag-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          activeTag = tag;
+          renderCards();
+        });
+        tagFilterBar.appendChild(btn);
+      });
     }
 
     function renderCards() {
-      var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
       var ui = getUI();
-      var quizzes = window.QUIZZES_CATALOG || [];
+      var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
       var visibleCount = 0;
 
       catalogGrid.innerHTML = '';
 
-      quizzes.forEach(function(q) {
-        var tags = (q.tags || []).map(function(t) { return t.toLowerCase(); });
-        var title = getText(q.title);
-        var subtitle = getText(q.subtitle);
+      loadedQuizzes.forEach(function(q) {
+        var title = (q.title || '').toLowerCase();
+        var subtitle = (q.subtitle || '').toLowerCase();
+        var tagsLower = (q.tags || []).map(function(t) { return t.toLowerCase(); });
 
-        var matchesTag = (activeTag === 'all') || tags.indexOf(activeTag.toLowerCase()) !== -1;
-        var matchesQuery = !query || 
-          title.toLowerCase().indexOf(query) !== -1 || 
-          subtitle.toLowerCase().indexOf(query) !== -1 ||
-          tags.some(function(t) { return t.indexOf(query) !== -1; });
+        var matchesTag = (activeTag === 'all') || tagsLower.indexOf(activeTag.toLowerCase()) !== -1;
+        var matchesQuery = !query ||
+          title.indexOf(query) !== -1 ||
+          subtitle.indexOf(query) !== -1 ||
+          tagsLower.some(function(t) { return t.indexOf(query) !== -1; });
 
         if (matchesTag && matchesQuery) {
           visibleCount++;
@@ -116,9 +179,9 @@ title: "Home"
           }).join('');
 
           var coverHtml = '';
-          if (q.cover_image) {
+          if (q.cover) {
             coverHtml = '<div class="card-cover-wrapper">' +
-              '<img src="' + q.cover_image + '" alt="' + title + '" class="card-cover-img" loading="lazy">' +
+              '<img src="' + q.cover + '" alt="' + q.title + '" class="card-cover-img" loading="lazy">' +
             '</div>';
           }
 
@@ -126,10 +189,10 @@ title: "Home"
             coverHtml +
             '<div class="card-body">' +
               '<div class="card-tags">' + tagsHtml + '</div>' +
-              '<h3 class="card-title">' + title + '</h3>' +
-              '<p class="card-desc">' + subtitle + '</p>' +
+              '<h3 class="card-title">' + q.title + '</h3>' +
+              '<p class="card-desc">' + q.subtitle + '</p>' +
               '<div class="card-footer">' +
-                '<span class="card-meta-time">⏱️ ' + (ui.read_time || '2 min') + '</span>' +
+                '<span class="card-meta-time">⏱️ ' + (q.time || '2 min') + '</span>' +
                 '<span class="card-cta-btn">' + (ui.start_quiz || 'Começar Quiz') + ' &rarr;</span>' +
               '</div>' +
             '</div>' +
@@ -148,21 +211,12 @@ title: "Home"
       searchInput.addEventListener('input', renderCards);
     }
 
-    tagButtons.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        tagButtons.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        activeTag = btn.getAttribute('data-tag');
-        renderCards();
-      });
-    });
-
+    // Listen to global language change
     window.addEventListener('quiztide:langchange', function(e) {
-      currentLang = e.detail.lang || 'pt';
-      renderView();
+      loadCatalog(e.detail.lang || 'pt');
     });
 
-    // Initial render
-    renderView();
+    // Initial catalog load
+    loadCatalog(currentLang);
   })();
 </script>
