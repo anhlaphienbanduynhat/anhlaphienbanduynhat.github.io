@@ -1,0 +1,77 @@
+---
+layout: default
+---
+
+<article class="quiz-article container">
+  <!-- Quiz Header -->
+  <header class="quiz-header">
+    <div class="quiz-meta-badge">{{ page.category | default: "Personality" }}</div>
+    <h1 class="quiz-title">{{ page.title }}</h1>
+    <p class="quiz-subtitle">{{ page.description }}</p>
+    <div class="quiz-info-bar">
+      <span>⏱️ 2 min test</span>
+      <span>📊 {{ page.questions.size }} questions</span>
+      <span>🌐 Instant result</span>
+    </div>
+  </header>
+
+  <!-- Quiz Interactive Stage -->
+  <div id="quiz-stage" class="quiz-stage">
+    <!-- Progress Bar -->
+    <div class="quiz-progress-wrapper">
+      <div class="quiz-progress-info">
+        <span id="quiz-progress-text">Question 1 of {{ page.questions.size }}</span>
+        <span id="quiz-progress-percent">0%</span>
+      </div>
+      <div class="quiz-progress-bar">
+        <div id="quiz-progress-fill" class="quiz-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Active Question Card -->
+    <div id="quiz-question-card" class="quiz-question-card">
+      <h2 id="quiz-question-title" class="question-title">Loading question...</h2>
+      <div id="quiz-options-list" class="options-grid"></div>
+    </div>
+
+    <!-- Quiz Result Screen (Initially Hidden) -->
+    <div id="quiz-result-card" class="quiz-result-card" style="display: none;">
+      <div class="result-celebration">🎉 Result Unlocked!</div>
+      <div id="result-badge" class="result-badge">🌊</div>
+      <h2 id="result-title" class="result-title">Calculating your vibe...</h2>
+      <p id="result-description" class="result-description">Please wait a second.</p>
+
+      <!-- Share Actions -->
+      <div class="result-share-actions">
+        <button id="btn-share-whatsapp" class="btn btn-whatsapp">
+          <span>📲 Share on WhatsApp</span>
+        </button>
+        <button id="btn-copy-link" class="btn btn-copy">
+          <span>📋 Copy Result Link</span>
+        </button>
+        <button id="btn-restart-quiz" class="btn btn-outline">
+          <span>🔄 Retake Quiz</span>
+        </button>
+      </div>
+      <div id="copy-feedback" class="copy-feedback" style="display: none;">Link copied to clipboard!</div>
+    </div>
+  </div>
+
+  <!-- Editorial content below quiz (SEO Boost for AdSense) -->
+  {% if content and content != "" %}
+  <section class="quiz-editorial-content">
+    {{ content }}
+  </section>
+  {% endif %}
+</article>
+
+<!-- Inject Quiz Data into Vanilla JS Engine -->
+<script>
+  window.QUIZ_DATA = {
+    title: {{ page.title | jsonify }},
+    url: {{ page.url | absolute_url | jsonify }},
+    questions: {{ page.questions | jsonify }},
+    results: {{ page.results | jsonify }}
+  };
+</script>
+<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>

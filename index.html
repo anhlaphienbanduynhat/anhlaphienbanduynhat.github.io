@@ -1,0 +1,27 @@
+---
+layout: default
+title: "Home"
+---
+
+<div class="hero-section container">
+  <span class="hero-badge">🌊 Fast & Insightful Quizzes</span>
+  <h1 class="hero-title">Discover Your True Vibe & Archetype</h1>
+  <p class="hero-subtitle">Interactive, clean, and distraction-free quizzes. Get instant psychological and lifestyle insights in under 2 minutes.</p>
+</div>
+
+<section class="container">
+  <h2 class="section-title">✨ Featured Quizzes</h2>
+  <div class="quiz-grid">
+    {% for quiz in site.quizzes %}
+    <a href="{{ quiz.url | relative_url }}" class="quiz-card">
+      <div class="card-category">{{ quiz.category | default: "Personality" }} · {{ quiz.lang | upcase }}</div>
+      <h3 class="card-title">{{ quiz.title }}</h3>
+      <p class="card-desc">{{ quiz.description | truncate: 120 }}</p>
+      <div class="card-footer">
+        <span>⏱️ 2 min</span>
+        <span>Start Quiz &rarr;</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>

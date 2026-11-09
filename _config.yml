@@ -1,0 +1,35 @@
+title: Quiztide
+tagline: "Quick, fun, and insightful quizzes."
+description: "Discover your true archetype, personality traits, and test your knowledge with clean, ultra-fast interactive quizzes on Quiztide."
+url: "https://quiztide.github.io"
+baseurl: ""
+
+# Collections
+collections:
+  quizzes:
+    output: true
+    permalink: /quizzes/:name/
+
+# Plugins supported by GitHub Pages
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Markdown processor
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "quizzes"
+    values:
+      layout: "quiz"
+
+# Exclude list
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
