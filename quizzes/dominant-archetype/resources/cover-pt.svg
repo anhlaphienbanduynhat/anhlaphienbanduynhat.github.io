@@ -1,24 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
   <defs>
-    <linearGradient id="oceanGradPt" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0284c7" />
-      <stop offset="50%" stop-color="#0369a1" />
-      <stop offset="100%" stop-color="#0f172a" />
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="50%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
     </linearGradient>
-    <linearGradient id="accentGradPt" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="100%" stop-color="#06b6d4" />
-    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
   </defs>
-  <rect width="100%" height="100%" fill="url(#oceanGradPt)" rx="16"/>
-  <path d="M0,320 C200,280 350,380 500,320 C650,260 750,340 800,300 L800,400 L0,400 Z" fill="#ffffff" fill-opacity="0.08"/>
-  <path d="M0,350 C180,310 320,390 480,350 C640,310 720,380 800,340 L800,400 L0,400 Z" fill="#ffffff" fill-opacity="0.12"/>
-  <g transform="translate(400, 160)">
-    <circle r="65" fill="none" stroke="url(#accentGradPt)" stroke-width="4" stroke-dasharray="6,4"/>
-    <circle r="50" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="2"/>
-    <path d="M0,-42 L12,0 L0,42 L-12,0 Z" fill="url(#accentGradPt)"/>
-    <circle r="7" fill="#ffffff"/>
+  <rect width="800" height="450" fill="url(#bgGrad)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+  
+  <!-- Geometric decorative shapes -->
+  <circle cx="100" cy="80" r="120" fill="#818CF8" opacity="0.3"/>
+  <circle cx="720" cy="380" r="140" fill="#A855F7" opacity="0.35"/>
+  
+  <!-- 4 Archetype Floating Badges -->
+  <g transform="translate(140, 70)">
+    <g transform="translate(0, 40)">
+      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
+      <text x="55" y="72" font-size="52" text-anchor="middle">👑</text>
+      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">LÍDER</text>
+    </g>
+    <g transform="translate(140, 0)">
+      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
+      <text x="55" y="72" font-size="52" text-anchor="middle">🎨</text>
+      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">CRIADOR</text>
+    </g>
+    <g transform="translate(280, 40)">
+      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
+      <text x="55" y="72" font-size="52" text-anchor="middle">🦉</text>
+      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">PENSADOR</text>
+    </g>
+    <g transform="translate(420, 0)">
+      <rect width="110" height="110" rx="24" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="2"/>
+      <text x="55" y="72" font-size="52" text-anchor="middle">🌿</text>
+      <text x="55" y="100" font-family="-apple-system, Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GUARDIÃO</text>
+    </g>
   </g>
-  <text x="400" y="280" text-anchor="middle" font-family="-apple-system, Inter, sans-serif" font-size="28" font-weight="800" fill="#ffffff" letter-spacing="1">DESCOBERTA DE ARQUÉTIPO</text>
-  <text x="400" y="315" text-anchor="middle" font-family="-apple-system, Inter, sans-serif" font-size="16" fill="#bae6fd">Descubra suas forças cognitivas e comportamentais</text>
+  
+  <text x="400" y="350" font-family="-apple-system, Inter, sans-serif" font-size="32" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5">ARQUÉTIPO DOMINANTE</text>
+  <text x="400" y="385" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="500" fill="#E0E7FF" text-anchor="middle">Descubra o padrão psicológico que guia suas decisões e instintos</text>
 </svg>

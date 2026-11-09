@@ -12,7 +12,7 @@ title: "Home"
         <span id="home-hero-badge">⚡ Avaliações de Autoconhecimento & Arquétipos</span>
       </div>
       
-      <h1 class="hero-title" id="home-hero-title">Descubra os padrões que guiam sua mente.</h1>
+      <h1 class="hero-title" id="home-hero-title">Descubra <span class="gradient-text">quem você realmente é</span>.</h1>
       <p class="hero-subtitle" id="home-hero-subtitle">Avaliações psicométricas interativas, sem distrações e com rigor editorial. Resultados imediatos com análise detalhada dos seus traços psicológicos.</p>
 
       <!-- Featured Assessment Action Card -->
@@ -186,8 +186,8 @@ title: "Home"
       currentLang = lang;
       var ui = getUI();
 
-      if (heroBadge) heroBadge.textContent = ui.hero_badge || '⚡ Avaliações de Autoconhecimento & Arquétipos';
-      if (heroTitle) heroTitle.textContent = ui.hero_title || '';
+      if (heroBadge) heroBadge.textContent = ui.hero_badge || '⚡ +150.000 avaliações realizadas';
+      if (heroTitle) heroTitle.innerHTML = ui.hero_title || 'Descubra <span class="gradient-text">quem você realmente é</span>.';
       if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
       if (searchInput) searchInput.placeholder = ui.search_placeholder || 'Buscar avaliações por título ou tag...';
       if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhuma avaliação encontrada.';

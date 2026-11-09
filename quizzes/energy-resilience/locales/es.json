@@ -1,0 +1,76 @@
+{
+  "title": "Índice de Energía Mental y Resiliencia",
+  "subtitle": "Evalúa tu nivel de recuperación, enfoque cognitivo y resistencia al estrés.",
+  "category": "Bienestar",
+  "tags": ["bienestar", "salud mental", "productividad"],
+  "cover": "resources/cover.svg",
+  "questions": [
+    {
+      "text": "¿Cómo te despiertas la mayoría de los días hábiles?",
+      "options": [
+        { "type": "peak", "text": "Con energía y claridad mental para encarar el día." },
+        { "type": "balanced", "text": "Bien; necesito unos minutos y un café para entrar en ritmo." },
+        { "type": "alert", "text": "Cansado, ya sintiendo el peso de las obligaciones del día." },
+        { "type": "depleted", "text": "Agotado, sintiendo que el sueño no restauró absolutamente nada." }
+      ]
+    },
+    {
+      "text": "Cuando surge un imprevisto urgente en medio de tu jornada:",
+      "options": [
+        { "type": "peak", "text": "Me adapto con calma y lo resuelvo sin estrés innecesario." },
+        { "type": "balanced", "text": "Me pongo algo tenso, pero respiro hondo y reorganizo prioridades." },
+        { "type": "alert", "text": "Siento irritación inmediata y la sensación de pérdida de control." },
+        { "type": "depleted", "text": "Siento ganas de dejar todo; cualquier novedad se siente insoportable." }
+      ]
+    },
+    {
+      "text": "¿Cómo calificarías tu capacidad de concentración en tareas complejas?",
+      "options": [
+        { "type": "peak", "text": "Alta; entro en estado de flujo y foco sostenido con facilidad." },
+        { "type": "balanced", "text": "Buena; con pequeñas distracciones que logro gestionar." },
+        { "type": "alert", "text": "Oscilante; me cuesta empezar y cambio de pestañas constantemente." },
+        { "type": "depleted", "text": "Muy baja; releo la misma frase varias veces con niebla mental." }
+      ]
+    },
+    {
+      "text": "Durante los fines de semana o días libres, ¿logras desconectarte de verdad?",
+      "options": [
+        { "type": "peak", "text": "Sí, disfruto al 100% mi tiempo de ocio y recargo toda la batería." },
+        { "type": "balanced", "text": "La mayor parte del tiempo, aunque a veces pienso en pendientes." },
+        { "type": "alert", "text": "Me cuesta; siento culpa por descansar o reviso mensajes de trabajo." },
+        { "type": "depleted", "text": "Imposible; paso el descanso con ansiedad paralizante por el lunes." }
+      ]
+    },
+    {
+      "text": "¿Qué frase resume mejor tu ritmo en las últimas semanas?",
+      "options": [
+        { "type": "peak", "text": "'Estoy al mando, construyendo a un ritmo sostenible y saludable.'" },
+        { "type": "balanced", "text": "'La rutina es intensa, pero mantengo el timón firme.'" },
+        { "type": "alert", "text": "'Estoy al límite; si no freno un poco, algo se va a romper.'" },
+        { "type": "depleted", "text": "'Estoy en piloto automático por puro modo de supervivencia.'" }
+      ]
+    }
+  ],
+  "results": {
+    "peak": {
+      "badge": "⚡",
+      "title": "Batería al Máximo: Alta Resiliencia",
+      "description": "Tu reserva cognitiva es excelente. Mantienes calma bajo presión, tomas decisiones claras y te recuperas rápido. ¡Sigue nutriendo los hábitos que sostienen este estado!"
+    },
+    "balanced": {
+      "badge": "🌱",
+      "title": "Equilibrio Sostenible",
+      "description": "Manejas bien las exigencias cotidianas. Aunque haya picos de trabajo, cuentas con defensas psicológicas saludables para reponerte. Cuida no acumular cansancio."
+    },
+    "alert": {
+      "badge": "⚠️",
+      "title": "Alerta de Sobrecarga",
+      "description": "Tu batería mental está en modo de bajo consumo. La irritabilidad y los lapsos de atención son alarmas tempranas. Renegocia plazos y protege tus pausas de descanso."
+    },
+    "depleted": {
+      "badge": "🪫",
+      "title": "Batería Agotada: Descanso Inmediato",
+      "description": "Tu sistema nervioso necesita una pausa urgente. La niebla mental y el agotamiento indican que forzarte más solo traerá rendimientos decrecientes. Prioriza tu bienestar hoy."
+    }
+  }
+}

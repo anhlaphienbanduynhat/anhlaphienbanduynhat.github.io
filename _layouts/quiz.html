@@ -110,4 +110,4 @@ layout: default
 <script>
   window.QUIZ_BASE_URL = {{ page.url | relative_url | jsonify }};
 </script>
-<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}?v=3.2.{{ site.time | date: '%s' }}"></script>

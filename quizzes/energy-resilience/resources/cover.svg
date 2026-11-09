@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="erGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="batteryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="70%" stop-color="#6EE7B7"/>
+      <stop offset="100%" stop-color="#A7F3D0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#erGrad)"/>
+  <circle cx="120" cy="90" r="150" fill="#34D399" opacity="0.25"/>
+  <circle cx="720" cy="360" r="160" fill="#065F46" opacity="0.35"/>
+  
+  <g transform="translate(240, 90)">
+    <!-- Battery Outer Frame -->
+    <rect x="30" y="40" width="240" height="120" rx="20" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-width="6"/>
+    <path d="M276 75 C284 75, 290 82, 290 90 L290 110 C290 118, 284 125, 276 125 Z" fill="#FFFFFF"/>
+    
+    <!-- Battery Level -->
+    <rect x="44" y="54" width="160" height="92" rx="12" fill="url(#batteryGrad)"/>
+    
+    <!-- Lightning Bolt -->
+    <polygon points="120,45 95,100 125,100 110,155 155,90 130,90" fill="#FEF08A"/>
+  </g>
+  <text x="400" y="360" font-family="-apple-system, Inter, sans-serif" font-size="28" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5">ENERGIA & RESILIÊNCIA</text>
+  <text x="400" y="395" font-family="-apple-system, Inter, sans-serif" font-size="16" font-weight="500" fill="#D1FAE5" text-anchor="middle">Descubra como está sua bateria mental e ritmo de recuperação</text>
+</svg>

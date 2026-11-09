@@ -1,0 +1,76 @@
+{
+  "title": "¿Cuál es tu Estilo de Toma de Decisiones?",
+  "subtitle": "Descubre cómo tu mente procesa riesgos, elecciones y prioridades bajo presión real.",
+  "category": "Carrera",
+  "tags": ["carrera", "liderazgo", "estrategia"],
+  "cover": "resources/cover.svg",
+  "questions": [
+    {
+      "text": "Cuando tienes poco tiempo para una decisión clave, ¿qué haces primero?",
+      "options": [
+        { "type": "rational", "text": "Reúno la mayor cantidad de datos y hechos antes de definir." },
+        { "type": "intuitive", "text": "Confío en mi intuición inmediata; rara vez falla." },
+        { "type": "collaborative", "text": "Consulto con colegas o personas de mi total confianza." },
+        { "type": "action", "text": "Tomo una decisión rápida para probar en la práctica y ajustar." }
+      ]
+    },
+    {
+      "text": "¿Qué es lo que más te incomoda al decidir?",
+      "options": [
+        { "type": "rational", "text": "La falta de datos concretos o métricas verificables." },
+        { "type": "intuitive", "text": "Tener que sobrejustificar una corazonada que sé que es correcta." },
+        { "type": "collaborative", "text": "Saber que alguien clave en el equipo está en desacuerdo." },
+        { "type": "action", "text": "La lentitud burocrática y la indecisión constante." }
+      ]
+    },
+    {
+      "text": "En reuniones estratégicas, ¿cuál es tu rol espontáneo?",
+      "options": [
+        { "type": "rational", "text": "Desafío supuestos y pido números para respaldar el debate." },
+        { "type": "intuitive", "text": "Propongo rumbos disruptivos que nadie estaba viendo." },
+        { "type": "collaborative", "text": "Ayudo a encontrar puntos en común para lograr un consenso sólido." },
+        { "type": "action", "text": "Presiono para definir pasos a seguir y plazos inmediatos." }
+      ]
+    },
+    {
+      "text": "¿Cómo juzgas si una decisión pasada fue exitosa?",
+      "options": [
+        { "type": "rational", "text": "Por los resultados medibles y el retorno de inversión." },
+        { "type": "intuitive", "text": "Por la claridad de propósito y el impacto transformador generado." },
+        { "type": "collaborative", "text": "Por el compromiso y bienestar de las personas involucradas." },
+        { "type": "action", "text": "Por la velocidad de ejecución y los hitos alcanzados." }
+      ]
+    },
+    {
+      "text": "Si pudieras tener un superpoder profesional, ¿cuál elegirías?",
+      "options": [
+        { "type": "rational", "text": "Prever escenarios con precisión matemática y certidumbre total." },
+        { "type": "intuitive", "text": "Visión de futuro para anticipar tendencias años antes que el resto." },
+        { "type": "collaborative", "text": "Un don magnético para alinear a cualquier grupo hacia una meta común." },
+        { "type": "action", "text": "Velocidad imparable para transformar cualquier idea en realidad sin trabas." }
+      ]
+    }
+  ],
+  "results": {
+    "rational": {
+      "badge": "📊",
+      "title": "El Analista Estratégico",
+      "description": "Decides con base en lógica, datos y probabilidades. Tu mente evalúa meticulosamente cada variable antes de dar el siguiente paso, minimizando riesgos."
+    },
+    "intuitive": {
+      "badge": "🔮",
+      "title": "El Visionario Intuitivo",
+      "description": "Posees un instinto privilegiado y conectas puntos invisibles para otros. No necesitas planillas para saber cuándo una oportunidad tiene potencial transformador."
+    },
+    "collaborative": {
+      "badge": "🤝",
+      "title": "El Constructor de Consensos",
+      "description": "Entiendes que las decisiones duraderas requieren sentido de pertenencia colectivo. Tu liderazgo inspira lealtad, empatía y gran cohesión de equipo."
+    },
+    "action": {
+      "badge": "⚡",
+      "title": "El Ejecutor Ágil",
+      "description": "Para ti, 'mejor hecho que perfecto'. Prefieres equivocarte rápido y corregir el rumbo antes que paralizarte por exceso de análisis."
+    }
+  }
+}
