@@ -1,65 +1,40 @@
 (function() {
   'use strict';
 
-  if (!window.QUIZ_DATA || !window.QUIZ_DATA.i18n) {
-    return;
-  }
+  if (!window.QUIZ_DATA) return;
 
   const quiz = window.QUIZ_DATA;
   let currentLang = window.CURRENT_LANG || 'pt';
 
-  // UI Strings per language
-  const UI_STRINGS = {
-    pt: {
-      questionOf: 'Pergunta',
+  // Helper to extract localized string from nested language object
+  function t(obj) {
+    if (!obj) return '';
+    if (typeof obj === 'string') return obj;
+    return obj[currentLang] || obj.pt || obj.en || obj.es || '';
+  }
+
+  function getUI() {
+    const siteI18n = window.SITE_I18N || {};
+    return siteI18n[currentLang] || siteI18n.pt || {
+      question_of: 'Pergunta',
       of: 'de',
       completed: 'Concluído!',
       celebration: '🎉 Resultado Revelado!',
-      shareWhatsApp: '📲 Compartilhar no WhatsApp',
-      copyLink: '📋 Copiar Link',
-      copied: 'Link copiado com sucesso!',
-      retake: '🔄 Refazer Teste',
-      shareText: (qTitle, rTitle, url) => `Fiz o quiz "${qTitle}" no Quiztide e meu resultado foi: ${rTitle}! Descubra o seu: ${url}`
-    },
-    en: {
-      questionOf: 'Question',
-      of: 'of',
-      completed: 'Completed!',
-      celebration: '🎉 Result Unlocked!',
-      shareWhatsApp: '📲 Share on WhatsApp',
-      copyLink: '📋 Copy Link',
-      copied: 'Link copied to clipboard!',
-      retake: '🔄 Retake Quiz',
-      shareText: (qTitle, rTitle, url) => `I took the "${qTitle}" quiz on Quiztide and my result is: ${rTitle}! Check yours: ${url}`
-    },
-    es: {
-      questionOf: 'Pregunta',
-      of: 'de',
-      completed: '¡Completado!',
-      celebration: '🎉 ¡Resultado Revelado!',
-      shareWhatsApp: '📲 Compartir en WhatsApp',
-      copyLink: '📋 Copiar Enlace',
-      copied: '¡Enlace copiado con éxito!',
-      retake: '🔄 Rehacer Test',
-      shareText: (qTitle, rTitle, url) => `¡Hice el quiz "${qTitle}" en Quiztide y mi resultado fue: ${rTitle}! Descubre el tuyo: ${url}`
-    }
-  };
-
-  function getLangData(lang) {
-    if (quiz.i18n[lang]) return quiz.i18n[lang];
-    if (quiz.i18n['pt']) return quiz.i18n['pt'];
-    if (quiz.i18n['en']) return quiz.i18n['en'];
-    return Object.values(quiz.i18n)[0];
+      share_whatsapp: 'Compartilhar no WhatsApp',
+      copy_link: 'Copiar Link',
+      copied_success: 'Link copiado com sucesso!',
+      retake_quiz: 'Refazer Teste'
+    };
   }
 
-  let activeData = getLangData(currentLang);
-  let questions = activeData.questions || [];
-  let results = activeData.results || {};
-  let totalQuestions = questions.length;
+  const questions = quiz.questions || [];
+  const results = quiz.results || {};
+  const totalQuestions = questions.length;
 
   let currentIndex = 0;
   let scores = {};
   let winningKey = null;
+  let isFinished = false;
 
   // DOM Elements
   const quizTitle = document.getElementById('quiz-title');
@@ -93,30 +68,27 @@
   const btnRestartText = document.getElementById('btn-restart-text');
   const copyFeedback = document.getElementById('copy-feedback');
 
-  function updateStaticHeader() {
-    activeData = getLangData(currentLang);
-    questions = activeData.questions || [];
-    results = activeData.results || {};
-    totalQuestions = questions.length;
+  function updateHeader() {
+    const ui = getUI();
+    if (quizTitle) quizTitle.textContent = t(quiz.title);
+    if (quizSubtitle) quizSubtitle.textContent = t(quiz.subtitle);
+    if (quizCategory) quizCategory.textContent = t(quiz.category) || 'Quiz';
+    if (quizTimeBadge) quizTimeBadge.textContent = `⏱️ ${ui.read_time || '2 min'}`;
+    if (quizCountBadge) quizCountBadge.textContent = `📊 ${totalQuestions} ${ui.question_of || 'questions'}`;
 
-    if (quizTitle) quizTitle.textContent = activeData.title || '';
-    if (quizSubtitle) quizSubtitle.textContent = activeData.subtitle || activeData.description || '';
-    if (quizCategory) quizCategory.textContent = activeData.category || 'Quiz';
-    if (quizTimeBadge) quizTimeBadge.textContent = `⏱️ ${activeData.time || '2 min'}`;
-    if (quizCountBadge) quizCountBadge.textContent = `📊 ${totalQuestions} questions`;
-
-    const ui = UI_STRINGS[currentLang] || UI_STRINGS.en;
-    if (btnCopyText) btnCopyText.textContent = ui.copyLink;
-    if (btnRestartText) btnRestartText.textContent = ui.retake;
+    if (btnCopyText) btnCopyText.textContent = ui.copy_link;
+    if (btnRestartText) btnRestartText.textContent = ui.retake_quiz;
     if (resultCelebration) resultCelebration.textContent = ui.celebration;
-    if (copyFeedback) copyFeedback.textContent = ui.copied;
+    if (copyFeedback) copyFeedback.textContent = ui.copied_success;
   }
 
   function initQuiz() {
     currentIndex = 0;
     scores = {};
     winningKey = null;
-    updateStaticHeader();
+    isFinished = false;
+
+    updateHeader();
 
     if (resultCard) resultCard.style.display = 'none';
     if (questionCard) questionCard.style.display = 'block';
@@ -128,15 +100,15 @@
     const q = questions[index];
     if (!q) return;
 
-    const ui = UI_STRINGS[currentLang] || UI_STRINGS.en;
+    const ui = getUI();
     const currentNum = index + 1;
     const pct = Math.round((index / totalQuestions) * 100);
 
-    progressText.textContent = `${ui.questionOf} ${currentNum} ${ui.of} ${totalQuestions}`;
+    progressText.textContent = `${ui.question_of} ${currentNum} ${ui.of} ${totalQuestions}`;
     progressPercent.textContent = `${pct}%`;
     progressFill.style.width = `${pct}%`;
 
-    // Question image (optional)
+    // Optional Question Image
     if (q.image) {
       questionImg.src = q.image;
       questionImgWrapper.style.display = 'block';
@@ -144,11 +116,11 @@
       questionImgWrapper.style.display = 'none';
     }
 
-    // Question title
-    questionTitle.textContent = q.question;
+    // Question Title
+    questionTitle.textContent = t(q.text);
 
-    // Check if options have images to toggle grid layout
-    const hasImages = q.options.some(opt => !!opt.image);
+    // Render Options
+    const hasImages = q.options && q.options.some(opt => !!opt.image);
     optionsList.className = hasImages ? 'options-container options-grid-visual' : 'options-container options-list-vertical';
     optionsList.innerHTML = '';
 
@@ -157,16 +129,16 @@
       btn.className = 'option-btn' + (opt.image ? ' has-image' : '');
       btn.type = 'button';
 
-      let innerHtml = '';
+      let inner = '';
       if (opt.image) {
-        innerHtml += `<div class="opt-img-box"><img src="${opt.image}" alt="Option ${optIndex + 1}"></div>`;
+        inner += `<div class="opt-img-box"><img src="${opt.image}" alt="Option ${optIndex + 1}"></div>`;
       }
-      innerHtml += `<div class="opt-content">
+      inner += `<div class="opt-content">
         <span class="option-marker">${String.fromCharCode(65 + optIndex)}</span>
-        <span class="option-text">${opt.text}</span>
+        <span class="option-text">${t(opt.text)}</span>
       </div>`;
 
-      btn.innerHTML = innerHtml;
+      btn.innerHTML = inner;
       btn.addEventListener('click', function() {
         handleOptionSelect(btn, opt.type);
       });
@@ -193,18 +165,21 @@
   }
 
   function showResults() {
-    const ui = UI_STRINGS[currentLang] || UI_STRINGS.en;
+    isFinished = true;
+    const ui = getUI();
+
     progressText.textContent = ui.completed;
     progressPercent.textContent = `100%`;
     progressFill.style.width = `100%`;
 
-    let maxScore = -1;
-    winningKey = Object.keys(results)[0];
-
-    for (const key in scores) {
-      if (scores[key] > maxScore) {
-        maxScore = scores[key];
-        winningKey = key;
+    if (!winningKey) {
+      let maxScore = -1;
+      winningKey = Object.keys(results)[0];
+      for (const key in scores) {
+        if (scores[key] > maxScore) {
+          maxScore = scores[key];
+          winningKey = key;
+        }
       }
     }
 
@@ -213,7 +188,6 @@
     questionCard.style.display = 'none';
     resultCard.style.display = 'block';
 
-    // Result image (optional)
     if (winner.image) {
       resultImg.src = winner.image;
       resultImgWrapper.style.display = 'block';
@@ -222,8 +196,8 @@
     }
 
     resultBadge.textContent = winner.badge || '🌊';
-    resultTitle.textContent = winner.title || 'Result';
-    resultDesc.textContent = winner.description || '';
+    resultTitle.textContent = t(winner.title);
+    resultDesc.textContent = t(winner.description);
 
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
@@ -233,9 +207,10 @@
     btnWhatsapp.addEventListener('click', function() {
       const winner = results[winningKey] || Object.values(results)[0];
       if (!winner) return;
-      const ui = UI_STRINGS[currentLang] || UI_STRINGS.en;
-      const text = ui.shareText(activeData.title, winner.title, quiz.url);
-      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      const qTitle = t(quiz.title);
+      const rTitle = t(winner.title);
+      const shareText = `Fiz o teste "${qTitle}" no Quiztide e meu resultado foi: ${rTitle}! Descubra o seu: ${quiz.url}`;
+      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
       window.open(url, '_blank');
     });
   }
@@ -257,17 +232,17 @@
     });
   }
 
-  // Listen to Global Language Switcher
+  // Language Change Listener (Maintains Quiz State Mid-Quiz!)
   window.addEventListener('quiztide:langchange', function(e) {
     currentLang = e.detail.lang || 'pt';
-    updateStaticHeader();
-    if (resultCard && resultCard.style.display === 'block') {
-      showResults(); // refresh result texts in new language
+    updateHeader();
+    if (isFinished) {
+      showResults(); // refresh result card in new language
     } else {
-      renderQuestion(currentIndex); // refresh question texts in new language
+      renderQuestion(currentIndex); // refresh active question in new language
     }
   });
 
-  // Start Quiz
+  // Launch initial state
   initQuiz();
 })();

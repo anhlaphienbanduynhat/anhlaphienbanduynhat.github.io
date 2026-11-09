@@ -1,0 +1,33 @@
+{% assign current_lang = page.lang | default: "pt" %}
+{% assign t = site.data.i18n[current_lang] %}
+{% assign base_lang_path = "" %}
+{% if current_lang != "pt" %}
+  {% assign base_lang_path = "/" | append: current_lang %}
+{% endif %}
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🌊 Quiztide</div>
+      <p class="footer-desc">{{ t.site_tagline }}</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="{{ base_lang_path | append: '/' | relative_url }}">{{ t.nav_home }}</a></li>
+        <li><a href="{{ '/about/' | relative_url }}">{{ t.nav_about }}</a></li>
+        <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="{{ '/privacy/' | relative_url }}">{{ t.nav_privacy }}</a></li>
+        <li><a href="{{ '/terms/' | relative_url }}">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; {{ 'now' | date: "%Y" }} Quiztide. All rights reserved.</p>
+  </div>
+</footer>

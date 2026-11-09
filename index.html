@@ -6,17 +6,17 @@ title: "Home"
 <!-- Hero Section -->
 <div class="hero-section container">
   <span class="hero-badge">🌊 Quiztide</span>
-  <h1 class="hero-title" id="home-hero-title">Descubra Quem Você É de Verdade</h1>
-  <p class="hero-subtitle" id="home-hero-subtitle">Quizzes rápidos, visuais e sem travamentos. Teste sua personalidade e seus conhecimentos em 2 minutos.</p>
+  <h1 class="hero-title" id="home-hero-title"></h1>
+  <p class="hero-subtitle" id="home-hero-subtitle"></p>
 
   <!-- Live Search Box -->
   <div class="search-box-wrapper">
-    <input type="text" id="quiz-search-input" placeholder="🔍 Buscar quizzes por título ou tag..." class="search-input">
+    <input type="text" id="quiz-search-input" placeholder="🔍" class="search-input">
   </div>
 
   <!-- Tag Filter Bar -->
   <div class="tag-filter-bar" id="tag-filter-bar">
-    <button type="button" class="tag-filter-btn active" data-tag="all">✨ Todos</button>
+    <button type="button" class="tag-filter-btn active" data-tag="all" id="btn-tag-all">✨ Todos</button>
     <button type="button" class="tag-filter-btn" data-tag="personalidade">#personalidade</button>
     <button type="button" class="tag-filter-btn" data-tag="psicologia">#psicologia</button>
     <button type="button" class="tag-filter-btn" data-tag="autoconhecimento">#autoconhecimento</button>
@@ -25,129 +25,117 @@ title: "Home"
 
 <!-- Quizzes Grid -->
 <section class="container">
-  <div class="quiz-grid" id="quiz-catalog-grid">
-    {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
-    {% for quiz in quiz_pages %}
-    <article class="quiz-card" 
-             data-slug="{{ quiz.slug }}" 
-             data-tags="{{ quiz.tags | join: ',' | downcase }}"
-             data-title-pt="{{ quiz.i18n.pt.title | escape }}"
-             data-desc-pt="{{ quiz.i18n.pt.subtitle | default: quiz.i18n.pt.description | escape }}"
-             data-title-en="{{ quiz.i18n.en.title | escape }}"
-             data-desc-en="{{ quiz.i18n.en.subtitle | default: quiz.i18n.en.description | escape }}"
-             data-title-es="{{ quiz.i18n.es.title | escape }}"
-             data-desc-es="{{ quiz.i18n.es.subtitle | default: quiz.i18n.es.description | escape }}">
-      
-      <a href="{{ quiz.url | relative_url }}" class="card-link-wrapper">
-        {% if quiz.cover_image %}
-        <div class="card-cover-wrapper">
-          <img src="{{ quiz.cover_image | relative_url }}" alt="{{ quiz.title }}" class="card-cover-img" loading="lazy">
-        </div>
-        {% endif %}
-
-        <div class="card-body">
-          <div class="card-tags">
-            {% for tag in quiz.tags %}
-            <span class="card-tag">#{{ tag }}</span>
-            {% endfor %}
-          </div>
-          <h3 class="card-title quiz-card-title">{{ quiz.i18n.pt.title }}</h3>
-          <p class="card-desc quiz-card-desc">{{ quiz.i18n.pt.subtitle | default: quiz.i18n.pt.description | truncate: 120 }}</p>
-          <div class="card-footer">
-            <span class="card-meta-time">⏱️ 2 min</span>
-            <span class="card-cta-btn">Começar Quiz &rarr;</span>
-          </div>
-        </div>
-      </a>
-    </article>
-    {% endfor %}
-  </div>
+  <div class="quiz-grid" id="quiz-catalog-grid"></div>
 
   <div id="no-results-msg" class="no-results-msg" style="display: none;">
-    <p>Nenhum quiz encontrado para essa busca. Tente outro termo ou limpe os filtros.</p>
+    <p id="no-results-text">Nenhum quiz encontrado.</p>
   </div>
 </section>
 
-<!-- Homepage Interactive Filtering & Localization Script -->
+<!-- Inject Quizzes Data for Reactive Catalog -->
+<script>
+  window.QUIZZES_CATALOG = [
+    {% assign quiz_pages = site.pages | where: "layout", "quiz" %}
+    {% for q in quiz_pages %}
+    {
+      url: {{ q.url | relative_url | jsonify }},
+      slug: {{ q.slug | jsonify }},
+      cover_image: {{ q.cover_image | relative_url | jsonify }},
+      tags: {{ q.tags | jsonify }},
+      title: {{ q.title | jsonify }},
+      subtitle: {{ q.subtitle | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+</script>
+
 <script>
   (function() {
-    const searchInput = document.getElementById('quiz-search-input');
-    const tagButtons = document.querySelectorAll('.tag-filter-btn');
-    const cards = document.querySelectorAll('.quiz-card');
-    const noResults = document.getElementById('no-results-msg');
+    'use strict';
 
-    const heroTitle = document.getElementById('home-hero-title');
-    const heroSubtitle = document.getElementById('home-hero-subtitle');
+    var searchInput = document.getElementById('quiz-search-input');
+    var tagButtons = document.querySelectorAll('.tag-filter-btn');
+    var catalogGrid = document.getElementById('quiz-catalog-grid');
+    var noResults = document.getElementById('no-results-msg');
+    var noResultsText = document.getElementById('no-results-text');
+    var heroTitle = document.getElementById('home-hero-title');
+    var heroSubtitle = document.getElementById('home-hero-subtitle');
+    var btnTagAll = document.getElementById('btn-tag-all');
 
-    const I18N_HOME = {
-      pt: {
-        heroTitle: "Descubra Quem Você É de Verdade",
-        heroSubtitle: "Quizzes rápidos, visuais e sem travamentos. Teste sua personalidade e seus conhecimentos em 2 minutos.",
-        placeholder: "🔍 Buscar quizzes por título ou tag...",
-        allTag: "✨ Todos",
-        cta: "Começar Quiz →",
-        noResults: "Nenhum quiz encontrado para essa busca."
-      },
-      en: {
-        heroTitle: "Discover Your True Self & Vibe",
-        heroSubtitle: "Fast, visual, distraction-free quizzes. Test your personality and mind in under 2 minutes.",
-        placeholder: "🔍 Search quizzes by title or tag...",
-        allTag: "✨ All",
-        cta: "Start Quiz →",
-        noResults: "No quizzes found for this search."
-      },
-      es: {
-        heroTitle: "Descubre Quién Eres Realmente",
-        heroSubtitle: "Quizzes rápidos, visuales y sin pausas. Pon a prueba tu personalidad en 2 minutos.",
-        placeholder: "🔍 Buscar quizzes por título o tag...",
-        allTag: "✨ Todos",
-        cta: "Comenzar Quiz →",
-        noResults: "No se encontraron quizzes para esta búsqueda."
-      }
-    };
+    var currentLang = window.CURRENT_LANG || 'pt';
+    var activeTag = 'all';
 
-    function updateHomeLanguage(lang) {
-      const texts = I18N_HOME[lang] || I18N_HOME.pt;
-      if (heroTitle) heroTitle.textContent = texts.heroTitle;
-      if (heroSubtitle) heroSubtitle.textContent = texts.heroSubtitle;
-      if (searchInput) searchInput.placeholder = texts.placeholder;
-
-      const allTagBtn = document.querySelector('.tag-filter-btn[data-tag="all"]');
-      if (allTagBtn) allTagBtn.textContent = texts.allTag;
-
-      cards.forEach(card => {
-        const titleEl = card.querySelector('.quiz-card-title');
-        const descEl = card.querySelector('.quiz-card-desc');
-        const ctaEl = card.querySelector('.card-cta-btn');
-
-        const title = card.getAttribute(`data-title-${lang}`) || card.getAttribute('data-title-pt') || card.getAttribute('data-title-en');
-        const desc = card.getAttribute(`data-desc-${lang}`) || card.getAttribute('data-desc-pt') || card.getAttribute('data-desc-en');
-
-        if (titleEl && title) titleEl.textContent = title;
-        if (descEl && desc) descEl.textContent = desc;
-        if (ctaEl) ctaEl.textContent = texts.cta;
-      });
+    function getUI() {
+      var i18n = window.SITE_I18N || {};
+      return i18n[currentLang] || i18n.pt || {};
     }
 
-    let activeTag = 'all';
+    function getText(obj) {
+      if (!obj) return '';
+      if (typeof obj === 'string') return obj;
+      return obj[currentLang] || obj.pt || obj.en || obj.es || '';
+    }
 
-    function filterCards() {
-      const query = (searchInput.value || '').toLowerCase().trim();
-      let visibleCount = 0;
+    function renderView() {
+      var ui = getUI();
+      if (heroTitle) heroTitle.textContent = ui.hero_title || '';
+      if (heroSubtitle) heroSubtitle.textContent = ui.hero_subtitle || '';
+      if (searchInput) searchInput.placeholder = ui.search_placeholder || '🔍 Buscar quizzes...';
+      if (btnTagAll) btnTagAll.textContent = '✨ ' + (ui.all_tags || 'Todos');
+      if (noResultsText) noResultsText.textContent = ui.no_results || 'Nenhum quiz encontrado.';
 
-      cards.forEach(card => {
-        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-        const title = (card.querySelector('.quiz-card-title').textContent || '').toLowerCase();
-        const desc = (card.querySelector('.quiz-card-desc').textContent || '').toLowerCase();
+      renderCards();
+    }
 
-        const matchesTag = (activeTag === 'all') || tags.includes(activeTag);
-        const matchesQuery = !query || title.includes(query) || desc.includes(query) || tags.includes(query);
+    function renderCards() {
+      var query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+      var ui = getUI();
+      var quizzes = window.QUIZZES_CATALOG || [];
+      var visibleCount = 0;
+
+      catalogGrid.innerHTML = '';
+
+      quizzes.forEach(function(q) {
+        var tags = (q.tags || []).map(function(t) { return t.toLowerCase(); });
+        var title = getText(q.title);
+        var subtitle = getText(q.subtitle);
+
+        var matchesTag = (activeTag === 'all') || tags.indexOf(activeTag.toLowerCase()) !== -1;
+        var matchesQuery = !query || 
+          title.toLowerCase().indexOf(query) !== -1 || 
+          subtitle.toLowerCase().indexOf(query) !== -1 ||
+          tags.some(function(t) { return t.indexOf(query) !== -1; });
 
         if (matchesTag && matchesQuery) {
-          card.style.display = 'flex';
           visibleCount++;
-        } else {
-          card.style.display = 'none';
+          var card = document.createElement('article');
+          card.className = 'quiz-card';
+
+          var tagsHtml = (q.tags || []).map(function(t) {
+            return '<span class="card-tag">#' + t + '</span>';
+          }).join('');
+
+          var coverHtml = '';
+          if (q.cover_image) {
+            coverHtml = '<div class="card-cover-wrapper">' +
+              '<img src="' + q.cover_image + '" alt="' + title + '" class="card-cover-img" loading="lazy">' +
+            '</div>';
+          }
+
+          card.innerHTML = '<a href="' + q.url + '" class="card-link-wrapper">' +
+            coverHtml +
+            '<div class="card-body">' +
+              '<div class="card-tags">' + tagsHtml + '</div>' +
+              '<h3 class="card-title">' + title + '</h3>' +
+              '<p class="card-desc">' + subtitle + '</p>' +
+              '<div class="card-footer">' +
+                '<span class="card-meta-time">⏱️ ' + (ui.read_time || '2 min') + '</span>' +
+                '<span class="card-cta-btn">' + (ui.start_quiz || 'Começar Quiz') + ' &rarr;</span>' +
+              '</div>' +
+            '</div>' +
+          '</a>';
+
+          catalogGrid.appendChild(card);
         }
       });
 
@@ -157,23 +145,24 @@ title: "Home"
     }
 
     if (searchInput) {
-      searchInput.addEventListener('input', filterCards);
+      searchInput.addEventListener('input', renderCards);
     }
 
-    tagButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tagButtons.forEach(b => b.classList.remove('active'));
+    tagButtons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        tagButtons.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
         activeTag = btn.getAttribute('data-tag');
-        filterCards();
+        renderCards();
       });
     });
 
-    window.addEventListener('quiztide:langchange', (e) => {
-      updateHomeLanguage(e.detail.lang || 'pt');
+    window.addEventListener('quiztide:langchange', function(e) {
+      currentLang = e.detail.lang || 'pt';
+      renderView();
     });
 
-    // Initial language setup
-    updateHomeLanguage(window.CURRENT_LANG || 'pt');
+    // Initial render
+    renderView();
   })();
 </script>

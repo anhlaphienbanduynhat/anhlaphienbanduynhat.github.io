@@ -7,7 +7,7 @@ layout: default
   <header class="quiz-header">
     {% if page.cover_image %}
     <div class="quiz-cover-wrapper">
-      <img src="{{ page.cover_image | relative_url }}" alt="{{ page.title }}" class="quiz-cover-img" id="quiz-cover-img">
+      <img src="{{ page.cover_image | relative_url }}" alt="Quiz Banner" class="quiz-cover-img" id="quiz-cover-img">
     </div>
     {% endif %}
 
@@ -20,13 +20,13 @@ layout: default
     </div>
     {% endif %}
 
-    <div class="quiz-meta-badge" id="quiz-category">Personality</div>
+    <div class="quiz-meta-badge" id="quiz-category">Quiz</div>
     <h1 class="quiz-title" id="quiz-title">Loading...</h1>
     <p class="quiz-subtitle" id="quiz-subtitle"></p>
     
     <div class="quiz-info-bar">
       <span id="quiz-time-badge">⏱️ 2 min</span>
-      <span id="quiz-count-badge">📊 5 questions</span>
+      <span id="quiz-count-badge">📊 {{ page.questions.size }} questions</span>
       <span>🌐 Multilingual</span>
     </div>
   </header>
@@ -80,23 +80,20 @@ layout: default
       <div id="copy-feedback" class="copy-feedback" style="display: none;">Link copiado com sucesso!</div>
     </div>
   </div>
-
-  <!-- Editorial content below quiz (SEO Boost for AdSense) -->
-  {% if content and content != "" %}
-  <section class="quiz-editorial-content">
-    {{ content }}
-  </section>
-  {% endif %}
 </article>
 
-<!-- Inject Multilingual Quiz Data into JS Engine -->
+<!-- Inject Quiz Data -->
 <script>
   window.QUIZ_DATA = {
     slug: {{ page.slug | jsonify }},
     url: {{ page.url | absolute_url | jsonify }},
     tags: {{ page.tags | jsonify }},
     cover_image: {{ page.cover_image | relative_url | jsonify }},
-    i18n: {{ page.i18n | jsonify }}
+    title: {{ page.title | jsonify }},
+    subtitle: {{ page.subtitle | jsonify }},
+    category: {{ page.category | jsonify }},
+    questions: {{ page.questions | jsonify }},
+    results: {{ page.results | jsonify }}
   };
 </script>
 <script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>
